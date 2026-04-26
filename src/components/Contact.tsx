@@ -8,12 +8,20 @@ const SOCIALS = [
   { label: "Email", handle: "sazanyogi@gmail.com", href: "mailto:sazanyogi@gmail.com" },
 ];
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!emailRegex.test(form.email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+    setEmailError("");
     setStatus("sending");
     try {
       const res = await fetch("/api/contact", {
@@ -184,16 +192,26 @@ export default function Contact() {
             onFocus={(e) => (e.target.style.borderColor = "var(--pink)")}
             onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
           />
-          <input
-            type="email"
-            placeholder="Your email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            required
-            style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = "var(--pink)")}
-            onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
-          />
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+            <input
+              type="email"
+              placeholder="Your email"
+              value={form.email}
+              onChange={(e) => {
+                setForm({ ...form, email: e.target.value });
+                if (emailError) setEmailError("");
+              }}
+              required
+              style={{ ...inputStyle, borderColor: emailError ? "#cc3333" : undefined }}
+              onFocus={(e) => (e.target.style.borderColor = emailError ? "#cc3333" : "var(--pink)")}
+              onBlur={(e) => (e.target.style.borderColor = emailError ? "#cc3333" : "var(--border)")}
+            />
+            {emailError && (
+              <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.78rem", color: "#cc3333", paddingLeft: "0.25rem" }}>
+                {emailError}
+              </span>
+            )}
+          </div>
           <textarea
             placeholder="What's on your mind?"
             value={form.message}

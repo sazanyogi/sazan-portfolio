@@ -12,7 +12,7 @@ export default function ResumePage() {
     <>
       <style>{`
         .resume-body {
-          background: #CBD5E0;
+          background: var(--bg);
           min-height: 100vh;
           padding: 100px 20px 60px;
           font-family: 'Inter', sans-serif;
@@ -41,9 +41,24 @@ export default function ResumePage() {
         .paper {
           max-width: 760px;
           margin: 0 auto;
-          background: #fff;
-          box-shadow: 0 4px 40px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.08);
+          background: #F9F7F4;
+          box-shadow:
+            0 1px 1px rgba(0,0,0,0.10),
+            0 2px 2px rgba(0,0,0,0.09),
+            0 4px 4px rgba(0,0,0,0.08),
+            0 8px 16px rgba(0,0,0,0.07),
+            0 24px 48px rgba(0,0,0,0.06);
           padding: 36px 52px 40px;
+          position: relative;
+        }
+        .paper::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+          opacity: 0.12;
+          pointer-events: none;
+          border-radius: inherit;
         }
         .resume-header { text-align: center; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 2px solid #1A202C; }
         .resume-name { font-family: 'Georgia', serif; font-size: 34px; font-weight: 500; color: #1A202C; letter-spacing: 0.01em; line-height: 1.1; }
@@ -100,7 +115,7 @@ export default function ResumePage() {
 
       <div className="resume-body">
         <div className="toolbar">
-          <Link href="/" style={{ fontSize: "13px", color: "#4A5568", textDecoration: "none" }}>← sazan.com.np</Link>
+          <Link href="/" style={{ fontSize: "13px", color: "var(--text-sec)", textDecoration: "none" }}>← sazan.com.np</Link>
           <PrintButton />
         </div>
 

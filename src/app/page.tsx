@@ -1,49 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import PhotoTeaser from "@/components/PhotoTeaser";
 import Contact from "@/components/Contact";
 
-const ROLES = [
-  "Data Analyst",
-  "AI Automation Builder",
-  "Creative Technologist",
-  "Photographer",
-];
-
-function TypingText() {
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const current = ROLES[roleIdx];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!deleting && displayed.length < current.length) {
-      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 70);
-    } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), 1800);
-    } else if (deleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setRoleIdx((i) => (i + 1) % ROLES.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayed, deleting, roleIdx]);
-
-  return (
-    <span style={{ color: "var(--cyan)" }}>
-      {displayed}
-      <span className="typing-cursor" />
-    </span>
-  );
-}
 
 const STATS = [
   { value: "5+", label: "Years in Tech" },
@@ -99,20 +61,21 @@ export default function Home() {
               gap: "0.6rem",
               fontFamily: "var(--font-space-mono)",
               fontSize: "0.7rem",
-              color: "var(--text-sec)",
+              color: "#4ade80",
               letterSpacing: "0.12em",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
+              background: "rgba(74,222,128,0.06)",
+              border: "1px solid #4ade80",
               borderRadius: "2rem",
               padding: "0.35rem 0.9rem",
               marginBottom: "2.5rem",
+              boxShadow: "0 0 12px rgba(74,222,128,0.25), inset 0 0 12px rgba(74,222,128,0.04)",
             }}
           >
             <span
               className="animate-pulse-dot"
-              style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cyan)", display: "inline-block", flexShrink: 0 }}
+              style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", display: "inline-block", flexShrink: 0 }}
             />
-            Available for work · Mississauga, ON
+            Open to work · Stoney Creek, ON
           </div>
 
           {/* Name — refined size, fixed descender clip */}
@@ -125,29 +88,25 @@ export default function Home() {
                 fontFamily: "var(--font-bricolage)",
                 fontWeight: 800,
                 fontSize: "clamp(3rem, 6.5vw, 6rem)",
-                lineHeight: 1.15,
+                lineHeight: 1.1,
                 letterSpacing: "-0.02em",
                 color: "var(--text)",
               }}
             >
-              Sajan Yogi
+              Sajan Nath Yogi
               <span style={{ color: "var(--cyan)" }}>.</span>
             </h1>
-          </div>
-
-          {/* Typing role */}
-          <div
-            className="animate-fade-up"
-            style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "clamp(0.85rem, 1.8vw, 1rem)",
-              color: "var(--text-sec)",
-              marginBottom: "1.25rem",
-              animationDelay: "0.2s",
-              minHeight: "1.6em",
-            }}
-          >
-            <TypingText />
+            <div
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "clamp(0.72rem, 1.4vw, 0.85rem)",
+                color: "var(--cyan)",
+                letterSpacing: "0.1em",
+                marginTop: "0.75rem",
+              }}
+            >
+              Seeking — Data Analyst · Data Engineer · AI Automation
+            </div>
           </div>
 
           {/* One-liner */}
@@ -155,16 +114,16 @@ export default function Home() {
             className="animate-fade-up"
             style={{
               fontFamily: "var(--font-dm-sans)",
-              fontSize: "clamp(1rem, 2vw, 1.2rem)",
+              fontSize: "clamp(1rem, 2vw, 1.1rem)",
               color: "var(--text-sec)",
-              lineHeight: 1.7,
+              lineHeight: 1.75,
               maxWidth: "520px",
               marginBottom: "2.5rem",
-              animationDelay: "0.25s",
+              animationDelay: "0.2s",
             }}
           >
             I build AI pipelines, data dashboards, and digital products that actually ship.
-            Based in Canada, open to Data Analyst and AI Automation roles.
+            Based in Stoney Creek, Ontario — open to roles across Canada.
           </p>
 
           <div
@@ -177,7 +136,7 @@ export default function Home() {
             }}
           >
             <Link
-              href="#work"
+              href="/work"
               style={{
                 fontFamily: "var(--font-space-mono)",
                 fontSize: "0.8rem",
@@ -230,6 +189,33 @@ export default function Home() {
               }}
             >
               GET IN TOUCH
+            </Link>
+            <Link
+              href="/resume"
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                color: "var(--text-sec)",
+                background: "transparent",
+                border: "none",
+                padding: "0.85rem 0.5rem",
+                borderRadius: "3rem",
+                textDecoration: "none",
+                transition: "color 0.2s, transform 0.2s",
+                display: "inline-block",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "var(--text)";
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "var(--text-sec)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              VIEW RESUME ↗
             </Link>
           </div>
 
