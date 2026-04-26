@@ -95,7 +95,7 @@ export default function Footer() {
             }}
           >
             Data Analyst · AI Automation · Photographer.
-            Based in Mississauga, Ontario.
+            Based in Stoney Creek, Ontario.
           </p>
         </div>
 

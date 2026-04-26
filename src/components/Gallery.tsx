@@ -216,7 +216,7 @@ export default function Gallery() {
         </div>
         <h2
           style={{
-            fontFamily: "var(--font-syne)",
+            fontFamily: "var(--font-bricolage)",
             fontWeight: 800,
             fontSize: "clamp(2rem, 5vw, 3.5rem)",
             color: "var(--text)",

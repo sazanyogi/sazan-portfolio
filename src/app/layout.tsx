@@ -32,7 +32,7 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: "Sajan Yogi — Portfolio",
-  description: "Creative technologist, data analyst, and photographer based in Mississauga, Ontario. Building brands through AI, data, and digital products.",
+  description: "Creative technologist, data analyst, and photographer based in Stoney Creek, Ontario. Building brands through AI, data, and digital products.",
   authors: [{ name: "Sajan Yogi" }],
   openGraph: {
     title: "Sajan Yogi — Portfolio",

@@ -233,7 +233,7 @@ export default function Home() {
               <div key={s.label}>
                 <div
                   style={{
-                    fontFamily: "var(--font-syne)",
+                    fontFamily: "var(--font-bricolage)",
                     fontWeight: 800,
                     fontSize: "2rem",
                     color: "var(--text)",

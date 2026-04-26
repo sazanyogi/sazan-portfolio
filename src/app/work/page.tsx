@@ -203,7 +203,7 @@ function ProjectRow({ project, index }: { project: typeof PROJECTS[0]; index: nu
         </span>
 
         {/* Title */}
-        <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "1.05rem", color: "var(--text)" }}>
+        <span style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1.05rem", color: "var(--text)" }}>
           {project.title}
         </span>
 

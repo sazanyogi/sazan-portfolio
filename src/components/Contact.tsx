@@ -100,7 +100,7 @@ export default function Contact() {
           </div>
           <h2
             style={{
-              fontFamily: "var(--font-syne)",
+              fontFamily: "var(--font-bricolage)",
               fontWeight: 800,
               fontSize: "clamp(2rem, 4vw, 3rem)",
               color: "var(--text)",

@@ -26,7 +26,7 @@ export default function PhotoTeaser() {
           <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.75rem", color: "var(--pink)", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>
             PHOTOGRAPHY
           </div>
-          <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1 }}>
+          <h2 style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1 }}>
             Through the Lens
           </h2>
         </div>

@@ -147,7 +147,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
       {/* Title */}
       <h3
         style={{
-          fontFamily: "var(--font-syne)",
+          fontFamily: "var(--font-bricolage)",
           fontWeight: 700,
           fontSize: "1.25rem",
           color: "var(--text)",
@@ -262,7 +262,7 @@ export default function Projects() {
         </div>
         <h2
           style={{
-            fontFamily: "var(--font-syne)",
+            fontFamily: "var(--font-bricolage)",
             fontWeight: 800,
             fontSize: "clamp(2rem, 5vw, 3.5rem)",
             color: "var(--text)",

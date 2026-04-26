@@ -67,7 +67,7 @@ export default function About() {
           </div>
           <h2
             style={{
-              fontFamily: "var(--font-syne)",
+              fontFamily: "var(--font-bricolage)",
               fontWeight: 800,
               fontSize: "clamp(2rem, 4vw, 3rem)",
               color: "var(--text)",
@@ -89,7 +89,7 @@ export default function About() {
               marginBottom: "1rem",
             }}
           >
-            Big Data Analytics graduate based in Mississauga, Ontario. I bridge the gap between raw
+            Big Data Analytics graduate based in Stoney Creek, Ontario. I bridge the gap between raw
             data and real decisions — building AI pipelines, analytics dashboards, and automation
             systems that actually ship.
           </p>
@@ -138,7 +138,7 @@ export default function About() {
                 >
                   <div
                     style={{
-                      fontFamily: "var(--font-syne)",
+                      fontFamily: "var(--font-bricolage)",
                       fontWeight: 600,
                       fontSize: "0.9rem",
                       color: "var(--text)",
