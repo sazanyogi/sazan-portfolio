@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
+import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 
 const ROLES = [
@@ -303,6 +304,7 @@ export default function Home() {
 
       <Projects />
       <About />
+      <Gallery />
       <Contact />
     </>
   );
