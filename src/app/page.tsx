@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Projects from "@/components/Projects";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
 
 const ROLES = [
   "Data Analyst",
@@ -63,7 +66,6 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        {/* Background glow */}
         <div
           style={{
             position: "absolute",
@@ -88,7 +90,6 @@ export default function Home() {
         />
 
         <div style={{ maxWidth: "900px", position: "relative" }}>
-          {/* Label */}
           <div
             className="animate-fade-up"
             style={{
@@ -115,7 +116,6 @@ export default function Home() {
             AVAILABLE FOR WORK — MISSISSAUGA, ON
           </div>
 
-          {/* Name */}
           <h1
             className="animate-fade-up"
             style={{
@@ -135,7 +135,6 @@ export default function Home() {
             <span style={{ color: "var(--cyan)" }}>.</span>
           </h1>
 
-          {/* Tagline */}
           <div
             className="animate-fade-up"
             style={{
@@ -151,7 +150,6 @@ export default function Home() {
             Craft
           </div>
 
-          {/* Typing role */}
           <div
             className="animate-fade-up"
             style={{
@@ -165,7 +163,6 @@ export default function Home() {
             <TypingText />
           </div>
 
-          {/* CTA buttons */}
           <div
             className="animate-fade-up"
             style={{
@@ -232,7 +229,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Stats */}
           <div
             className="animate-fade-up"
             style={{
@@ -272,7 +268,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div
           style={{
             position: "absolute",
@@ -306,93 +301,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Placeholder sections — will build in next sessions */}
-      <section id="work" style={{ minHeight: "100vh", padding: "8rem clamp(1.5rem, 6vw, 8rem)" }}>
-        <div
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.75rem",
-            color: "var(--cyan)",
-            letterSpacing: "0.15em",
-            marginBottom: "1rem",
-          }}
-        >
-          SELECTED WORK
-        </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-syne)",
-            fontWeight: 800,
-            fontSize: "clamp(2rem, 5vw, 4rem)",
-            color: "var(--text)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Projects
-        </h2>
-        <p style={{ color: "var(--text-sec)", marginTop: "1rem" }}>Coming soon — building in next session.</p>
-      </section>
-
-      <section id="about" style={{ minHeight: "60vh", padding: "8rem clamp(1.5rem, 6vw, 8rem)", background: "var(--surface)" }}>
-        <div
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.75rem",
-            color: "var(--cyan)",
-            letterSpacing: "0.15em",
-            marginBottom: "1rem",
-          }}
-        >
-          ABOUT
-        </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-syne)",
-            fontWeight: 800,
-            fontSize: "clamp(2rem, 5vw, 4rem)",
-            color: "var(--text)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          The Builder
-        </h2>
-        <p style={{ color: "var(--text-sec)", marginTop: "1rem", maxWidth: "600px", lineHeight: 1.7 }}>
-          Big Data Analytics graduate from Lambton College. I build AI-powered tools, data pipelines,
-          and digital products. Based in Mississauga, ON — running Click & Cast Inc and hunting
-          for the right Data Analyst role.
-        </p>
-      </section>
-
-      <section id="contact" style={{ minHeight: "60vh", padding: "8rem clamp(1.5rem, 6vw, 8rem)" }}>
-        <div
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.75rem",
-            color: "var(--cyan)",
-            letterSpacing: "0.15em",
-            marginBottom: "1rem",
-          }}
-        >
-          CONTACT
-        </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-syne)",
-            fontWeight: 800,
-            fontSize: "clamp(2rem, 5vw, 4rem)",
-            color: "var(--text)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Let&apos;s Talk
-        </h2>
-        <p style={{ color: "var(--text-sec)", marginTop: "1rem" }}>
-          Reach me at{" "}
-          <a href="mailto:sazanyogi@gmail.com" style={{ color: "var(--cyan)", textDecoration: "none" }}>
-            sazanyogi@gmail.com
-          </a>
-        </p>
-      </section>
+      <Projects />
+      <About />
+      <Contact />
     </>
   );
 }
