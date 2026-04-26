@@ -7,8 +7,9 @@ import { useState, useEffect } from "react";
 const links = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
-  { label: "Photos", href: "#photos" },
+  { label: "Photos", href: "/photos" },
   { label: "Now", href: "/now" },
+  { label: "Resume", href: "/resume" },
 ];
 
 export default function Navbar() {
@@ -45,9 +46,9 @@ export default function Navbar() {
       <Link
         href="/"
         style={{
-          fontFamily: "var(--font-syne)",
+          fontFamily: "var(--font-bricolage)",
           fontWeight: 800,
-          fontSize: "1.25rem",
+          fontSize: "1.5rem",
           color: "var(--text)",
           textDecoration: "none",
           letterSpacing: "-0.02em",
@@ -62,7 +63,7 @@ export default function Navbar() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "2rem",
+          gap: "0.5rem",
         }}
         className="nav-desktop"
       >
@@ -75,11 +76,20 @@ export default function Navbar() {
               fontSize: "0.8rem",
               color: "var(--text-sec)",
               textDecoration: "none",
-              letterSpacing: "0.05em",
-              transition: "color 0.2s",
+              letterSpacing: "0.06em",
+              border: "1px solid transparent",
+              borderRadius: "6px",
+              padding: "0.35rem 0.75rem",
+              transition: "color 0.2s, border-color 0.2s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--cyan)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-sec)")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--cyan)";
+              e.currentTarget.style.borderColor = "var(--cyan)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--text-sec)";
+              e.currentTarget.style.borderColor = "var(--border)";
+            }}
           >
             {l.label}
           </Link>
@@ -90,29 +100,36 @@ export default function Navbar() {
           onClick={toggle}
           aria-label="Toggle theme"
           style={{
-            background: "none",
+            background: theme === "dark" ? "var(--chip-bg)" : "var(--chip-bg)",
             border: "1px solid var(--border)",
-            borderRadius: "50%",
-            width: "34px",
-            height: "34px",
+            borderRadius: "20px",
+            width: "56px",
+            height: "28px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            padding: "0 4px",
             cursor: "none",
-            color: "var(--text-sec)",
-            fontSize: "0.9rem",
-            transition: "border-color 0.2s, color 0.2s",
+            position: "relative",
+            transition: "border-color 0.2s",
+            flexShrink: 0,
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = "var(--cyan)";
-            e.currentTarget.style.color = "var(--cyan)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = "var(--border)";
-            e.currentTarget.style.color = "var(--text-sec)";
-          }}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--cyan)")}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
         >
-          {theme === "dark" ? "☀" : "◐"}
+          <span style={{ fontSize: "0.65rem", position: "absolute", left: "7px", opacity: theme === "light" ? 1 : 0.3 }}>☀</span>
+          <span style={{ fontSize: "0.65rem", position: "absolute", right: "7px", opacity: theme === "dark" ? 1 : 0.3 }}>☽</span>
+          <span
+            style={{
+              width: "20px",
+              height: "20px",
+              borderRadius: "50%",
+              background: "var(--cyan)",
+              display: "block",
+              transform: theme === "dark" ? "translateX(28px)" : "translateX(0px)",
+              transition: "transform 0.25s ease",
+              flexShrink: 0,
+            }}
+          />
         </button>
 
         {/* Hire me */}

@@ -54,21 +54,27 @@ export default function PhotoTeaser() {
       {/* 6-photo preview grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
         {PREVIEW.map((src, i) => (
-          <Link key={src} href="/photos" style={{ display: "block", borderRadius: "8px", overflow: "hidden", aspectRatio: "4/3", position: "relative" }}>
-            <Image
-              src={src}
-              alt="Sajan Yogi Photography"
-              fill
-              style={{ objectFit: "cover", transition: "transform 0.4s ease, filter 0.4s ease" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; (e.currentTarget as HTMLImageElement).style.filter = "brightness(0.8)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; (e.currentTarget as HTMLImageElement).style.filter = "brightness(1)"; }}
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
-            {i === 5 && (
-              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", color: "#fff", letterSpacing: "0.1em" }}>+49 MORE</span>
-              </div>
-            )}
+          <Link
+            key={src}
+            href="/photos"
+            style={{ display: "block", borderRadius: "8px", overflow: "hidden" }}
+          >
+            <div style={{ position: "relative", paddingBottom: "75%", width: "100%" }}>
+              <Image
+                src={src}
+                alt="Sajan Yogi Photography"
+                fill
+                style={{ objectFit: "cover", transition: "transform 0.4s ease, filter 0.4s ease" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; (e.currentTarget as HTMLImageElement).style.filter = "brightness(0.8)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; (e.currentTarget as HTMLImageElement).style.filter = "brightness(1)"; }}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              {i === 5 && (
+                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", color: "#fff", letterSpacing: "0.1em" }}>+49 MORE</span>
+                </div>
+              )}
+            </div>
           </Link>
         ))}
       </div>

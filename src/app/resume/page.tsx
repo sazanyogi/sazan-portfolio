@@ -86,9 +86,10 @@ export default function ResumePage() {
         .tool-tag { font-size: 10px; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 2px 7px; color: #4A5568; font-weight: 500; }
         .divider { border: none; border-top: 1px solid #E2E8F0; margin: 11px 0; }
         @media print {
+          nav, .toolbar { display: none !important; }
           .resume-body { background: #fff; padding: 0; }
-          .toolbar { display: none; }
           .paper { box-shadow: none; padding: 24px 44px 28px; max-width: 100%; }
+          body { padding-top: 0 !important; }
         }
         @media (max-width: 640px) {
           .paper { padding: 40px 28px 52px; }

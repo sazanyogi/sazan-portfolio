@@ -64,7 +64,6 @@ export default function Home() {
           padding: "0 clamp(1.5rem, 6vw, 8rem)",
           paddingTop: "80px",
           position: "relative",
-          overflow: "hidden",
         }}
       >
         <div
@@ -90,79 +89,83 @@ export default function Home() {
           }}
         />
 
-        <div style={{ maxWidth: "900px", position: "relative" }}>
+        <div style={{ maxWidth: "820px", position: "relative" }}>
+          {/* Status badge */}
           <div
             className="animate-fade-up"
             style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "0.75rem",
-              color: "var(--cyan)",
-              letterSpacing: "0.15em",
-              marginBottom: "1.5rem",
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
-              gap: "0.75rem",
+              gap: "0.6rem",
+              fontFamily: "var(--font-space-mono)",
+              fontSize: "0.7rem",
+              color: "var(--text-sec)",
+              letterSpacing: "0.12em",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "2rem",
+              padding: "0.35rem 0.9rem",
+              marginBottom: "2.5rem",
             }}
           >
             <span
               className="animate-pulse-dot"
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "var(--cyan)",
-                display: "inline-block",
-              }}
+              style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cyan)", display: "inline-block", flexShrink: 0 }}
             />
-            AVAILABLE FOR WORK — MISSISSAUGA, ON
+            Available for work · Mississauga, ON
           </div>
 
-          <h1
-            className="animate-fade-up"
-            style={{
-              fontFamily: "var(--font-syne)",
-              fontWeight: 800,
-              fontSize: "clamp(3rem, 8vw, 7rem)",
-              lineHeight: 1,
-              letterSpacing: "-0.03em",
-              color: "var(--text)",
-              marginBottom: "1.25rem",
-              animationDelay: "0.1s",
-            }}
-          >
-            Sajan
-            <br />
-            Yogi
-            <span style={{ color: "var(--cyan)" }}>.</span>
-          </h1>
-
+          {/* Name — refined size, fixed descender clip */}
           <div
             className="animate-fade-up"
-            style={{
-              fontFamily: "var(--font-syne)",
-              fontSize: "clamp(1.1rem, 3vw, 1.75rem)",
-              color: "var(--text-sec)",
-              marginBottom: "1rem",
-              animationDelay: "0.2s",
-            }}
+            style={{ marginBottom: "1.5rem", animationDelay: "0.1s" }}
           >
-            Tech<span style={{ color: "var(--border)" }}> · </span>
-            Vision<span style={{ color: "var(--border)" }}> · </span>
-            Craft
+            <h1
+              style={{
+                fontFamily: "var(--font-bricolage)",
+                fontWeight: 800,
+                fontSize: "clamp(3rem, 6.5vw, 6rem)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                color: "var(--text)",
+              }}
+            >
+              Sajan Yogi
+              <span style={{ color: "var(--cyan)" }}>.</span>
+            </h1>
           </div>
 
+          {/* Typing role */}
           <div
             className="animate-fade-up"
             style={{
               fontFamily: "var(--font-space-mono)",
-              fontSize: "clamp(0.9rem, 2vw, 1.1rem)",
-              marginBottom: "2.5rem",
-              animationDelay: "0.3s",
+              fontSize: "clamp(0.85rem, 1.8vw, 1rem)",
+              color: "var(--text-sec)",
+              marginBottom: "1.25rem",
+              animationDelay: "0.2s",
               minHeight: "1.6em",
             }}
           >
             <TypingText />
           </div>
+
+          {/* One-liner */}
+          <p
+            className="animate-fade-up"
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "clamp(1rem, 2vw, 1.2rem)",
+              color: "var(--text-sec)",
+              lineHeight: 1.7,
+              maxWidth: "520px",
+              marginBottom: "2.5rem",
+              animationDelay: "0.25s",
+            }}
+          >
+            I build AI pipelines, data dashboards, and digital products that actually ship.
+            Based in Canada, open to Data Analyst and AI Automation roles.
+          </p>
 
           <div
             className="animate-fade-up"

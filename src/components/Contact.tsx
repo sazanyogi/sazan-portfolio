@@ -242,40 +242,6 @@ export default function Contact() {
         </form>
       </div>
 
-      {/* Footer line */}
-      <div
-        style={{
-          marginTop: "6rem",
-          paddingTop: "2rem",
-          borderTop: "1px solid var(--border)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "1rem",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.7rem",
-            color: "var(--text-sec)",
-            letterSpacing: "0.06em",
-          }}
-        >
-          © {new Date().getFullYear()} SAJAN YOGI — MISSISSAUGA, ON
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.7rem",
-            color: "var(--text-sec)",
-            letterSpacing: "0.06em",
-          }}
-        >
-          BUILT WITH NEXT.JS + VERCEL
-        </span>
-      </div>
 
       <style>{`
         @media (max-width: 768px) {
