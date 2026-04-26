@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 export async function POST(req: NextRequest) {
   const { name, email, message } = await req.json();
@@ -8,27 +8,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  const gmailUser = process.env.GMAIL_USER;
-  const gmailPass = process.env.GMAIL_PASS?.replace(/\s/g, "");
-
-  if (!gmailUser || !gmailPass) {
-    return NextResponse.json({ error: "Email not configured" }, { status: 500 });
-  }
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: gmailUser,
-        pass: gmailPass,
-      },
-    });
-
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${gmailUser}>`,
-      to: gmailUser,
+    await resend.emails.send({
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: "sazanyogi@gmail.com",
       replyTo: email,
       subject: `Portfolio message from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
