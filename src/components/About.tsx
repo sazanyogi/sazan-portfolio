@@ -220,8 +220,7 @@ export default function About() {
 
           {/* Download resume CTA */}
           <a
-            href="/resume.pdf"
-            download
+            href="/resume"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -246,7 +245,7 @@ export default function About() {
               e.currentTarget.style.color = "var(--purple)";
             }}
           >
-            ↓ DOWNLOAD RESUME
+            ↗ VIEW RESUME
           </a>
         </div>
       </div>

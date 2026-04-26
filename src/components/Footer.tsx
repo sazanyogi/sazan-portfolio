@@ -180,9 +180,8 @@ export default function Footer() {
           borderTop: "1px solid var(--border)",
           paddingTop: "1.5rem",
           display: "flex",
-          justifyContent: "space-between",
+          flexDirection: "column",
           alignItems: "center",
-          flexWrap: "wrap",
           gap: "1rem",
         }}
       >

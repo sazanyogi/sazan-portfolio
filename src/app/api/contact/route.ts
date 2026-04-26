@@ -1,11 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
+const rateLimitMap = new Map<string, { count: number; ts: number }>();
+const WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const MAX_PER_WINDOW = 3;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.ts > WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, ts: now });
+    return false;
+  }
+  if (entry.count >= MAX_PER_WINDOW) return true;
+  entry.count++;
+  return false;
+}
+
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const { name, email, message } = await req.json();
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+
+  if (name.length > 100 || email.length > 200 || message.length > 2000) {
+    return NextResponse.json({ error: "Input too long" }, { status: 400 });
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);

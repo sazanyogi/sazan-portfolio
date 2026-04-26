@@ -25,8 +25,8 @@ export default function Cursor() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const animate = () => {
-      ringX = lerp(ringX, mouseX, 0.12);
-      ringY = lerp(ringY, mouseY, 0.12);
+      ringX = lerp(ringX, mouseX, 0.35);
+      ringY = lerp(ringY, mouseY, 0.35);
       ring.style.left = ringX + "px";
       ring.style.top = ringY + "px";
       animId = requestAnimationFrame(animate);

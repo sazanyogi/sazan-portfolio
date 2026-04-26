@@ -62,7 +62,7 @@ body {
   pointer-events: none;
   z-index: 10001;
   transform: translate(-50%, -50%);
-  transition: transform 0.18s ease, width 0.2s, height 0.2s;
+  transition: width 0.2s, height 0.2s;
 }
 
 /* Noise overlay */
@@ -113,4 +113,5 @@ body::before {
   .nav-mobile-toggle { display: flex !important; }
   body { cursor: auto; }
   .cursor, .cursor-ring { display: none; }
+  .hide-mobile { display: none !important; }
 }
