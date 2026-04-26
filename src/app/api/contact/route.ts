@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
               <div style="font-size: 14px; color: #FFFFFF; line-height: 1.75; background: #11121A; padding: 16px; border-radius: 8px; border-left: 3px solid #00F5FF; white-space: pre-wrap;">${message}</div>
             </div>
           </div>
-          <div style="padding: 20px 32px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="padding: 20px 32px; text-align: center;">
+            <a href="mailto:${email}" style="display: inline-block; font-size: 11px; letter-spacing: 0.08em; color: #0A0A0F; background: #00F5FF; padding: 8px 24px; border-radius: 20px; text-decoration: none; font-weight: 700; margin-bottom: 12px;">REPLY TO ${name.toUpperCase()}</a>
             <div style="font-size: 11px; color: #A0A3B1;">sazan.com.np</div>
-            <a href="mailto:${email}" style="font-size: 11px; letter-spacing: 0.08em; color: #0A0A0F; background: #00F5FF; padding: 8px 18px; border-radius: 20px; text-decoration: none; font-weight: 700;">REPLY</a>
           </div>
         </div>
       `,
