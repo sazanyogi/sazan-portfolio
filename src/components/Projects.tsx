@@ -70,6 +70,17 @@ const PROJECTS = [
     accent: "pink",
     featured: false,
   },
+  {
+    id: "crs-calculator",
+    title: "CRS Score Calculator",
+    category: "Web App",
+    description:
+      "Accurate, mobile-first CRS calculator for Canadian Express Entry — better UX than the official IRCC tool. Supports IELTS, CELPIP, TEF, and TCF with real-time scoring, animated score ring, and full IRCC breakdown.",
+    stack: ["Next.js", "TypeScript", "Vercel"],
+    links: { github: "https://github.com/sazanyogi/crs-calculator", live: "https://crs.sazan.com.np" },
+    accent: "cyan",
+    featured: true,
+  },
 ];
 
 const ACCENT_COLORS: Record<string, string> = {
