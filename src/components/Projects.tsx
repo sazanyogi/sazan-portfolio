@@ -62,13 +62,13 @@ const PROJECTS = [
   {
     id: "yogi-finance",
     title: "Yogi Finance",
-    category: "Web App",
+    category: "Full-Stack App",
     description:
-      "Multi-user personal budgeting PWA with Firebase Auth, real-time Firestore sync, and offline support. Tracks income, expenses, and savings goals across devices.",
-    stack: ["Firebase Auth", "Firestore", "PWA", "JavaScript"],
-    links: { github: "https://github.com/sazanyogi" },
-    accent: "pink",
-    featured: false,
+      "AI-powered personal finance tracker for individuals and couples. Upload any bank statement — Claude AI extracts and categorizes every transaction automatically. Features shared family workspaces, partner invites, auto account detection, duplicate filtering, and real-time balance calculations.",
+    stack: ["Next.js", "Supabase", "Claude AI", "TypeScript", "Vercel"],
+    links: { github: "https://github.com/sazanyogi", live: "https://yogi-finance.vercel.app" },
+    accent: "cyan",
+    featured: true,
   },
   {
     id: "crs-calculator",
