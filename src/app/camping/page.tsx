@@ -1,9 +1,61 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const LAST_UPDATED = "May 2026";
+
+const MY_GEAR = [
+  {
+    id: "core-tent",
+    name: "CORE 6 Person Instant Cabin Tent",
+    category: "Shelter",
+    icon: "⛺",
+    color: "var(--cyan)",
+    image: "https://www.coreequipment.com/cdn/shop/files/core-6-person-instant-cabin-tent-dark-gray-main.png?v=1762467508",
+    specs: [
+      "Full rainfly — H2O Block Technology",
+      "60-second instant setup",
+      "Multi-room cabin layout, fits 6",
+      "Includes carry bag + gear loft",
+    ],
+    url: "https://www.amazon.ca/Rainfly-Weather-Protection-Accessories-Portable/dp/B0BF7GDSP7/",
+    where: "Amazon.ca",
+  },
+  {
+    id: "bluetti",
+    name: "BLUETTI Elite 30 V2 Power Station",
+    category: "Power",
+    icon: "⚡",
+    color: "var(--purple)",
+    image: "https://cdn.shopify.com/s/files/1/0536/3390/8911/files/Elite30v2_1x_5b1256c8-be35-4ed1-a41c-d2ec6fac98f0.webp",
+    specs: [
+      "288Wh LiFePO4 — 3,000+ charge cycles",
+      "600W output, 1500W power lift mode",
+      "0–100% in ~70 min via AC",
+      "4.3 kg · 5-year warranty",
+    ],
+    url: "https://www.amazon.ca/dp/B0F42HLLSC",
+    where: "Amazon.ca",
+  },
+  {
+    id: "heeta",
+    name: "HEETA Waterproof Dry Bag — 2-Pack",
+    category: "Protection",
+    icon: "💧",
+    color: "var(--pink)",
+    image: "https://www.kinzd.com/cdn/shop/files/72833ad6606fbf6aefffefe1d3c1e450_1500x.jpg?v=1749481635",
+    specs: [
+      "IPX8 — waterproof to 32 ft for 1 hr",
+      "Triple seal (3 zips + Velcro fold)",
+      "Touch-screen-sensitive window",
+      "Floatable · fits 22–33\" waist",
+    ],
+    url: "https://www.amazon.ca/dp/B07B8DVJHM",
+    where: "Amazon.ca",
+  },
+];
 
 const GEAR_CATEGORIES = [
   {
@@ -275,6 +327,79 @@ export default function CampingPage() {
           </button>
         </div>
 
+        {/* My Gear */}
+        <div style={{ marginBottom: "4rem" }}>
+          <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
+            MY GEAR
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }} className="mygear-grid">
+            {MY_GEAR.map((item) => (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  textDecoration: "none",
+                  transition: "border-color 0.2s, transform 0.2s, box-shadow 0.2s",
+                  position: "relative",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = item.color;
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${item.color}, transparent)` }} />
+                {/* Image */}
+                <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", background: "var(--chip-bg)", overflow: "hidden" }}>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    unoptimized
+                    style={{ objectFit: "contain", padding: "1rem" }}
+                  />
+                </div>
+                {/* Info */}
+                <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  <div>
+                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: item.color, letterSpacing: "0.12em", display: "block", marginBottom: "0.35rem" }}>
+                      {item.icon} {item.category.toUpperCase()}
+                    </span>
+                    <span style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: "var(--text)", lineHeight: 1.3 }}>
+                      {item.name}
+                    </span>
+                  </div>
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                    {item.specs.map((spec, i) => (
+                      <li key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                        <span style={{ color: item.color, fontSize: "0.6rem", marginTop: "0.35em", flexShrink: 0 }}>▸</span>
+                        <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.78rem", color: "var(--text-sec)", lineHeight: 1.5 }}>{spec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.08em" }}>{item.where}</span>
+                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: item.color, marginLeft: "auto", letterSpacing: "0.08em" }}>VIEW →</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* Gear categories */}
         <div style={{ marginBottom: "4rem" }}>
           <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
@@ -493,7 +618,11 @@ export default function CampingPage() {
       </div>
 
       <style>{`
+        @media (max-width: 900px) {
+          .mygear-grid { grid-template-columns: 1fr 1fr !important; }
+        }
         @media (max-width: 640px) {
+          .mygear-grid { grid-template-columns: 1fr !important; }
           .camping-grid { grid-template-columns: 1fr !important; }
           .after-grid { grid-template-columns: 1fr !important; }
           .store-grid { grid-template-columns: 1fr !important; }
