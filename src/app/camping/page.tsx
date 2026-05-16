@@ -1,0 +1,504 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+
+const LAST_UPDATED = "May 2026";
+
+const GEAR_CATEGORIES = [
+  {
+    label: "SHELTER & SLEEP",
+    icon: "⛺",
+    color: "var(--cyan)",
+    items: [
+      { id: "tent", text: "Tent (with footprint)", where: "MEC / REI", note: "2-person min, check rain rating" },
+      { id: "sleeping-bag", text: "Sleeping bag (rated for temp)", where: "MEC / Amazon", note: "Down or synthetic depending on humidity" },
+      { id: "sleeping-pad", text: "Sleeping pad", where: "MEC / Canadian Tire", note: "Foam or inflatable" },
+      { id: "pillow", text: "Camping pillow or stuff sack", where: "Amazon", note: null },
+      { id: "tarp", text: "Tarp or rain fly", where: "Canadian Tire", note: "Extra cover for wet weather" },
+      { id: "tent-stakes", text: "Extra tent stakes", where: "MEC / Canadian Tire", note: null },
+    ],
+  },
+  {
+    label: "COOKING & FOOD",
+    icon: "🍳",
+    color: "var(--purple)",
+    items: [
+      { id: "stove", text: "Camp stove (e.g. MSR PocketRocket)", where: "MEC", note: null },
+      { id: "fuel", text: "Fuel canisters (extra)", where: "MEC / Canadian Tire", note: "1 canister per 2–3 days" },
+      { id: "cookset", text: "Pot & pan set", where: "MEC / Amazon", note: null },
+      { id: "utensils", text: "Utensils, cup, bowl", where: "MEC / Canadian Tire", note: "Spork is your best friend" },
+      { id: "lighter", text: "Lighter + waterproof matches", where: "Canadian Tire / Dollarama", note: null },
+      { id: "cooler", text: "Cooler with ice", where: "Canadian Tire / Walmart", note: "Pre-chill before packing" },
+      { id: "food", text: "Meal plan + snacks", where: "Grocery store", note: "Plan meals per night + 1 emergency" },
+      { id: "water-filter", text: "Water filter or purification tabs", where: "MEC", note: "Sawyer Squeeze or Lifestraw" },
+      { id: "water-bottles", text: "Water bottles / hydration bladder", where: "MEC / Amazon", note: null },
+      { id: "cutting-board", text: "Small cutting board + knife", where: "Walmart / Amazon", note: null },
+      { id: "dishwashing", text: "Camp soap + scrubber", where: "MEC / Canadian Tire", note: "Biodegradable soap only" },
+    ],
+  },
+  {
+    label: "CLOTHING & LAYERS",
+    icon: "🧥",
+    color: "var(--pink)",
+    items: [
+      { id: "base-layer", text: "Moisture-wicking base layer", where: "MEC / Uniqlo", note: "Merino wool preferred" },
+      { id: "mid-layer", text: "Fleece or down mid-layer", where: "MEC / REI", note: null },
+      { id: "rain-jacket", text: "Waterproof rain jacket", where: "MEC", note: "Gore-Tex or similar" },
+      { id: "rain-pants", text: "Rain pants", where: "MEC / Amazon", note: null },
+      { id: "hiking-pants", text: "Hiking pants (2 pairs)", where: "MEC / Mountain Warehouse", note: null },
+      { id: "hiking-boots", text: "Waterproof hiking boots", where: "MEC / SportChek", note: "Break them in before the trip" },
+      { id: "camp-shoes", text: "Camp sandals or crocs", where: "Amazon / SportChek", note: "For around camp" },
+      { id: "wool-socks", text: "Merino wool socks (multiple pairs)", where: "MEC / Costco", note: null },
+      { id: "hat", text: "Sun hat + warm toque", where: "MEC / Amazon", note: null },
+      { id: "gloves", text: "Lightweight gloves", where: "MEC / Amazon", note: "Nights can get cold" },
+      { id: "sunglasses", text: "Sunglasses", where: "Any", note: null },
+    ],
+  },
+  {
+    label: "NAVIGATION & SAFETY",
+    icon: "🧭",
+    color: "var(--cyan)",
+    items: [
+      { id: "map", text: "Paper trail map", where: "Park visitor center / AllTrails", note: "Don't rely only on phone" },
+      { id: "compass", text: "Compass", where: "MEC / Canadian Tire", note: null },
+      { id: "first-aid", text: "First aid kit", where: "MEC / Shoppers Drug Mart", note: "Include blister pads" },
+      { id: "headlamp", text: "Headlamp + extra batteries", where: "MEC / Canadian Tire", note: "Black Diamond or Petzl" },
+      { id: "whistle", text: "Emergency whistle", where: "MEC / Canadian Tire", note: "Clip to backpack" },
+      { id: "fire-starter", text: "Fire starter / firestarter cubes", where: "Canadian Tire", note: null },
+      { id: "emergency-blanket", text: "Emergency mylar blanket", where: "MEC / Amazon", note: null },
+      { id: "multi-tool", text: "Multi-tool or pocket knife", where: "Canadian Tire / Amazon", note: null },
+      { id: "phone-charger", text: "Portable battery pack", where: "Best Buy / Amazon", note: "20,000mAh minimum" },
+    ],
+  },
+  {
+    label: "HYGIENE & LEAVE NO TRACE",
+    icon: "🌿",
+    color: "var(--purple)",
+    items: [
+      { id: "toothbrush", text: "Toothbrush + toothpaste", where: "Anywhere", note: null },
+      { id: "trowel", text: "Trowel (cat hole digging)", where: "MEC", note: "For backcountry bathroom" },
+      { id: "toilet-paper", text: "Biodegradable toilet paper", where: "MEC / Amazon", note: "Pack it out or bury 6+ inches" },
+      { id: "hand-sanitizer", text: "Hand sanitizer", where: "Shoppers / Dollarama", note: null },
+      { id: "sunscreen", text: "Sunscreen SPF 50+", where: "Shoppers / Walmart", note: null },
+      { id: "bug-spray", text: "Bug spray (DEET or Picaridin)", where: "Canadian Tire / Shoppers", note: "Picaridin is fabric-safe" },
+      { id: "trash-bags", text: "Extra zip-lock bags + garbage bags", where: "Dollarama / Walmart", note: "Pack out all waste" },
+      { id: "bear-canister", text: "Bear canister or hang bag", where: "MEC", note: "Required in some parks" },
+      { id: "microfiber-towel", text: "Microfiber towel", where: "MEC / Amazon", note: null },
+    ],
+  },
+  {
+    label: "EXTRAS & NICE TO HAVE",
+    icon: "✨",
+    color: "var(--pink)",
+    items: [
+      { id: "camp-chair", text: "Lightweight camp chair", where: "Canadian Tire / MEC", note: "Helinox or Kijaro" },
+      { id: "hammock", text: "Hammock + straps", where: "MEC / Amazon", note: "ENO SingleNest is great" },
+      { id: "camera", text: "Camera + extra batteries", where: "Your gear", note: null },
+      { id: "journal", text: "Journal + pen", where: "Your stuff", note: null },
+      { id: "book", text: "Book or e-reader", where: "Your stuff", note: null },
+      { id: "headphones", text: "Headphones (for solo hikes)", where: "Your gear", note: null },
+      { id: "trekking-poles", text: "Trekking poles", where: "MEC / Amazon", note: "Knees will thank you" },
+      { id: "dry-bags", text: "Dry bags for gear protection", where: "MEC / Amazon", note: "Keep electronics & clothes dry" },
+      { id: "lantern", text: "Camp lantern (solar or battery)", where: "Canadian Tire / Amazon", note: null },
+    ],
+  },
+];
+
+const AFTER_CAMPING = [
+  { id: "dry-tent", text: "Dry and air out tent completely", note: "Prevents mildew — never pack wet" },
+  { id: "clean-cookware", text: "Clean all cookware + stove", note: "Soak stubborn residue first" },
+  { id: "air-sleeping-bag", text: "Air out sleeping bag before storing", note: "Store uncompressed in large sack" },
+  { id: "check-ticks", text: "Do a full tick check", note: "Common in Ontario trails — check armpits, scalp, behind knees" },
+  { id: "restock-first-aid", text: "Restock first aid kit", note: "Note what you used" },
+  { id: "charge-batteries", text: "Recharge all batteries + power banks", note: null },
+  { id: "wash-clothes", text: "Wash all camping clothes", note: "Especially wool — air dry" },
+  { id: "food-inventory", text: "Check leftover food — discard anything expired", note: null },
+  { id: "repair-gear", text: "Inspect and repair any damaged gear", note: "Patch tent holes, fix zippers" },
+  { id: "trip-notes", text: "Write trip notes while fresh", note: "Log trail conditions, what worked, what to leave next time" },
+];
+
+const WHERE_TO_BUY = [
+  {
+    name: "MEC (Mountain Equipment Co.)",
+    url: "https://www.mec.ca",
+    type: "Best for",
+    note: "Core gear — sleeping bags, tents, packs, stoves. Lifetime return policy.",
+    icon: "🏔",
+  },
+  {
+    name: "Canadian Tire",
+    url: "https://www.canadiantire.ca",
+    type: "Best for",
+    note: "Budget camping supplies, fire starters, coolers, basic tools. Watch for sales.",
+    icon: "🍁",
+  },
+  {
+    name: "Amazon Canada",
+    url: "https://www.amazon.ca",
+    type: "Best for",
+    note: "Accessories, niche gear, good prices. Check reviews carefully.",
+    icon: "📦",
+  },
+  {
+    name: "SportChek",
+    url: "https://www.sportchek.ca",
+    type: "Best for",
+    note: "Footwear, clothing layers, in-store try-on option.",
+    icon: "👟",
+  },
+  {
+    name: "Mountain Warehouse",
+    url: "https://www.mountainwarehouse.com",
+    type: "Best for",
+    note: "Affordable hiking clothing and accessories. Good for budget layering.",
+    icon: "⛰",
+  },
+  {
+    name: "Dollarama / Walmart",
+    url: "https://www.dollarama.com",
+    type: "Best for",
+    note: "Consumables — ziplock bags, garbage bags, lighters, soap.",
+    icon: "🛒",
+  },
+];
+
+type CheckedMap = Record<string, boolean>;
+
+export default function CampingPage() {
+  const [checked, setChecked] = useState<CheckedMap>({});
+  const [afterChecked, setAfterChecked] = useState<CheckedMap>({});
+
+  const toggle = (id: string) =>
+    setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  const toggleAfter = (id: string) =>
+    setAfterChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  const totalGear = GEAR_CATEGORIES.reduce((acc, c) => acc + c.items.length, 0);
+  const checkedGear = Object.values(checked).filter(Boolean).length;
+  const afterTotal = AFTER_CAMPING.length;
+  const afterCheckedCount = Object.values(afterChecked).filter(Boolean).length;
+
+  const resetAll = () => { setChecked({}); setAfterChecked({}); };
+
+  return (
+    <main
+      style={{
+        minHeight: "100vh",
+        padding: "120px clamp(1.5rem, 6vw, 8rem) 6rem",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background glows */}
+      <div style={{ position: "absolute", top: "10%", right: "-10%", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(123,97,255,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "30%", left: "-10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(0,245,255,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      <div style={{ maxWidth: "960px" }}>
+        {/* Back link */}
+        <Link
+          href="/"
+          style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.72rem", color: "var(--text-sec)", textDecoration: "none", letterSpacing: "0.1em", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "3rem" }}
+        >
+          ← BACK HOME
+        </Link>
+
+        {/* Header */}
+        <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.75rem", color: "var(--cyan)", letterSpacing: "0.15em", marginBottom: "1rem" }}>
+          /CAMPING
+        </div>
+        <h1 style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "var(--text)", letterSpacing: "-0.03em", lineHeight: 1, marginBottom: "1rem" }}>
+          Camping
+          <br />
+          Gear & Checklist
+        </h1>
+        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.9rem", color: "var(--text-sec)", marginBottom: "0.5rem", lineHeight: 1.7, maxWidth: "600px" }}>
+          A personal reference for camping trips — gear I use, where to get it, and checklists for before and after the trip. Based in Ontario (Hamilton / Stoney Creek area).
+        </p>
+        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)", marginBottom: "3rem", opacity: 0.6 }}>
+          Last updated: {LAST_UPDATED}
+        </p>
+
+        {/* Progress bar */}
+        <div
+          style={{
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "16px",
+            padding: "1.5rem 2rem",
+            marginBottom: "2.5rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1.5rem",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ flex: 1, minWidth: "200px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--cyan)", letterSpacing: "0.1em" }}>PRE-TRIP PACKED</span>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--text-sec)" }}>{checkedGear} / {totalGear}</span>
+            </div>
+            <div style={{ height: "4px", background: "var(--border)", borderRadius: "2px", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${(checkedGear / totalGear) * 100}%`, background: "var(--cyan)", borderRadius: "2px", transition: "width 0.3s ease" }} />
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: "200px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--purple)", letterSpacing: "0.1em" }}>POST-TRIP DONE</span>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--text-sec)" }}>{afterCheckedCount} / {afterTotal}</span>
+            </div>
+            <div style={{ height: "4px", background: "var(--border)", borderRadius: "2px", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${(afterCheckedCount / afterTotal) * 100}%`, background: "var(--purple)", borderRadius: "2px", transition: "width 0.3s ease" }} />
+            </div>
+          </div>
+          <button
+            onClick={resetAll}
+            style={{
+              fontFamily: "var(--font-space-mono)",
+              fontSize: "0.62rem",
+              color: "var(--text-sec)",
+              background: "transparent",
+              border: "1px solid var(--border)",
+              borderRadius: "999px",
+              padding: "0.4rem 1rem",
+              cursor: "none",
+              letterSpacing: "0.08em",
+              transition: "border-color 0.2s, color 0.2s",
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--pink)"; e.currentTarget.style.color = "var(--pink)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
+          >
+            RESET ALL
+          </button>
+        </div>
+
+        {/* Gear categories */}
+        <div style={{ marginBottom: "4rem" }}>
+          <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
+            PRE-TRIP CHECKLIST
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(440px, 1fr))", gap: "1.25rem" }} className="camping-grid">
+            {GEAR_CATEGORIES.map((cat) => {
+              const catChecked = cat.items.filter((i) => checked[i.id]).length;
+              return (
+                <div
+                  key={cat.label}
+                  style={{
+                    background: "var(--surface)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "16px",
+                    padding: "1.5rem",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${cat.color}, transparent)` }} />
+
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span style={{ fontSize: "1rem" }}>{cat.icon}</span>
+                      <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.62rem", color: cat.color, letterSpacing: "0.15em" }}>{cat.label}</span>
+                    </div>
+                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)" }}>
+                      {catChecked}/{cat.items.length}
+                    </span>
+                  </div>
+
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+                    {cat.items.map((item) => (
+                      <li
+                        key={item.id}
+                        style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "none" }}
+                        onClick={() => toggle(item.id)}
+                      >
+                        {/* Checkbox */}
+                        <div
+                          style={{
+                            width: "16px",
+                            height: "16px",
+                            borderRadius: "4px",
+                            border: `1.5px solid ${checked[item.id] ? cat.color : "var(--border)"}`,
+                            background: checked[item.id] ? cat.color : "transparent",
+                            flexShrink: 0,
+                            marginTop: "0.15em",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            transition: "all 0.15s ease",
+                          }}
+                        >
+                          {checked[item.id] && (
+                            <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                              <path d="M1 3.5L3.5 6L8 1" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                        </div>
+                        <div>
+                          <span
+                            style={{
+                              fontFamily: "var(--font-dm-sans)",
+                              fontSize: "0.88rem",
+                              color: checked[item.id] ? "var(--text-sec)" : "var(--text)",
+                              textDecoration: checked[item.id] ? "line-through" : "none",
+                              lineHeight: 1.5,
+                              transition: "color 0.15s, text-decoration 0.15s",
+                              display: "block",
+                            }}
+                          >
+                            {item.text}
+                          </span>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.15rem", flexWrap: "wrap" }}>
+                            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: cat.color, opacity: 0.7 }}>
+                              {item.where}
+                            </span>
+                            {item.note && (
+                              <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)", opacity: 0.7 }}>
+                                · {item.note}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* After camping */}
+        <div style={{ marginBottom: "4rem" }}>
+          <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
+            POST-TRIP CHECKLIST
+          </div>
+          <div
+            style={{
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "16px",
+              padding: "1.75rem 2rem",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, var(--purple), transparent)" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.5rem" }}>
+              <span style={{ fontSize: "1rem" }}>🏕</span>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--purple)", letterSpacing: "0.15em" }}>AFTER YOU GET HOME</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "0.6rem" }} className="after-grid">
+              {AFTER_CAMPING.map((item) => (
+                <div
+                  key={item.id}
+                  style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "none", padding: "0.5rem 0" }}
+                  onClick={() => toggleAfter(item.id)}
+                >
+                  <div
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      borderRadius: "4px",
+                      border: `1.5px solid ${afterChecked[item.id] ? "var(--purple)" : "var(--border)"}`,
+                      background: afterChecked[item.id] ? "var(--purple)" : "transparent",
+                      flexShrink: 0,
+                      marginTop: "0.15em",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.15s ease",
+                    }}
+                  >
+                    {afterChecked[item.id] && (
+                      <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                        <path d="M1 3.5L3.5 6L8 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </div>
+                  <div>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-dm-sans)",
+                        fontSize: "0.88rem",
+                        color: afterChecked[item.id] ? "var(--text-sec)" : "var(--text)",
+                        textDecoration: afterChecked[item.id] ? "line-through" : "none",
+                        lineHeight: 1.5,
+                        display: "block",
+                        transition: "color 0.15s",
+                      }}
+                    >
+                      {item.text}
+                    </span>
+                    {item.note && (
+                      <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)", opacity: 0.65 }}>
+                        {item.note}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Where to buy */}
+        <div>
+          <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
+            WHERE TO GET GEAR — ONTARIO
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1rem" }} className="store-grid">
+            {WHERE_TO_BUY.map((store) => (
+              <a
+                key={store.name}
+                href={store.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "block",
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "12px",
+                  padding: "1.25rem 1.5rem",
+                  textDecoration: "none",
+                  transition: "border-color 0.2s, transform 0.2s",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--cyan)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
+                  <span style={{ fontSize: "1.1rem" }}>{store.icon}</span>
+                  <span style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: "var(--text)" }}>{store.name}</span>
+                </div>
+                <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--cyan)", letterSpacing: "0.1em", display: "block", marginBottom: "0.4rem" }}>
+                  {store.type.toUpperCase()}
+                </span>
+                <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.82rem", color: "var(--text-sec)", lineHeight: 1.6, margin: 0 }}>
+                  {store.note}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .camping-grid { grid-template-columns: 1fr !important; }
+          .after-grid { grid-template-columns: 1fr !important; }
+          .store-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </main>
+  );
+}
