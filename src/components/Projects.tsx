@@ -297,6 +297,52 @@ export default function Projects() {
         </p>
       </div>
 
+      {/* AI callout strip */}
+      <div
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderLeft: "3px solid var(--cyan)",
+          borderRadius: "12px",
+          padding: "1.25rem 1.75rem",
+          marginBottom: "2.5rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "1.25rem",
+          flexWrap: "wrap",
+          boxShadow: "0 0 32px rgba(0,245,255,0.04)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+          <span className="animate-pulse-dot" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cyan)", display: "inline-block" }} />
+          <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--cyan)", letterSpacing: "0.12em", whiteSpace: "nowrap" }}>
+            CURRENTLY BUILDING WITH AI
+          </span>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+          {["Claude API", "n8n", "Modal", "Agentic AI", "MCP", "FastAPI", "Anthropic SDK"].map((tool) => (
+            <span
+              key={tool}
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "0.65rem",
+                color: "var(--text-sec)",
+                background: "rgba(0,245,255,0.06)",
+                border: "1px solid rgba(0,245,255,0.15)",
+                padding: "0.2rem 0.6rem",
+                borderRadius: "4px",
+                letterSpacing: "0.04em",
+              }}
+            >
+              {tool}
+            </span>
+          ))}
+        </div>
+        <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.82rem", color: "var(--text-sec)", marginLeft: "auto", whiteSpace: "nowrap" }}>
+          For automation &amp; productivity
+        </span>
+      </div>
+
       {/* Grid */}
       <div
         style={{
