@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-const LAST_UPDATED = "April 2026";
+const LAST_UPDATED = "May 2026";
 
 const SPOTLIGHT = {
   label: "MAIN FOCUS",
   icon: "⚡",
-  title: "Landing a Data / AI role in Canada",
-  description: "Applying daily, running Job Hunter Bot, building portfolio projects, and sharpening SQL — everything points here right now.",
+  title: "Building a creative career in media & content",
+  description: "Pivoting fully into photography, videography, and content creation. Growing Click & Cast Inc, building my visual portfolio, and using AI to make creative work faster and smarter.",
   color: "var(--cyan)",
 };
 
@@ -18,10 +18,10 @@ const SECTIONS = [
     icon: "🔨",
     color: "var(--cyan)",
     items: [
-      { text: "Rebuilding sazan.com.np in Next.js", tag: "LIVE" },
-      { text: "Running Job Hunter Bot — targeting Data Analyst roles", tag: "DAILY" },
-      { text: "Growing Click & Cast Inc — AI media & automation agency", tag: "ONGOING" },
-      { text: "SQL portfolio on GitHub (10 problems done, 10 more coming)", tag: "IN PROGRESS" },
+      { text: "Shooting & growing my creative portfolio", tag: "ONGOING" },
+      { text: "Growing Click & Cast Inc — media & content agency", tag: "DAILY" },
+      { text: "Building AI automation tools for creative workflows", tag: "IN PROGRESS" },
+      { text: "sazan.com.np — repositioned for media & creative roles", tag: "LIVE" },
     ],
   },
   {
@@ -29,10 +29,10 @@ const SECTIONS = [
     icon: "📖",
     color: "var(--purple)",
     items: [
-      { text: "SQL — sqlbolt.com → stratascratch.com, 2 problems a day", tag: "DAILY" },
-      { text: "Power BI — working toward PL-300 certification", tag: "IN PROGRESS" },
-      { text: "Agentic AI & MCP — building smarter automation pipelines", tag: "ONGOING" },
-      { text: "dbt — for the Toronto Open Data ETL pipeline", tag: "UPCOMING" },
+      { text: "Premiere Pro & DaVinci Resolve — video editing", tag: "ONGOING" },
+      { text: "Agentic AI & MCP — automation for creative pipelines", tag: "IN PROGRESS" },
+      { text: "Short-form video & Reels production", tag: "DAILY" },
+      { text: "Social media strategy & content planning", tag: "ONGOING" },
     ],
   },
   {
@@ -40,8 +40,8 @@ const SECTIONS = [
     icon: "👀",
     color: "var(--pink)",
     items: [
-      { text: "Researching Canadian housing market data for a future project", tag: null },
-      { text: "Following AI tooling — Claude, Codex, n8n updates", tag: "WEEKLY" },
+      { text: "Following AI tooling — Claude, n8n, MCP updates", tag: "WEEKLY" },
+      { text: "Studying photographers & cinematographers I admire", tag: null },
     ],
   },
   {
@@ -51,6 +51,7 @@ const SECTIONS = [
     items: [
       { text: "Based in Stoney Creek, Ontario", tag: null },
       { text: "Shooting whenever the light is good", tag: "ONGOING" },
+      { text: "Camping trips with camera gear in tow", tag: null },
       { text: "Trying to run every morning — inconsistently", tag: null },
     ],
   },

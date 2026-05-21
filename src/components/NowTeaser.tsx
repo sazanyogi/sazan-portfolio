@@ -3,9 +3,9 @@
 import Link from "next/link";
 
 const ITEMS = [
-  { text: "Running Job Hunter Bot — targeting Data Analyst roles", tag: "DAILY", color: "var(--cyan)", tagBg: "rgba(0,245,255,0.1)" },
-  { text: "Power BI — working toward PL-300 certification", tag: "IN PROGRESS", color: "#f59e0b", tagBg: "rgba(245,158,11,0.1)" },
-  { text: "Growing Click & Cast Inc — AI media & automation agency", tag: "ONGOING", color: "var(--purple)", tagBg: "rgba(123,97,255,0.12)" },
+  { text: "Shooting & building my creative portfolio", tag: "ONGOING", color: "var(--cyan)", tagBg: "rgba(0,245,255,0.1)" },
+  { text: "Growing Click & Cast Inc — media & content agency", tag: "DAILY", color: "#4ade80", tagBg: "rgba(74,222,128,0.12)" },
+  { text: "Building AI automation tools for creative workflows", tag: "IN PROGRESS", color: "var(--purple)", tagBg: "rgba(123,97,255,0.12)" },
 ];
 
 export default function NowTeaser() {
@@ -52,7 +52,7 @@ export default function NowTeaser() {
               ⚡ WHAT I&apos;M DOING NOW
             </div>
             <h2 style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.4rem, 3vw, 2rem)", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              Landing a Data / AI role in Canada
+              Building a creative career in media & content
             </h2>
           </div>
           <Link
@@ -120,7 +120,7 @@ export default function NowTeaser() {
 
         {/* Footer */}
         <div style={{ marginTop: "1.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--text-sec)", letterSpacing: "0.08em" }}>
-          LAST UPDATED — APRIL 2026
+          LAST UPDATED — MAY 2026
         </div>
       </div>
     </section>
