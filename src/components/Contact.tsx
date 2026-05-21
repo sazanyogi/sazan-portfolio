@@ -109,7 +109,7 @@ export default function Contact() {
               marginBottom: "1.25rem",
             }}
           >
-            Let&apos;s Build
+            Let&apos;s Create
             <br />
             Something
           </h2>
@@ -123,8 +123,8 @@ export default function Contact() {
               maxWidth: "380px",
             }}
           >
-            Open to Data Analyst and AI Automation roles in Canada. Also happy to chat about
-            freelance projects, dashboards, or AI tooling.
+            Open to photography, videography, content creation, and social media roles.
+            Also happy to chat about brand collaborations, agency work, or creative projects.
           </p>
 
           {/* Socials */}
