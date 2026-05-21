@@ -16,28 +16,6 @@ const PROJECTS = [
     featured: true,
   },
   {
-    id: "click-cast-ga4",
-    title: "Click & Cast GA4 Dashboard",
-    category: "Data Analytics",
-    description:
-      "Live marketing analytics dashboard for a real media company. Built GA4 tracking into a Next.js app and created a Looker Studio dashboard tracking sessions, traffic sources, top pages, and time-series trends.",
-    stack: ["GA4", "Looker Studio", "Next.js", "Google Analytics"],
-    links: { live: "https://clickandcast.com" },
-    accent: "purple",
-    featured: true,
-  },
-  {
-    id: "sql-portfolio",
-    title: "SQL Interview Portfolio",
-    category: "Data Engineering",
-    description:
-      "10 annotated real-world SQL problems covering window functions (DENSE_RANK, LAG, rolling AVG), CTEs, anti-joins, self joins, and retention rate calculations — all with explanations of the why.",
-    stack: ["PostgreSQL", "Window Functions", "CTEs", "Analytics"],
-    links: { github: "https://github.com/sazanyogi/sql-portfolio" },
-    accent: "pink",
-    featured: false,
-  },
-  {
     id: "ai-workflows",
     title: "AI Workflow Automations",
     category: "AI Automation",
