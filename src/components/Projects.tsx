@@ -269,7 +269,7 @@ export default function Projects() {
             marginBottom: "1rem",
           }}
         >
-          SELECTED WORK
+          TECHNICAL WORK
         </div>
         <h2
           style={{
@@ -281,7 +281,7 @@ export default function Projects() {
             lineHeight: 1,
           }}
         >
-          Things I&apos;ve Built
+          Also: I Build Things
         </h2>
         <p
           style={{
@@ -289,11 +289,11 @@ export default function Projects() {
             fontSize: "1rem",
             color: "var(--text-sec)",
             marginTop: "1rem",
-            maxWidth: "480px",
+            maxWidth: "520px",
             lineHeight: 1.65,
           }}
         >
-          From AI automation pipelines to live analytics dashboards — real projects with real impact.
+          Beyond the lens — AI pipelines, analytics dashboards, and web apps. The technical side gives creative work a measurable edge.
         </p>
       </div>
 

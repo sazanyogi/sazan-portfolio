@@ -6,12 +6,13 @@ import About from "@/components/About";
 import PhotoTeaser from "@/components/PhotoTeaser";
 import NowTeaser from "@/components/NowTeaser";
 import Contact from "@/components/Contact";
-
+import Services from "@/components/Services";
+import Showreel from "@/components/Showreel";
 
 const STATS = [
-  { value: "5+", label: "Years in Tech" },
-  { value: "10+", label: "Projects Built" },
-  { value: "3K+", label: "Photos Taken" },
+  { value: "3K+", label: "Photos Shot" },
+  { value: "5+", label: "Years Creative" },
+  { value: "10+", label: "Brands Worked With" },
 ];
 
 export default function Home() {
@@ -24,14 +25,14 @@ export default function Home() {
         <div style={{ position: "absolute", top: "15%", right: "-5%", width: "700px", height: "700px", background: "radial-gradient(circle, rgba(0,245,255,0.05) 0%, transparent 65%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "5%", left: "-10%", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(123,97,255,0.05) 0%, transparent 65%)", pointerEvents: "none" }} />
 
-        {/* Main content — fills available height */}
+        {/* Main content */}
         <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 340px", gap: "3rem", alignItems: "center", paddingTop: "100px", paddingBottom: "2rem" }} className="hero-grid">
 
           {/* LEFT — identity */}
           <div>
             <div className="animate-fade-up" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "#4ade80", letterSpacing: "0.12em", background: "rgba(74,222,128,0.06)", border: "1px solid #4ade80", borderRadius: "2rem", padding: "0.35rem 0.9rem", marginBottom: "2rem", boxShadow: "0 0 12px rgba(74,222,128,0.25)" }}>
               <span className="animate-pulse-dot" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", display: "inline-block", flexShrink: 0 }} />
-              Open to work · Stoney Creek, ON
+              Available for creative work · Stoney Creek, ON
             </div>
 
             <div className="animate-fade-up" style={{ marginBottom: "1.5rem", animationDelay: "0.1s" }}>
@@ -39,20 +40,19 @@ export default function Home() {
                 Sajan Nath<br />Yogi<span style={{ color: "var(--cyan)" }}>.</span>
               </h1>
               <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "clamp(0.7rem, 1.3vw, 0.82rem)", color: "var(--cyan)", letterSpacing: "0.1em", marginTop: "1rem" }}>
-                Seeking — Data Analyst · Data Engineer · AI Automation
+                Photographer · Videographer · Content Creator · Social Media
               </div>
             </div>
 
             <p className="animate-fade-up" style={{ fontFamily: "var(--font-dm-sans)", fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", color: "var(--text-sec)", lineHeight: 1.8, maxWidth: "480px", marginBottom: "2.5rem", animationDelay: "0.2s" }}>
-              I build AI pipelines, data dashboards, and digital products that actually ship.
-              Based in Stoney Creek, Ontario — open to roles across Canada.
+              Visual storyteller based in Stoney Creek, Ontario. I shoot, edit, and create content that makes brands stand out — photography, video, and social media that actually connects.
             </p>
 
             <div className="animate-fade-up" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", animationDelay: "0.3s" }}>
               {[
-                { label: "VIEW WORK", href: "/work", primary: true },
+                { label: "VIEW PORTFOLIO", href: "/photos", primary: true },
                 { label: "GET IN TOUCH", href: "#contact", primary: false },
-                { label: "VIEW RESUME ↗", href: "/resume", primary: false },
+                { label: "MY WORK ↗", href: "/work", primary: false },
               ].map((btn) => (
                 <Link key={btn.label} href={btn.href}
                   style={{
@@ -89,10 +89,10 @@ export default function Home() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "1.5rem" }}>
                 {[
-                  { text: "Applying to Data Analyst roles daily", tag: "DAILY", color: "var(--cyan)", bg: "rgba(0,245,255,0.1)" },
-                  { text: "Sharpening SQL — 2 problems a day", tag: "ONGOING", color: "var(--purple)", bg: "rgba(123,97,255,0.12)" },
-                  { text: "Building AI automation pipelines", tag: "IN PROGRESS", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
-                  { text: "Growing Click & Cast Inc", tag: "LIVE", color: "#4ade80", bg: "rgba(74,222,128,0.12)" },
+                  { text: "Shooting & building creative portfolio", tag: "ONGOING", color: "var(--cyan)", bg: "rgba(0,245,255,0.1)" },
+                  { text: "Creating content via Click & Cast Inc", tag: "DAILY", color: "#4ade80", bg: "rgba(74,222,128,0.12)" },
+                  { text: "Available for media & agency work", tag: "OPEN", color: "var(--purple)", bg: "rgba(123,97,255,0.12)" },
+                  { text: "Building AI tools that support creative work", tag: "IN PROGRESS", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
                 ].map((item, i) => (
                   <div key={i}>
                     <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", marginBottom: "0.3rem" }}>
@@ -128,7 +128,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom bar — scroll indicator */}
+        {/* Scroll indicator */}
         <div style={{ display: "flex", justifyContent: "center", paddingBottom: "2rem" }} className="hero-bottom">
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
             <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.15em" }}>SCROLL</span>
@@ -136,6 +136,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <style>{`
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr !important; padding-top: 90px !important; }
@@ -144,9 +145,12 @@ export default function Home() {
         }
       `}</style>
 
+      {/* Creative-first section order */}
+      <Services />
+      <PhotoTeaser />
+      <Showreel />
       <Projects />
       <About />
-      <PhotoTeaser />
       <NowTeaser />
       <Contact />
     </>

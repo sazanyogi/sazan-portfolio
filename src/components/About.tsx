@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 const SKILLS = [
-  { category: "Data & Analytics", items: ["Python", "SQL", "Pandas", "Power BI", "Looker Studio", "GA4"] },
-  { category: "AI & Automation", items: ["Claude API", "OpenAI API", "n8n", "Modal", "Agentic AI", "MCP"] },
-  { category: "Cloud & Systems", items: ["AWS", "Firebase", "Firestore", "FastAPI", "Git", "Linux"] },
-  { category: "Web & BI", items: ["Next.js", "TypeScript", "React", "Tailwind", "Vercel", "Codex"] },
+  { category: "Camera & Capture", items: ["Sony A6700", "DJI RS Mini", "NiSi Filters", "Lighting", "Composition"] },
+  { category: "Editing & Post", items: ["Lightroom", "Premiere Pro", "Capture One", "DaVinci Resolve", "Photoshop"] },
+  { category: "Social & Content", items: ["Instagram", "TikTok", "YouTube", "Meta Ads", "Content Strategy", "GA4"] },
+  { category: "Tech (Bonus)", items: ["Next.js", "Python", "Claude API", "n8n", "SQL", "Power BI"] },
 ];
 
 const TIMELINE = [
@@ -76,9 +76,9 @@ export default function About() {
               marginBottom: "1.5rem",
             }}
           >
-            The Builder
+            The Creative
             <br />
-            Behind the Work
+            Behind the Lens
           </h2>
           <p
             style={{
@@ -89,9 +89,9 @@ export default function About() {
               marginBottom: "1rem",
             }}
           >
-            Big Data Analytics graduate based in Stoney Creek, Ontario. I bridge the gap between raw
-            data and real decisions — building AI pipelines, analytics dashboards, and automation
-            systems that actually ship.
+            Photographer, videographer, and content creator based in Stoney Creek, Ontario.
+            I tell visual stories — for brands, events, and the moments in between. Shooting on Sony,
+            editing with precision, and building content that earns attention.
           </p>
           <p
             style={{
@@ -102,8 +102,8 @@ export default function About() {
               marginBottom: "2.5rem",
             }}
           >
-            Running Click & Cast Inc while actively targeting Data Analyst and AI Automation roles in
-            Canada. When I&apos;m not coding — I&apos;m out with a camera.
+            Founder of Click &amp; Cast Inc — an AI-powered media and content agency. I also bring a
+            rare technical edge: data analytics and AI automation that gives creative campaigns a measurable backbone.
           </p>
 
           {/* Timeline */}
