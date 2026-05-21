@@ -7,6 +7,7 @@ const NAV = [
   { label: "About", href: "/#about" },
   { label: "Photos", href: "/photos" },
   { label: "Now", href: "/now" },
+  { label: "Camping", href: "/camping" },
   { label: "Resume", href: "/resume" },
 ];
 
@@ -94,7 +95,7 @@ export default function Footer() {
               maxWidth: "280px",
             }}
           >
-            Data Analyst · AI Automation · Photographer.
+            Photographer · Videographer · Content Creator.
             Based in Stoney Creek, Ontario.
           </p>
         </div>
