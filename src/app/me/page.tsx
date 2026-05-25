@@ -10,7 +10,7 @@ import { useState } from "react";
 // → "Integrate calendar" → copy the URL from the Embed Code src="..."
 // Tip: add &mode=WEEK&bgcolor=%230A0A0F to match the dark theme
 const GOOGLE_CALENDAR_EMBED_URL =
-  "https://calendar.google.com/calendar/embed?src=YOUR_EMAIL%40gmail.com&ctz=America%2FToronto&mode=WEEK&bgcolor=%230A0A0F&color=%2300F5FF";
+  "https://calendar.google.com/calendar/embed?src=sazanyogi%40gmail.com&ctz=America%2FToronto&mode=WEEK&bgcolor=%230A0A0F&color=%2300F5FF&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0";
 
 const bookmarks = [
   { label: "YouTube Studio", href: "https://studio.youtube.com" },
