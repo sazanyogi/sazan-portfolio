@@ -10,7 +10,8 @@ type Movie = {
   year: number;
   genre: string;
   status: "watchlist" | "watched";
-  rating: number;
+  summary: string;
+  poster: string;
 };
 
 const GENRE_COLORS: Record<string, string> = {
@@ -29,46 +30,63 @@ const GENRE_COLORS: Record<string, string> = {
 };
 
 const SEED: Movie[] = [
-  { id:"s1",  title:"The Dark Knight",  director:"Christopher Nolan", year:2008, genre:"Thriller",    status:"watched",   rating:5 },
-  { id:"s2",  title:"Parasite",         director:"Bong Joon-ho",      year:2019, genre:"Drama",       status:"watched",   rating:5 },
-  { id:"s3",  title:"Interstellar",     director:"Christopher Nolan", year:2014, genre:"Sci-Fi",      status:"watched",   rating:5 },
-  { id:"s4",  title:"Inception",        director:"Christopher Nolan", year:2010, genre:"Sci-Fi",      status:"watched",   rating:5 },
-  { id:"s5",  title:"1917",             director:"Sam Mendes",        year:2019, genre:"War",         status:"watched",   rating:4 },
-  { id:"s6",  title:"Oppenheimer",      director:"Christopher Nolan", year:2023, genre:"Drama",       status:"watchlist", rating:0 },
-  { id:"s7",  title:"Past Lives",       director:"Celine Song",       year:2023, genre:"Romance",     status:"watchlist", rating:0 },
-  { id:"s8",  title:"Dune: Part Two",   director:"Denis Villeneuve",  year:2024, genre:"Sci-Fi",      status:"watchlist", rating:0 },
-  { id:"s9",  title:"Poor Things",      director:"Yorgos Lanthimos",  year:2023, genre:"Fantasy",     status:"watchlist", rating:0 },
-  { id:"s10", title:"The Brutalist",    director:"Brady Corbet",      year:2024, genre:"Drama",       status:"watchlist", rating:0 },
+  { id:"s1",  title:"The Dark Knight",  director:"Christopher Nolan", year:2008, genre:"Thriller", status:"watched",
+    summary:"Batman faces his greatest test as the Joker unleashes calculated chaos on Gotham City.",
+    poster:"https://image.tmdb.org/t/p/w342/qJ2tW6WMUDux911r6m7haRef0WH.jpg" },
+  { id:"s2",  title:"Parasite",         director:"Bong Joon-ho",      year:2019, genre:"Drama",    status:"watched",
+    summary:"A poor family schemes their way into a wealthy household, triggering an unexpected and deadly chain of events.",
+    poster:"https://image.tmdb.org/t/p/w342/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" },
+  { id:"s3",  title:"Interstellar",     director:"Christopher Nolan", year:2014, genre:"Sci-Fi",   status:"watched",
+    summary:"A team of astronauts travels through a wormhole near Saturn in search of a new home for humanity.",
+    poster:"https://image.tmdb.org/t/p/w342/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" },
+  { id:"s4",  title:"Inception",        director:"Christopher Nolan", year:2010, genre:"Sci-Fi",   status:"watched",
+    summary:"A thief who enters dreamscapes to steal secrets is offered one final job — to plant an idea.",
+    poster:"https://image.tmdb.org/t/p/w342/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg" },
+  { id:"s5",  title:"1917",             director:"Sam Mendes",        year:2019, genre:"War",       status:"watched",
+    summary:"Two British soldiers must cross enemy territory to deliver a message that could save 1,600 lives.",
+    poster:"https://image.tmdb.org/t/p/w342/iZf0KyrE25z1sage4SYQLhzjCUu.jpg" },
+  { id:"s6",  title:"Oppenheimer",      director:"Christopher Nolan", year:2023, genre:"Drama",     status:"watchlist",
+    summary:"The story of J. Robert Oppenheimer, the physicist who led the Manhattan Project to develop the atomic bomb.",
+    poster:"https://image.tmdb.org/t/p/w342/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" },
+  { id:"s7",  title:"Past Lives",       director:"Celine Song",       year:2023, genre:"Romance",   status:"watchlist",
+    summary:"Two childhood sweethearts reconnect over decades, questioning love, identity, and the lives not lived.",
+    poster:"https://image.tmdb.org/t/p/w342/k3waqVXkpFfXsBHFCaHRfnkNHNq.jpg" },
+  { id:"s8",  title:"Dune: Part Two",   director:"Denis Villeneuve",  year:2024, genre:"Sci-Fi",    status:"watchlist",
+    summary:"Paul Atreides unites with the Fremen to wage war against the conspirators who destroyed his family.",
+    poster:"https://image.tmdb.org/t/p/w342/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg" },
+  { id:"s9",  title:"Poor Things",      director:"Yorgos Lanthimos",  year:2023, genre:"Fantasy",   status:"watchlist",
+    summary:"A young woman brought back to life by an eccentric scientist embarks on a daring journey of self-discovery.",
+    poster:"https://image.tmdb.org/t/p/w342/kCGlIMHnOm8JPXIwebHn04165mW.jpg" },
+  { id:"s10", title:"The Brutalist",    director:"Brady Corbet",      year:2024, genre:"Drama",     status:"watchlist",
+    summary:"A Hungarian-Jewish architect flees post-war Europe to rebuild his life and legacy in America.",
+    poster:"" },
 ];
 
 function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
 
-function Stars({ rating, onChange }: { rating: number; onChange?: (n: number) => void }) {
-  const [hov, setHov] = useState(0);
-  return (
-    <div style={{ display: "flex", gap: "2px" }}>
-      {[1,2,3,4,5].map(n => (
-        <span key={n}
-          onClick={() => onChange?.(n === rating ? 0 : n)}
-          onMouseEnter={() => onChange && setHov(n)}
-          onMouseLeave={() => setHov(0)}
-          style={{ fontSize: "0.8rem", color: n <= (hov || rating) ? "#f0c040" : "var(--border)", cursor: onChange ? "none" : "default", transition: "color 0.1s", lineHeight: 1 }}
-        >★</span>
-      ))}
-    </div>
-  );
-}
+const BLANK = { title: "", director: "", year: String(new Date().getFullYear()), genre: "Drama", summary: "", poster: "" };
 
 export default function MoviesPage() {
   const [movies, setMovies]   = useState<Movie[]>([]);
   const [tab, setTab]         = useState<"watchlist" | "watched">("watchlist");
   const [genre, setGenre]     = useState("All");
   const [showAdd, setShowAdd] = useState(false);
-  const [form, setForm]       = useState({ title: "", director: "", year: String(new Date().getFullYear()), genre: "Drama" });
+  const [form, setForm]       = useState(BLANK);
 
   useEffect(() => {
     const s = localStorage.getItem("me_movies");
-    setMovies(s ? JSON.parse(s) : SEED);
+    if (s) {
+      const parsed: Movie[] = JSON.parse(s);
+      // migrate old format (had rating, lacked summary/poster)
+      if (!parsed.length || !("summary" in parsed[0])) {
+        localStorage.setItem("me_movies", JSON.stringify(SEED));
+        setMovies(SEED);
+      } else {
+        setMovies(parsed);
+      }
+    } else {
+      setMovies(SEED);
+    }
   }, []);
 
   function save(next: Movie[]) {
@@ -85,14 +103,15 @@ export default function MoviesPage() {
       year: parseInt(form.year) || new Date().getFullYear(),
       genre: form.genre,
       status: tab,
-      rating: 0,
+      summary: form.summary.trim(),
+      poster: form.poster.trim(),
     }]);
-    setForm({ title: "", director: "", year: String(new Date().getFullYear()), genre: "Drama" });
+    setForm(BLANK);
     setShowAdd(false);
   }
 
-  const filtered    = movies.filter(m => m.status === tab && (genre === "All" || m.genre === genre));
-  const usedGenres  = [...new Set(movies.filter(m => m.status === tab).map(m => m.genre))];
+  const filtered   = movies.filter(m => m.status === tab && (genre === "All" || m.genre === genre));
+  const usedGenres = [...new Set(movies.filter(m => m.status === tab).map(m => m.genre))];
 
   const inp: React.CSSProperties = {
     background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "0.5rem",
@@ -100,10 +119,9 @@ export default function MoviesPage() {
     fontSize: "0.875rem", outline: "none",
   };
 
-  const tabBtn = (t: "watchlist" | "watched"): React.CSSProperties => ({
+  const tabStyle = (t: typeof tab): React.CSSProperties => ({
     fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", letterSpacing: "0.08em",
-    padding: "0.4rem 1rem", borderRadius: "999px", border: "1px solid", cursor: "none",
-    transition: "all 0.2s",
+    padding: "0.4rem 1rem", borderRadius: "999px", border: "1px solid", cursor: "none", transition: "all 0.2s",
     background: tab === t ? "var(--cyan)" : "transparent",
     color: tab === t ? "#000" : "var(--text-sec)",
     borderColor: tab === t ? "transparent" : "var(--border)",
@@ -117,6 +135,7 @@ export default function MoviesPage() {
         onMouseLeave={e => (e.currentTarget.style.color = "var(--text-sec)")}
       >← Dashboard</Link>
 
+      {/* Page header */}
       <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
         <div>
           <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "var(--cyan)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Personal · Tracker</p>
@@ -130,16 +149,19 @@ export default function MoviesPage() {
         >{showAdd ? "Cancel" : "+ Add Movie"}</button>
       </div>
 
+      {/* Add form */}
       {showAdd && (
         <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} onKeyDown={e => e.key === "Enter" && add()} placeholder="Movie title *" autoFocus style={{ ...inp, flex: "2 1 180px" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
-            <input value={form.director} onChange={e => setForm({ ...form, director: e.target.value })} placeholder="Director" style={{ ...inp, flex: "1 1 140px" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+            <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Movie title *" autoFocus style={{ ...inp, flex: "2 1 180px" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+            <input value={form.director} onChange={e => setForm({ ...form, director: e.target.value })} placeholder="Director" style={{ ...inp, flex: "1 1 130px" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
             <input value={form.year} onChange={e => setForm({ ...form, year: e.target.value })} placeholder="Year" style={{ ...inp, flex: "0 0 70px" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
             <select value={form.genre} onChange={e => setForm({ ...form, genre: e.target.value })} style={{ ...inp, flex: "0 0 130px", cursor: "none" }}>
               {Object.keys(GENRE_COLORS).map(g => <option key={g} value={g}>{g}</option>)}
             </select>
           </div>
+          <input value={form.poster} onChange={e => setForm({ ...form, poster: e.target.value })} placeholder="Poster image URL (optional — paste from TMDB or any image URL)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+          <input value={form.summary} onChange={e => setForm({ ...form, summary: e.target.value })} onKeyDown={e => e.key === "Enter" && add()} placeholder="Short summary (1–2 lines)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em" }}>
               Adding to: <span style={{ color: "var(--cyan)" }}>{tab === "watchlist" ? "Watchlist" : "Watched"}</span>
@@ -149,11 +171,13 @@ export default function MoviesPage() {
         </div>
       )}
 
+      {/* Tabs */}
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem" }}>
-        <button style={tabBtn("watchlist")} onClick={() => { setTab("watchlist"); setGenre("All"); }}>Watchlist ({movies.filter(m => m.status === "watchlist").length})</button>
-        <button style={tabBtn("watched")} onClick={() => { setTab("watched"); setGenre("All"); }}>Watched ({movies.filter(m => m.status === "watched").length})</button>
+        <button style={tabStyle("watchlist")} onClick={() => { setTab("watchlist"); setGenre("All"); }}>Watchlist ({movies.filter(m => m.status === "watchlist").length})</button>
+        <button style={tabStyle("watched")} onClick={() => { setTab("watched"); setGenre("All"); }}>Watched ({movies.filter(m => m.status === "watched").length})</button>
       </div>
 
+      {/* Genre filters */}
       {usedGenres.length > 1 && (
         <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "1.75rem" }}>
           {["All", ...usedGenres].map(g => (
@@ -168,6 +192,7 @@ export default function MoviesPage() {
         </div>
       )}
 
+      {/* Movie grid */}
       {filtered.length === 0 ? (
         <div style={{ textAlign: "center", padding: "5rem 0" }}>
           <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "1rem", color: "var(--text-sec)" }}>
@@ -175,36 +200,75 @@ export default function MoviesPage() {
           </p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1rem" }}>
-          {filtered.map(m => (
-            <div key={m.id}
-              style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s, transform 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = gc(m.genre) + "80"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              <div style={{ height: "4px", background: gc(m.genre) }} />
-              <div style={{ padding: "1.1rem 1.25rem", display: "flex", flexDirection: "column", flex: 1, gap: "0.5rem" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", letterSpacing: "0.1em", color: gc(m.genre), background: gc(m.genre) + "22", border: `1px solid ${gc(m.genre)}44`, borderRadius: "999px", padding: "0.12rem 0.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "1.25rem" }}>
+          {filtered.map(m => {
+            const color = gc(m.genre);
+            return (
+              <div key={m.id}
+                style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s, transform 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = color + "90"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "translateY(0)"; }}
+              >
+                {/* Poster area — 2:3 portrait ratio */}
+                <div style={{ aspectRatio: "2/3", position: "relative", overflow: "hidden", flexShrink: 0 }}>
+                  {m.poster ? (
+                    <img
+                      src={m.poster}
+                      alt={m.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                      onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; (e.currentTarget.nextElementSibling as HTMLElement).style.display = "flex"; }}
+                    />
+                  ) : null}
+
+                  {/* Fallback / overlay shown when no poster or image fails */}
+                  <div style={{
+                    display: m.poster ? "none" : "flex",
+                    position: "absolute", inset: 0,
+                    background: `linear-gradient(160deg, ${color}30 0%, ${color}70 100%)`,
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "1.25rem",
+                    textAlign: "center",
+                    gap: "0.5rem",
+                  }}>
+                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color, letterSpacing: "0.14em", opacity: 0.85 }}>{m.genre.toUpperCase()}</span>
+                    <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.15rem", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{m.title}</p>
+                    <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)" }}>{m.year}</p>
+                  </div>
+
+                  {/* Delete button */}
+                  <button
+                    onClick={() => save(movies.filter(x => x.id !== m.id))}
+                    style={{ position: "absolute", top: "0.5rem", right: "0.5rem", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)", border: "none", color: "#fff", borderRadius: "50%", width: "26px", height: "26px", fontSize: "0.6rem", cursor: "none", display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.15s" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "var(--pink)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(0,0,0,0.55)")}
+                  >✕</button>
+
+                  {/* Watched badge */}
+                  {m.status === "watched" && (
+                    <span style={{ position: "absolute", top: "0.5rem", left: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.08em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "#4caf50", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>✓ WATCHED</span>
+                  )}
+                </div>
+
+                {/* Info below poster */}
+                <div style={{ padding: "0.85rem 1rem", display: "flex", flexDirection: "column", gap: "0.4rem", flex: 1 }}>
+                  <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", letterSpacing: "-0.01em", lineHeight: 1.25 }}>{m.title}</p>
+                  <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.7rem", color: "var(--text-sec)" }}>
+                    {[m.director, m.year].filter(Boolean).join(" · ")}
+                  </p>
+                  {m.summary && (
+                    <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.75rem", color: "var(--text-sec)", lineHeight: 1.45, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const }}>
+                      {m.summary}
+                    </p>
+                  )}
+                  <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", letterSpacing: "0.1em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.1rem 0.45rem", alignSelf: "flex-start", marginTop: "auto" }}>
                     {m.genre.toUpperCase()}
                   </span>
-                  <button onClick={() => save(movies.filter(x => x.id !== m.id))}
-                    style={{ background: "none", border: "none", color: "var(--text-sec)", fontSize: "0.65rem", cursor: "none", padding: "2px 4px", lineHeight: 1, transition: "color 0.15s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--pink)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--text-sec)")}
-                  >✕</button>
                 </div>
-                <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1rem", color: "var(--text)", letterSpacing: "-0.01em", lineHeight: 1.25, flex: 1 }}>{m.title}</p>
-                <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.76rem", color: "var(--text-sec)" }}>
-                  {[m.director, m.year].filter(Boolean).join(" · ")}
-                </p>
-                {m.status === "watched"
-                  ? <Stars rating={m.rating} onChange={r => save(movies.map(x => x.id === m.id ? { ...x, rating: r } : x))} />
-                  : <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", color: "var(--text-sec)", letterSpacing: "0.08em" }}>WANT TO WATCH</span>
-                }
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
