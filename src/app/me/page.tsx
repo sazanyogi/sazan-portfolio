@@ -417,6 +417,24 @@ export default function MePage() {
         >{loggingOut ? "Signing out..." : "Sign out"}</button>
       </div>
 
+      {/* Tracker cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem", marginBottom: "1.25rem" }}>
+        <DebtCard />
+        <MoviesCard />
+        <BooksCard />
+        <YouTubeCard />
+        <Card title="Reminders">
+          <ul style={{ display: "flex", flexDirection: "column", gap: "0.65rem", listStyle: "none" }}>
+            {reminders.map((note, i) => (
+              <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                <span style={{ color: "var(--pink)", fontSize: "0.6rem", marginTop: "0.3rem", flexShrink: 0 }}>◆</span>
+                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.875rem", color: "var(--text-sec)", lineHeight: 1.4 }}>{note}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
+
       {/* Google Calendar */}
       <Card title="Calendar">
         <GoogleCalendar />
@@ -425,7 +443,7 @@ export default function MePage() {
       <div style={{ height: "1.25rem" }} />
 
       {/* Apps */}
-      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.25rem" }}>
+      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem" }}>
         <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>Apps</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
           {apps.map((app) => (
@@ -441,28 +459,6 @@ export default function MePage() {
             </a>
           ))}
         </div>
-      </div>
-
-      {/* Bottom grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
-
-        <DebtCard />
-        <MoviesCard />
-        <BooksCard />
-
-        <YouTubeCard />
-
-        <Card title="Reminders">
-          <ul style={{ display: "flex", flexDirection: "column", gap: "0.65rem", listStyle: "none" }}>
-            {reminders.map((note, i) => (
-              <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                <span style={{ color: "var(--pink)", fontSize: "0.6rem", marginTop: "0.3rem", flexShrink: 0 }}>◆</span>
-                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.875rem", color: "var(--text-sec)", lineHeight: 1.4 }}>{note}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
       </div>
     </div>
   );
