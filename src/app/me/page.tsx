@@ -212,6 +212,108 @@ function Calendar() {
   );
 }
 
+// ─── Debt snapshot (summary only — full data lives in /me/debt) ───────────────
+
+const debtIOwe = [
+  { name: "Ambika Adhikari",   amount: 7500 },
+  { name: "Sanu Aunty",        amount: 3000 },
+  { name: "Sita Didi",         amount: 2000 },
+  { name: "Hari Sir",          amount: 2000 },
+  { name: "Tika Nath Yogi",    amount: 1500 },
+  { name: "Jitendra N. Yogi",  amount: 1000 },
+  { name: "Niroj KC",          amount: 250  },
+];
+const debtOwedToMe = [
+  { name: "Kritika Adhikari", amount: 1000 },
+  { name: "Lokendra Shah",    amount: 500  },
+];
+
+const fmtMoney = (n: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+
+function DebtPreview() {
+  const totalOwe     = debtIOwe.reduce((s, d) => s + d.amount, 0);
+  const totalCollect = debtOwedToMe.reduce((s, d) => s + d.amount, 0);
+  const net          = totalCollect - totalOwe;
+  const maxAmount    = debtIOwe[0].amount;
+  const SHOW         = 4;
+
+  return (
+    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.25rem" }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+          Financial
+        </p>
+        <Link
+          href="/me/debt"
+          style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", letterSpacing: "0.08em", textDecoration: "none", transition: "opacity 0.2s" }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.65")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+        >
+          View full tracker →
+        </Link>
+      </div>
+
+      {/* Summary stats */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "1.75rem" }}>
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.4rem, 3vw, 1.9rem)", color: "var(--pink)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+            {fmtMoney(totalOwe)}
+          </p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.45rem" }}>
+            YOU OWE · {debtIOwe.length} people
+          </p>
+        </div>
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.4rem, 3vw, 1.9rem)", color: "var(--cyan)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+            {fmtMoney(totalCollect)}
+          </p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.45rem" }}>
+            OWED TO YOU · {debtOwedToMe.length} people
+          </p>
+        </div>
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.4rem, 3vw, 1.9rem)", color: net >= 0 ? "var(--cyan)" : "var(--pink)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+            {fmtMoney(Math.abs(net))}
+          </p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.45rem" }}>
+            NET · {net >= 0 ? "in your favour" : "you owe more"}
+          </p>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div style={{ height: "1px", background: "var(--border)", marginBottom: "1.25rem" }} />
+
+      {/* Bar list — top debtors */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+        {debtIOwe.slice(0, SHOW).map((d) => (
+          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.825rem", color: "var(--text)", width: "155px", flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {d.name}
+            </span>
+            <div style={{ flex: 1, height: "5px", borderRadius: "3px", background: "var(--chip-bg)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${(d.amount / maxAmount) * 100}%`, background: "var(--pink)", borderRadius: "3px" }} />
+            </div>
+            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.68rem", color: "var(--pink)", width: "58px", textAlign: "right", flexShrink: 0, letterSpacing: "-0.02em" }}>
+              {fmtMoney(d.amount)}
+            </span>
+          </div>
+        ))}
+        {debtIOwe.length > SHOW && (
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.15rem" }}>
+            +{debtIOwe.length - SHOW} more ·{" "}
+            <Link href="/me/debt" style={{ color: "var(--cyan)", textDecoration: "none" }}>see all →</Link>
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 const navBtn: React.CSSProperties = {
   background: "var(--chip-bg)",
   border: "1px solid var(--border)",
@@ -304,6 +406,9 @@ export default function MePage() {
         </div>
       </div>
 
+      {/* Debt widget */}
+      <DebtPreview />
+
       {/* Bottom grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
 
@@ -328,21 +433,6 @@ export default function MePage() {
             ))}
           </ul>
         </Card>
-
-        <Link href="/me/debt" style={{ textDecoration: "none" }}>
-          <div
-            style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", cursor: "none", transition: "border-color 0.2s" }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--cyan)")}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
-          >
-            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem" }}>Financial</p>
-            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.4rem", color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Debt Tracker</p>
-            <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.85rem", color: "var(--text-sec)", lineHeight: 1.5 }}>
-              Track what you owe, progress paid off, monthly payments and payoff dates.
-            </p>
-            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", letterSpacing: "0.08em", marginTop: "1.25rem" }}>Open →</p>
-          </div>
-        </Link>
 
       </div>
     </div>
