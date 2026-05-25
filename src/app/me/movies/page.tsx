@@ -206,7 +206,7 @@ export default function MoviesPage() {
             const flipped = hoveredCard === m.id;
             return (
               <div key={m.id}
-                style={{ background: "var(--surface)", border: `1px solid ${flipped ? color + "90" : "var(--border)"}`, borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
+                style={{ background: "var(--surface)", border: `1px solid ${flipped ? color + "90" : "var(--border)"}`, borderRadius: "1rem", display: "flex", flexDirection: "column", transition: "border-color 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
                 onMouseEnter={() => setHoveredCard(m.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
@@ -219,8 +219,8 @@ export default function MoviesPage() {
                     transition: "transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1)",
                     transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
                   }}>
-                    {/* Front face — poster */}
-                    <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden" }}>
+                    {/* Front face — poster; overflow+radius here to clip image without breaking preserve-3d */}
+                    <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden", borderRadius: "1rem 1rem 0 0" }}>
                       {m.poster ? (
                         <img
                           src={m.poster}
@@ -256,10 +256,10 @@ export default function MoviesPage() {
                       position: "absolute", inset: 0,
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
+                      borderRadius: "1rem 1rem 0 0",
                       background: `linear-gradient(160deg, #0a0a0f 0%, ${color}25 100%)`,
                       display: "flex", flexDirection: "column", justifyContent: "center",
                       padding: "1.25rem", gap: "0.75rem",
-                      borderBottom: `1px solid ${color}40`,
                     }}>
                       <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.12em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.15rem 0.5rem", alignSelf: "flex-start" }}>
                         {m.genre.toUpperCase()}

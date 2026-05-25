@@ -241,7 +241,7 @@ export default function BooksPage() {
             const flipped = hoveredCard === b.id;
             return (
               <div key={b.id}
-                style={{ background: "var(--surface)", border: `1px solid ${flipped ? color + "90" : "var(--border)"}`, borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
+                style={{ background: "var(--surface)", border: `1px solid ${flipped ? color + "90" : "var(--border)"}`, borderRadius: "1rem", display: "flex", flexDirection: "column", transition: "border-color 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
                 onMouseEnter={() => setHoveredCard(b.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
@@ -255,7 +255,7 @@ export default function BooksPage() {
                     transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
                   }}>
                     {/* Front face — cover */}
-                    <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden" }}>
+                    <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden", borderRadius: "1rem 1rem 0 0" }}>
                       {b.cover && (
                         <img src={b.cover} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                           onError={e => {
@@ -286,10 +286,10 @@ export default function BooksPage() {
                       position: "absolute", inset: 0,
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
+                      borderRadius: "1rem 1rem 0 0",
                       background: `linear-gradient(160deg, #0a0a0f 0%, ${color}25 100%)`,
                       display: "flex", flexDirection: "column", justifyContent: "center",
                       padding: "1.25rem", gap: "0.75rem",
-                      borderBottom: `1px solid ${color}40`,
                     }}>
                       <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.12em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.15rem 0.5rem", alignSelf: "flex-start" }}>
                         {b.genre.toUpperCase()}
@@ -311,18 +311,10 @@ export default function BooksPage() {
                 <div style={{ padding: "0.85rem 1rem", display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1 }}>
                   <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.04em" }}>{b.author}</p>
                   <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", letterSpacing: "-0.01em", lineHeight: 1.25 }}>{b.title}</p>
-                  <div style={{ marginTop: "auto", paddingTop: "0.5rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
                     <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", letterSpacing: "0.1em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.1rem 0.45rem" }}>
                       {b.genre.toUpperCase()}
                     </span>
-                    {b.status === "want" && (
-                      <button
-                        onClick={() => save(books.map(x => x.id === b.id ? { ...x, status: "reading" } : x))}
-                        style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", background: "transparent", color: "var(--cyan)", border: "1px solid var(--cyan)", borderRadius: "999px", padding: "0.18rem 0.55rem", cursor: "none", letterSpacing: "0.06em", transition: "all 0.15s" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "var(--cyan)"; e.currentTarget.style.color = "#000"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--cyan)"; }}
-                      >Start Reading</button>
-                    )}
                   </div>
                 </div>
               </div>
