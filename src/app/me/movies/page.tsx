@@ -67,17 +67,17 @@ function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
 const BLANK = { title: "", director: "", year: String(new Date().getFullYear()), genre: "Drama", summary: "", poster: "" };
 
 export default function MoviesPage() {
-  const [movies, setMovies]   = useState<Movie[]>([]);
-  const [tab, setTab]         = useState<"watchlist" | "watched">("watchlist");
-  const [genre, setGenre]     = useState("All");
-  const [showAdd, setShowAdd] = useState(false);
-  const [form, setForm]       = useState(BLANK);
+  const [movies, setMovies]       = useState<Movie[]>([]);
+  const [tab, setTab]             = useState<"watchlist" | "watched">("watchlist");
+  const [genre, setGenre]         = useState("All");
+  const [showAdd, setShowAdd]     = useState(false);
+  const [form, setForm]           = useState(BLANK);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   useEffect(() => {
     const s = localStorage.getItem("me_movies");
     if (s) {
       const parsed: Movie[] = JSON.parse(s);
-      // migrate old format (had rating, lacked summary/poster)
       if (!parsed.length || !("summary" in parsed[0])) {
         localStorage.setItem("me_movies", JSON.stringify(SEED));
         setMovies(SEED);
@@ -203,57 +203,86 @@ export default function MoviesPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "1.25rem" }}>
           {filtered.map(m => {
             const color = gc(m.genre);
+            const flipped = hoveredCard === m.id;
             return (
               <div key={m.id}
-                style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s, transform 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = color + "90"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                style={{ background: "var(--surface)", border: `1px solid ${flipped ? color + "90" : "var(--border)"}`, borderRadius: "1rem", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}
+                onMouseEnter={() => setHoveredCard(m.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Poster area — 2:3 portrait ratio */}
-                <div style={{ aspectRatio: "2/3", position: "relative", overflow: "hidden", flexShrink: 0 }}>
-                  {m.poster ? (
-                    <img
-                      src={m.poster}
-                      alt={m.title}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                      onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; (e.currentTarget.nextElementSibling as HTMLElement).style.display = "flex"; }}
-                    />
-                  ) : null}
-
-                  {/* Fallback / overlay shown when no poster or image fails */}
+                {/* Poster area — 3D flip */}
+                <div style={{ aspectRatio: "2/3", position: "relative", flexShrink: 0, perspective: "800px" }}>
+                  {/* Flipper */}
                   <div style={{
-                    display: m.poster ? "none" : "flex",
                     position: "absolute", inset: 0,
-                    background: `linear-gradient(160deg, ${color}30 0%, ${color}70 100%)`,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "1.25rem",
-                    textAlign: "center",
-                    gap: "0.5rem",
+                    transformStyle: "preserve-3d",
+                    transition: "transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1)",
+                    transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
                   }}>
-                    <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color, letterSpacing: "0.14em", opacity: 0.85 }}>{m.genre.toUpperCase()}</span>
-                    <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.15rem", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{m.title}</p>
-                    <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)" }}>{m.year}</p>
-                  </div>
+                    {/* Front face — poster */}
+                    <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden" }}>
+                      {m.poster ? (
+                        <img
+                          src={m.poster}
+                          alt={m.title}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                          onError={e => {
+                            (e.currentTarget as HTMLImageElement).style.display = "none";
+                            (e.currentTarget.nextElementSibling as HTMLElement).style.display = "flex";
+                          }}
+                        />
+                      ) : null}
+                      {/* Fallback gradient */}
+                      <div style={{
+                        display: m.poster ? "none" : "flex",
+                        position: "absolute", inset: 0,
+                        background: `linear-gradient(160deg, ${color}30 0%, ${color}70 100%)`,
+                        flexDirection: "column", alignItems: "center", justifyContent: "center",
+                        padding: "1.25rem", textAlign: "center", gap: "0.5rem",
+                      }}>
+                        <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color, letterSpacing: "0.14em", opacity: 0.85 }}>{m.genre.toUpperCase()}</span>
+                        <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.15rem", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{m.title}</p>
+                        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)" }}>{m.year}</p>
+                      </div>
 
-                  {/* Watched badge */}
-                  {m.status === "watched" && (
-                    <span style={{ position: "absolute", top: "0.5rem", left: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.08em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "#4caf50", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>✓ WATCHED</span>
-                  )}
+                      {/* Watched badge */}
+                      {m.status === "watched" && (
+                        <span style={{ position: "absolute", top: "0.5rem", left: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.08em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "#4caf50", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>✓ WATCHED</span>
+                      )}
+                    </div>
+
+                    {/* Back face — summary */}
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                      background: `linear-gradient(160deg, #0a0a0f 0%, ${color}25 100%)`,
+                      display: "flex", flexDirection: "column", justifyContent: "center",
+                      padding: "1.25rem", gap: "0.75rem",
+                      borderBottom: `1px solid ${color}40`,
+                    }}>
+                      <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.12em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.15rem 0.5rem", alignSelf: "flex-start" }}>
+                        {m.genre.toUpperCase()}
+                      </span>
+                      <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1rem", color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+                        {m.title}
+                      </p>
+                      <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.78rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.55 }}>
+                        {m.summary || "No summary yet."}
+                      </p>
+                      <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.06em", marginTop: "auto" }}>
+                        {[m.director, m.year].filter(Boolean).join(" · ")}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Info below poster */}
-                <div style={{ padding: "0.85rem 1rem", display: "flex", flexDirection: "column", gap: "0.4rem", flex: 1 }}>
+                <div style={{ padding: "0.85rem 1rem", display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1 }}>
                   <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", letterSpacing: "-0.01em", lineHeight: 1.25 }}>{m.title}</p>
                   <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.7rem", color: "var(--text-sec)" }}>
                     {[m.director, m.year].filter(Boolean).join(" · ")}
                   </p>
-                  {m.summary && (
-                    <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.75rem", color: "var(--text-sec)", lineHeight: 1.45, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const }}>
-                      {m.summary}
-                    </p>
-                  )}
                   <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", letterSpacing: "0.1em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.1rem 0.45rem", alignSelf: "flex-start", marginTop: "auto" }}>
                     {m.genre.toUpperCase()}
                   </span>
