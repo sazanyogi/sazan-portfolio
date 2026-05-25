@@ -151,7 +151,7 @@ export default function MePage() {
         ) : (
           <iframe
             src={GOOGLE_CALENDAR_EMBED_URL}
-            style={{ width: "100%", height: "600px", border: "none", borderRadius: "0.75rem", colorScheme: "dark" }}
+            style={{ width: "100%", height: "600px", border: "none", borderRadius: "0.75rem", filter: "invert(1) hue-rotate(180deg)", colorScheme: "dark" }}
             title="Google Calendar"
           />
         )}
