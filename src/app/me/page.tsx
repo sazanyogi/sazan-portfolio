@@ -73,84 +73,78 @@ const debtOwedToMe = [
 const fmtMoney = (n: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
-function DebtPreview() {
+function DebtCard() {
   const totalOwe     = debtIOwe.reduce((s, d) => s + d.amount, 0);
   const totalCollect = debtOwedToMe.reduce((s, d) => s + d.amount, 0);
   const net          = totalCollect - totalOwe;
-  const maxAmount    = debtIOwe[0].amount;
-  const SHOW         = 4;
 
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.9rem" }}>
+    <Link href="/me/debt" style={{ textDecoration: "none", display: "block", height: "100%" }}>
+      <div
+        style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "1rem", cursor: "none", transition: "border-color 0.2s" }}
+        onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--pink)")}
+        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+      >
         <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           Financial
         </p>
-        <Link
-          href="/me/debt"
-          style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", letterSpacing: "0.08em", textDecoration: "none", transition: "opacity 0.2s" }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.65")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          View full tracker →
-        </Link>
-      </div>
 
-      {/* Summary stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem", marginBottom: "0.9rem" }}>
+        {/* Big owe number */}
         <div>
-          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.05rem, 2vw, 1.35rem)", color: "var(--pink)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "2rem", color: "var(--pink)", letterSpacing: "-0.03em", lineHeight: 1 }}>
             {fmtMoney(totalOwe)}
           </p>
-          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.3rem" }}>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.35rem" }}>
             YOU OWE · {debtIOwe.length} people
           </p>
         </div>
-        <div>
-          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.05rem, 2vw, 1.35rem)", color: "var(--cyan)", letterSpacing: "-0.03em", lineHeight: 1 }}>
-            {fmtMoney(totalCollect)}
-          </p>
-          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.3rem" }}>
-            OWED TO YOU · {debtOwedToMe.length} people
-          </p>
-        </div>
-        <div>
-          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(1.05rem, 2vw, 1.35rem)", color: net >= 0 ? "var(--cyan)" : "var(--pink)", letterSpacing: "-0.03em", lineHeight: 1 }}>
-            {fmtMoney(Math.abs(net))}
-          </p>
-          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.5rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.3rem" }}>
-            NET · {net >= 0 ? "in your favour" : "you owe more"}
-          </p>
-        </div>
-      </div>
 
-      {/* Divider */}
-      <div style={{ height: "1px", background: "var(--border)", marginBottom: "0.8rem" }} />
-
-      {/* Bar list — top debtors */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        {debtIOwe.slice(0, SHOW).map((d) => (
-          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.775rem", color: "var(--text)", width: "148px", flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {d.name}
-            </span>
-            <div style={{ flex: 1, height: "4px", borderRadius: "3px", background: "var(--chip-bg)", overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${(d.amount / maxAmount) * 100}%`, background: "var(--pink)", borderRadius: "3px" }} />
-            </div>
-            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.63rem", color: "var(--pink)", width: "54px", textAlign: "right", flexShrink: 0, letterSpacing: "-0.02em" }}>
-              {fmtMoney(d.amount)}
-            </span>
+        {/* Net position */}
+        <div style={{ display: "flex", gap: "1.25rem" }}>
+          <div>
+            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: "var(--cyan)", letterSpacing: "-0.02em" }}>
+              {fmtMoney(totalCollect)}
+            </p>
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "var(--text-sec)", letterSpacing: "0.05em", marginTop: "0.2rem" }}>OWED TO YOU</p>
           </div>
-        ))}
-        {debtIOwe.length > SHOW && (
-          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.1rem" }}>
-            +{debtIOwe.length - SHOW} more ·{" "}
-            <Link href="/me/debt" style={{ color: "var(--cyan)", textDecoration: "none" }}>see all →</Link>
-          </p>
-        )}
+          <div style={{ width: "1px", background: "var(--border)" }} />
+          <div>
+            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: net >= 0 ? "var(--cyan)" : "var(--pink)", letterSpacing: "-0.02em" }}>
+              {fmtMoney(Math.abs(net))}
+            </p>
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "var(--text-sec)", letterSpacing: "0.05em", marginTop: "0.2rem" }}>
+              {net >= 0 ? "IN YOUR FAVOUR" : "NET OWED"}
+            </p>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{ height: "1px", background: "var(--border)" }} />
+
+        {/* Top creditors list */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", flex: 1 }}>
+          {debtIOwe.slice(0, 4).map((d) => (
+            <div key={d.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "60%" }}>
+                {d.name}
+              </span>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.68rem", color: "var(--pink)", letterSpacing: "-0.02em", flexShrink: 0 }}>
+                {fmtMoney(d.amount)}
+              </span>
+            </div>
+          ))}
+          {debtIOwe.length > 4 && (
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.04em" }}>
+              +{debtIOwe.length - 4} more
+            </p>
+          )}
+        </div>
+
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--cyan)", letterSpacing: "0.06em" }}>
+          Open tracker →
+        </p>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -233,11 +227,10 @@ export default function MePage() {
         </div>
       </div>
 
-      {/* Debt widget */}
-      <DebtPreview />
-
       {/* Bottom grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
+
+        <DebtCard />
 
         <Card title="YouTube Ideas">
           <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", listStyle: "none" }}>
