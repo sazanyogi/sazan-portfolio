@@ -7,7 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 
 // ─── Edit your content here ───────────────────────────────────────────────────
 
-const apps = [
+const apps: { label: string; href: string; bg: string; internal?: boolean }[] = [
   { label: "YT Studio",      href: "https://studio.youtube.com",               bg: "#ff0000" },
   { label: "Analytics",      href: "https://analytics.google.com",             bg: "#e37400" },
   { label: "Notion",         href: "https://notion.so",                        bg: "#191919" },
@@ -15,6 +15,8 @@ const apps = [
   { label: "Canva",          href: "https://canva.com",                        bg: "#7d2ae8" },
   { label: "ChatGPT",        href: "https://chat.openai.com",                  bg: "#10a37f" },
   { label: "Search Console", href: "https://search.google.com/search-console", bg: "#4285f4" },
+  { label: "Movies",         href: "/me/movies",                               bg: "#c0392b", internal: true },
+  { label: "Books",          href: "/me/books",                                bg: "#6c5ce7", internal: true },
 ];
 
 const youtubeIdeas = [
@@ -208,22 +210,28 @@ export default function MePage() {
       <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.25rem" }}>
         <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>Apps</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
-          {apps.map((app) => (
-            <a
-              key={app.label}
-              href={app.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textDecoration: "none", transition: "transform 0.15s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
-            >
-              <div style={{ width: "56px", height: "56px", borderRadius: "14px", background: app.bg, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}>
-                <span style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "0.7rem", color: "white", letterSpacing: "0.02em", textAlign: "center", padding: "0 4px" }}>{app.label}</span>
-              </div>
-              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.04em", textAlign: "center" }}>{app.label}</span>
-            </a>
-          ))}
+          {apps.map((app) => {
+            const icon = (
+              <>
+                <div style={{ width: "56px", height: "56px", borderRadius: "14px", background: app.bg, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}>
+                  <span style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "0.7rem", color: "white", letterSpacing: "0.02em", textAlign: "center", padding: "0 4px" }}>{app.label}</span>
+                </div>
+                <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.04em", textAlign: "center" }}>{app.label}</span>
+              </>
+            );
+            const sharedStyle: React.CSSProperties = { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textDecoration: "none", transition: "transform 0.15s" };
+            return app.internal ? (
+              <Link key={app.label} href={app.href} style={sharedStyle}
+                onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-4px)")}
+                onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}
+              >{icon}</Link>
+            ) : (
+              <a key={app.label} href={app.href} target="_blank" rel="noopener noreferrer" style={sharedStyle}
+                onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-4px)")}
+                onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}
+              >{icon}</a>
+            );
+          })}
         </div>
       </div>
 
