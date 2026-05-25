@@ -41,12 +41,13 @@ const iOwe = [
   },
   {
     name: "Sita Didi",
-    amount: 2500,
+    amount: 2000,
     note: "When she comes back to Nepal",
     color: "#FF3CAC",
     transactions: [
-      { label: "Ded Lakh Tiryo - Japan jane process", date: "2026-04-05", amount: 1500 },
-      { label: "Bihe ma Leko",                        date: "2023-03-01", amount: -4000 },
+      { label: "Payment",                              date: "2026-05-12", amount: 500 },
+      { label: "Ded Lakh Tiryo - Japan jane process",  date: "2026-04-05", amount: 1500 },
+      { label: "Bihe ma Leko",                         date: "2023-03-01", amount: -4000 },
     ],
   },
   {
