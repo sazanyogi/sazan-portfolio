@@ -237,14 +237,6 @@ export default function MoviesPage() {
                     <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.72rem", color: "var(--text-sec)" }}>{m.year}</p>
                   </div>
 
-                  {/* Delete button */}
-                  <button
-                    onClick={() => save(movies.filter(x => x.id !== m.id))}
-                    style={{ position: "absolute", top: "0.5rem", right: "0.5rem", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)", border: "none", color: "#fff", borderRadius: "50%", width: "26px", height: "26px", fontSize: "0.6rem", cursor: "none", display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.15s" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "var(--pink)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(0,0,0,0.55)")}
-                  >✕</button>
-
                   {/* Watched badge */}
                   {m.status === "watched" && (
                     <span style={{ position: "absolute", top: "0.5rem", left: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.08em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "#4caf50", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>✓ WATCHED</span>
