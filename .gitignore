@@ -27,6 +27,13 @@
 **._*
 *.pem
 
+# local files
+Books/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
 # debug
 npm-debug.log*
 yarn-debug.log*
