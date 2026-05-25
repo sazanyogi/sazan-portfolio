@@ -223,9 +223,9 @@ export default function BooksPage() {
                     <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1rem", color: "var(--text)" }}>{b.title}</p>
                     <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.75rem", color: "var(--text-sec)", marginTop: "2px" }}>{b.author}</p>
                     {b.pdf && (
-                      <Link href={`/me/books/read?id=${b.id}`} style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--cyan)", letterSpacing: "0.06em", textDecoration: "none", display: "inline-block", marginTop: "0.35rem" }}>
+                      <a href={b.pdf} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--cyan)", letterSpacing: "0.06em", textDecoration: "none", display: "inline-block", marginTop: "0.35rem" }}>
                         Read PDF →
-                      </Link>
+                      </a>
                     )}
                   </div>
                   <div style={{ flex: "2 1 200px" }}>
@@ -363,9 +363,9 @@ export default function BooksPage() {
                       {b.genre.toUpperCase()}
                     </span>
                     {b.pdf ? (
-                      <Link href={`/me/books/read?id=${b.id}`}
-                        style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "#000", background: "var(--cyan)", border: "none", borderRadius: "999px", padding: "0.2rem 0.6rem", textDecoration: "none", letterSpacing: "0.06em", fontWeight: 700, flexShrink: 0 }}
-                      >Read</Link>
+                      <a href={b.pdf} target="_blank" rel="noopener noreferrer"
+                        style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "#000", background: "var(--cyan)", borderRadius: "999px", padding: "0.2rem 0.6rem", textDecoration: "none", letterSpacing: "0.06em", fontWeight: 700, flexShrink: 0 }}
+                      >Read</a>
                     ) : (
                       <>
                         <button
