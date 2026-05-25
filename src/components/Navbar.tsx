@@ -39,9 +39,7 @@ export default function Navbar() {
           gap: "0.5rem",
           padding: "0.45rem 0.45rem 0.45rem 1.5rem",
           borderRadius: "999px",
-          background: scrolled
-            ? "rgba(10,10,15,0.75)"
-            : "rgba(10,10,15,0.5)",
+          background: "var(--nav-bg)",
           backdropFilter: "blur(16px)",
           border: "1px solid var(--border)",
           boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.4)" : "none",
@@ -85,7 +83,7 @@ export default function Navbar() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = "var(--text)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                e.currentTarget.style.background = "var(--chip-bg)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.color = "var(--text-sec)";
@@ -104,7 +102,7 @@ export default function Navbar() {
             onClick={toggle}
             aria-label="Toggle theme"
             style={{
-              background: "rgba(255,255,255,0.06)",
+              background: "var(--chip-bg)",
               border: "1px solid var(--border)",
               borderRadius: "999px",
               width: "52px",
@@ -166,7 +164,7 @@ export default function Navbar() {
           aria-label="Menu"
           style={{
             display: "none",
-            background: "rgba(255,255,255,0.06)",
+            background: "var(--chip-bg)",
             border: "1px solid var(--border)",
             color: "var(--text)",
             width: "36px",
