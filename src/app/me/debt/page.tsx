@@ -27,10 +27,11 @@ const iOwe = [
   },
   {
     name: "Jitendra Nath Yogi",
-    amount: 2500,
+    amount: 1000,
     note: "Canada visa + land purchase help",
     color: "#FF3CAC",
     transactions: [
+      { label: "Paid by daddy",              date: "2026-05-24", amount: 1500 },
       { label: "Paid by daddy",              date: "2026-03-11", amount: 1000 },
       { label: "Paid by daddy",              date: "2026-03-11", amount: 1000 },
       { label: "Paid by daddy",              date: "2026-01-05", amount: 2000 },
