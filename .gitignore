@@ -28,7 +28,7 @@
 *.pem
 
 # local files
-Books/
+/Books/
 *.png
 *.jpg
 *.jpeg

@@ -30,16 +30,20 @@ export default function IdeaPage() {
   const [newNotes, setNewNotes]     = useState("");
   const [editConcept, setEditConcept] = useState(false);
   const [conceptDraft, setConceptDraft] = useState("");
+  const [prevIdea, setPrevIdea]     = useState<{ id: string; title: string } | null>(null);
+  const [nextIdea, setNextIdea]     = useState<{ id: string; title: string } | null>(null);
 
   useEffect(() => {
     if (!id) return;
     const s = localStorage.getItem("me_youtube");
     if (!s) { setNotFound(true); return; }
     const ideas: YouTubeIdea[] = JSON.parse(s);
-    const found = ideas.find(i => i.id === id);
-    if (!found) { setNotFound(true); return; }
-    setIdea(found);
-    setConceptDraft(found.concept);
+    const idx = ideas.findIndex(i => i.id === id);
+    if (idx === -1) { setNotFound(true); return; }
+    setIdea(ideas[idx]);
+    setConceptDraft(ideas[idx].concept);
+    setPrevIdea(idx > 0 ? { id: ideas[idx - 1].id, title: ideas[idx - 1].title } : null);
+    setNextIdea(idx < ideas.length - 1 ? { id: ideas[idx + 1].id, title: ideas[idx + 1].title } : null);
   }, [id]);
 
   function persist(updated: YouTubeIdea) {
@@ -92,11 +96,43 @@ export default function IdeaPage() {
 
   return (
     <div style={{ minHeight: "100vh", padding: "8rem 1.5rem 4rem", maxWidth: "800px", margin: "0 auto" }}>
-      <Link href="/me/youtube"
-        style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "1.5rem" }}
-        onMouseEnter={e => (e.currentTarget.style.color = "var(--cyan)")}
-        onMouseLeave={e => (e.currentTarget.style.color = "var(--text-sec)")}
-      >← YouTube Ideas</Link>
+      {/* Nav row */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem", gap: "1rem" }}>
+        <Link href="/me/youtube"
+          style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.55rem 1.25rem", border: "1px solid var(--border)", borderRadius: "999px", transition: "border-color 0.2s, color 0.2s", flexShrink: 0 }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--cyan)"; e.currentTarget.style.color = "var(--cyan)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
+        >← All Ideas</Link>
+
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          {prevIdea ? (
+            <Link href={`/me/youtube/${prevIdea.id}`}
+              style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.55rem 1.25rem", border: "1px solid var(--border)", borderRadius: "999px", transition: "border-color 0.2s, color 0.2s", maxWidth: "160px", overflow: "hidden" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--cyan)"; e.currentTarget.style.color = "var(--cyan)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
+              title={prevIdea.title}
+            >
+              <span>←</span>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{prevIdea.title}</span>
+            </Link>
+          ) : (
+            <div style={{ padding: "0.55rem 1.25rem", opacity: 0 }}>←</div>
+          )}
+          {nextIdea ? (
+            <Link href={`/me/youtube/${nextIdea.id}`}
+              style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.55rem 1.25rem", border: "1px solid var(--border)", borderRadius: "999px", transition: "border-color 0.2s, color 0.2s", maxWidth: "160px", overflow: "hidden" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--cyan)"; e.currentTarget.style.color = "var(--cyan)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
+              title={nextIdea.title}
+            >
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nextIdea.title}</span>
+              <span>→</span>
+            </Link>
+          ) : (
+            <div style={{ padding: "0.55rem 1.25rem", opacity: 0 }}>→</div>
+          )}
+        </div>
+      </div>
 
       {/* Header */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start", marginBottom: "2rem" }}>
