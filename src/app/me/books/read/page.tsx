@@ -18,11 +18,13 @@ function Reader() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    if (!id) return;
     const s = localStorage.getItem("me_books");
-    if (!s || !id) { setNotFound(true); return; }
+    if (!s) { setNotFound(true); return; }
     const books: Book[] = JSON.parse(s);
     const found = books.find(b => b.id === id);
     if (!found || !found.pdf) { setNotFound(true); return; }
+    setNotFound(false);
     setBook(found);
   }, [id]);
 
