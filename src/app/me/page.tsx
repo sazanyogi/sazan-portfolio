@@ -17,13 +17,6 @@ const apps: { label: string; href: string; bg: string; internal?: boolean }[] = 
   { label: "Search Console", href: "https://search.google.com/search-console", bg: "#4285f4" },
 ];
 
-const youtubeIdeas = [
-  "Solo camping in Algonquin — overnight timelapse",
-  "Big Data tools I actually use day-to-day",
-  "Canada vs Nepal — cost of living comparison",
-  "My study routine as an international student",
-  "Best budget gear for travel filmmaking",
-];
 
 const reminders = [
   "Remember to back up Lightroom catalog",
@@ -315,6 +308,72 @@ function BooksCard() {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ─── YouTube Ideas card ───────────────────────────────────────────────────────
+
+type IdeaSnap = { id: string; title: string; tagline: string; status: string; color: string; };
+
+const STATUS_COLORS_YT: Record<string, string> = {
+  brainstorm: "#636e72", planning: "#f39c12", filming: "#e74c3c", editing: "#6c5ce7", published: "#00b894",
+};
+
+function YouTubeCard() {
+  const [ideas, setIdeas] = useState<IdeaSnap[]>([]);
+
+  useEffect(() => {
+    const s = localStorage.getItem("me_youtube");
+    if (s) setIdeas(JSON.parse(s));
+  }, []);
+
+  const inMotion  = ideas.filter(i => i.status !== "brainstorm" && i.status !== "published").length;
+  const published = ideas.filter(i => i.status === "published").length;
+
+  return (
+    <Link href="/me/youtube" style={{ textDecoration: "none", display: "block", height: "100%" }}>
+      <div
+        style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "1rem", cursor: "none", transition: "border-color 0.2s" }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = "#ff0000")}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--border)")}
+      >
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>YouTube</p>
+
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "2rem", color: "#ff0000", letterSpacing: "-0.03em", lineHeight: 1 }}>{ideas.length}</p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.35rem" }}>CHANNEL IDEAS</p>
+        </div>
+
+        <div style={{ display: "flex", gap: "1.25rem" }}>
+          <div>
+            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: "var(--cyan)" }}>{inMotion}</p>
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "var(--text-sec)", letterSpacing: "0.05em", marginTop: "0.2rem" }}>IN PROGRESS</p>
+          </div>
+          <div style={{ width: "1px", background: "var(--border)" }} />
+          <div>
+            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.95rem", color: "var(--cyan)" }}>{published}</p>
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "var(--text-sec)", letterSpacing: "0.05em", marginTop: "0.2rem" }}>PUBLISHED</p>
+          </div>
+        </div>
+
+        <div style={{ height: "1px", background: "var(--border)" }} />
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", flex: 1 }}>
+          {ideas.length === 0 && <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)" }}>No ideas yet.</p>}
+          {ideas.map(idea => (
+            <div key={idea.id} style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: idea.color, flexShrink: 0 }} />
+              <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{idea.title}</p>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.42rem", color: STATUS_COLORS_YT[idea.status] ?? "var(--text-sec)", letterSpacing: "0.06em", flexShrink: 0 }}>{idea.status.toUpperCase()}</span>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--cyan)", letterSpacing: "0.06em" }}>Open ideas →</p>
+      </div>
+    </Link>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem" }}>
@@ -391,16 +450,7 @@ export default function MePage() {
         <MoviesCard />
         <BooksCard />
 
-        <Card title="YouTube Ideas">
-          <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", listStyle: "none" }}>
-            {youtubeIdeas.map((idea, i) => (
-              <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", marginTop: "0.2rem", flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
-                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.875rem", color: "var(--text-sec)", lineHeight: 1.4 }}>{idea}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
+        <YouTubeCard />
 
         <Card title="Reminders">
           <ul style={{ display: "flex", flexDirection: "column", gap: "0.65rem", listStyle: "none" }}>
