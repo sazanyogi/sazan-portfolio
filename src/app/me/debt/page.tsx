@@ -10,7 +10,7 @@ const iOwe = [
     name: "Ambika Adhikari",
     amount: 7500,
     note: "Bihe + Canada help",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Kartik 2/3 - jagga kinda", date: "2025-10-20", amount: -2500 },
       { label: "Bihe + Canada",            date: "2023-03-05", amount: -5000 },
@@ -20,7 +20,7 @@ const iOwe = [
     name: "Sanu Aunty",
     amount: 3000,
     note: "Pay anytime but need to pay full",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Kartik 3/4 - Chaurko Jaga Kinda", date: "2025-10-20", amount: -3000 },
     ],
@@ -29,7 +29,7 @@ const iOwe = [
     name: "Jitendra Nath Yogi",
     amount: 1000,
     note: "Canada visa + land purchase help",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Paid by daddy",              date: "2026-05-24", amount: 1500 },
       { label: "Paid by daddy",              date: "2026-03-11", amount: 1000 },
@@ -43,7 +43,7 @@ const iOwe = [
     name: "Sita Didi",
     amount: 2000,
     note: "When she comes back to Nepal",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Payment",                              date: "2026-05-12", amount: 500 },
       { label: "Ded Lakh Tiryo - Japan jane process",  date: "2026-04-05", amount: 1500 },
@@ -54,7 +54,7 @@ const iOwe = [
     name: "Hari Sir",
     amount: 2000,
     note: "Max 1 year",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Kartik 3/4 - Chaur ko Jaga Kinda", date: "2024-10-20", amount: -2000 },
     ],
@@ -63,7 +63,7 @@ const iOwe = [
     name: "Tika Nath Yogi",
     amount: 1500,
     note: "Canada aauda leko",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Canada aauda leko", date: "2023-07-05", amount: -1500 },
     ],
@@ -72,7 +72,7 @@ const iOwe = [
     name: "Niroj KC",
     amount: 250,
     note: "Help",
-    color: "#FF3CAC",
+    color: "var(--pink)",
     transactions: [
       { label: "Help", date: "2025-08-13", amount: -250 },
     ],
@@ -84,7 +84,7 @@ const owedToMe = [
     name: "Kritika Adhikari",
     amount: 1000,
     note: "College fee tirna",
-    color: "#00F5FF",
+    color: "var(--cyan)",
     transactions: [
       { label: "College fee tirna", date: "2026-03-28", amount: 1000 },
     ],
@@ -93,7 +93,7 @@ const owedToMe = [
     name: "Lokendra Shah",
     amount: 500,
     note: "",
-    color: "#00F5FF",
+    color: "var(--cyan)",
     transactions: [
       { label: "I gave", date: "2026-02-16", amount: 500 },
     ],
@@ -188,7 +188,7 @@ function PersonCard({
                   <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.825rem", color: "var(--text)" }}>{t.label}</p>
                   <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.04em", marginTop: "1px" }}>{t.date}</p>
                 </div>
-                <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", fontWeight: 700, color: t.amount > 0 ? "#00F5FF" : "#FF3CAC", flexShrink: 0 }}>
+                <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", fontWeight: 700, color: t.amount > 0 ? "var(--cyan)" : "var(--pink)", flexShrink: 0 }}>
                   {t.amount > 0 ? "+" : "−"}{fmt(t.amount)}
                 </p>
               </div>
@@ -222,8 +222,8 @@ function SettledCard({ name, note, gave, received, transactions }: { name: strin
       {open && transactions.length > 0 && (
         <div style={{ borderTop: "1px solid var(--border)", padding: "0.75rem 1.5rem 1.25rem" }}>
           <div style={{ display: "flex", gap: "2rem", marginBottom: "0.75rem" }}>
-            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "#00F5FF", letterSpacing: "0.06em" }}>Gave: {fmt(gave)}</span>
-            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "#FF3CAC", letterSpacing: "0.06em" }}>Received: {fmt(received)}</span>
+            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", letterSpacing: "0.06em" }}>Gave: {fmt(gave)}</span>
+            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--pink)", letterSpacing: "0.06em" }}>Received: {fmt(received)}</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
             {transactions.map((t, i) => (
@@ -232,7 +232,7 @@ function SettledCard({ name, note, gave, received, transactions }: { name: strin
                   <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.825rem", color: "var(--text)" }}>{t.label}</p>
                   <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", marginTop: "1px" }}>{t.date}</p>
                 </div>
-                <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", fontWeight: 700, color: t.amount > 0 ? "#00F5FF" : "#FF3CAC", flexShrink: 0 }}>
+                <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.8rem", fontWeight: 700, color: t.amount > 0 ? "var(--cyan)" : "var(--pink)", flexShrink: 0 }}>
                   {t.amount > 0 ? "+" : "−"}{fmt(t.amount)}
                 </p>
               </div>
@@ -281,9 +281,9 @@ export default function DebtPage() {
       {/* Summary */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
         {[
-          { label: "You Owe",       value: fmt(totalOwe),     color: "#FF3CAC", sub: `${iOwe.length} people` },
-          { label: "Owed to You",   value: fmt(totalCollect), color: "#00F5FF", sub: `${owedToMe.length} people` },
-          { label: "Net Position",  value: fmt(Math.abs(net)), color: net >= 0 ? "#00F5FF" : "#FF3CAC", sub: net >= 0 ? "in your favour" : "you owe more" },
+          { label: "You Owe",       value: fmt(totalOwe),     color: "var(--pink)", sub: `${iOwe.length} people` },
+          { label: "Owed to You",   value: fmt(totalCollect), color: "var(--cyan)", sub: `${owedToMe.length} people` },
+          { label: "Net Position",  value: fmt(Math.abs(net)), color: net >= 0 ? "var(--cyan)" : "var(--pink)", sub: net >= 0 ? "in your favour" : "you owe more" },
           { label: "Settled",       value: `${settled.length}`, color: "#4caf50", sub: "all cleared" },
         ].map((s) => (
           <div key={s.label} style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.25rem 1.5rem" }}>
