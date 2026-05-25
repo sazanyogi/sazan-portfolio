@@ -5,20 +5,98 @@ import { useState } from "react";
 
 // ─── Edit your content here ───────────────────────────────────────────────────
 
-// Paste your Google Calendar embed URL here.
-// How to get it: Google Calendar → Settings (⚙) → your calendar name
-// → "Integrate calendar" → copy the URL from the Embed Code src="..."
-// Tip: add &mode=WEEK&bgcolor=%230A0A0F to match the dark theme
-const GOOGLE_CALENDAR_EMBED_URL =
-  "https://calendar.google.com/calendar/embed?src=sazanyogi%40gmail.com&ctz=America%2FToronto&mode=WEEK&bgcolor=%230A0A0F&color=%2300F5FF&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0";
-
-const bookmarks = [
-  { label: "YouTube Studio", href: "https://studio.youtube.com" },
-  { label: "Google Analytics", href: "https://analytics.google.com" },
-  { label: "Notion", href: "https://notion.so" },
-  { label: "Lightroom", href: "https://lightroom.adobe.com" },
-  { label: "Canva", href: "https://canva.com" },
-  { label: "ChatGPT", href: "https://chat.openai.com" },
+const apps = [
+  {
+    label: "Calendar",
+    href: "https://calendar.google.com",
+    bg: "#1a73e8",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+        <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" strokeWidth="1.8"/>
+        <path d="M16 2v4M8 2v4M3 10h18" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+        <rect x="8" y="13" width="3" height="3" rx="0.5" fill="white"/>
+        <rect x="13" y="13" width="3" height="3" rx="0.5" fill="white"/>
+      </svg>
+    ),
+  },
+  {
+    label: "YT Studio",
+    href: "https://studio.youtube.com",
+    bg: "#ff0000",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+        <path d="M10 8l6 4-6 4V8z"/>
+        <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.4 4 12 4 12 4s-4.4 0-6.8.3c-.4.1-1.3.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.4v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.2.8C6.6 18 12 18 12 18s4.4 0 6.8-.3c.4-.1 1.3-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 8.8 21.6 7.2 21.6 7.2z" fillOpacity="0.3"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Analytics",
+    href: "https://analytics.google.com",
+    bg: "#e37400",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+        <rect x="3" y="12" width="4" height="9" rx="1" fill="white"/>
+        <rect x="10" y="7" width="4" height="14" rx="1" fill="white"/>
+        <rect x="17" y="3" width="4" height="18" rx="1" fill="white"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Notion",
+    href: "https://notion.so",
+    bg: "#191919",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="white" width="26" height="26">
+        <path d="M4.5 3.5h10l5 5v12a.5.5 0 01-.5.5h-14a.5.5 0 01-.5-.5v-17a.5.5 0 01.5-.5z" fillOpacity="0.15" stroke="white" strokeWidth="1.5"/>
+        <path d="M14.5 3.5v5h5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 12h8M8 15h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Lightroom",
+    href: "https://lightroom.adobe.com",
+    bg: "#001e36",
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <text x="4" y="18" fontSize="14" fontWeight="700" fill="#31a8ff" fontFamily="serif">Lr</text>
+      </svg>
+    ),
+  },
+  {
+    label: "Canva",
+    href: "https://canva.com",
+    bg: "#7d2ae8",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+        <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.8"/>
+        <circle cx="12" cy="12" r="3" fill="white"/>
+      </svg>
+    ),
+  },
+  {
+    label: "ChatGPT",
+    href: "https://chat.openai.com",
+    bg: "#10a37f",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="white" width="26" height="26">
+        <path d="M12 2a7 7 0 00-6.32 10A7 7 0 1012 22a7 7 0 006.32-10A7 7 0 0012 2zm0 2a5 5 0 110 10A5 5 0 0112 4z" fillOpacity="0.4"/>
+        <circle cx="12" cy="12" r="3" fill="white"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Search Console",
+    href: "https://search.google.com/search-console",
+    bg: "#4285f4",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+        <circle cx="11" cy="11" r="6" stroke="white" strokeWidth="1.8"/>
+        <path d="M15.5 15.5L20 20" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
 ];
 
 const youtubeIdeas = [
@@ -37,9 +115,9 @@ const notes = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Card({ title, children, style }: { title: string; children: React.ReactNode; style?: React.CSSProperties }) {
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", ...style }}>
+    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem" }}>
       <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem" }}>
         {title}
       </p>
@@ -47,24 +125,6 @@ function Card({ title, children, style }: { title: string; children: React.React
     </div>
   );
 }
-
-function LinkRow({ href, label, external = false }: { href: string; label: string; external?: boolean }) {
-  const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
-  return (
-    <a
-      href={href}
-      {...props}
-      style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.9rem", color: "var(--text)", textDecoration: "none", padding: "0.45rem 0.75rem", borderRadius: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem", transition: "background 0.15s, color 0.15s" }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = "var(--chip-bg)"; e.currentTarget.style.color = "var(--cyan)"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--text)"; }}
-    >
-      <span style={{ opacity: 0.35, fontSize: "0.7rem" }}>→</span>
-      {label}
-    </a>
-  );
-}
-
-const isPlaceholder = GOOGLE_CALENDAR_EMBED_URL.includes("YOUR_EMAIL");
 
 export default function MePage() {
   const router = useRouter();
@@ -79,7 +139,7 @@ export default function MePage() {
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   return (
-    <div style={{ minHeight: "100vh", padding: "8rem 1.5rem 4rem", maxWidth: "1200px", margin: "0 auto" }}>
+    <div style={{ minHeight: "100vh", padding: "8rem 1.5rem 4rem", maxWidth: "1100px", margin: "0 auto" }}>
 
       {/* Header */}
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "3rem", flexWrap: "wrap", gap: "1rem" }}>
@@ -102,70 +162,35 @@ export default function MePage() {
         </button>
       </div>
 
-      {/* Google Calendar — full width */}
+      {/* App launcher */}
       <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.25rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.75rem" }}>
-          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            Google Calendar
-          </p>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+          Apps
+        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
+          {apps.map((app) => (
             <a
-              href="https://calendar.google.com/calendar/r/eventedit"
+              key={app.label}
+              href={app.href}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "#000", background: "var(--cyan)", padding: "0.35rem 0.85rem", borderRadius: "999px", textDecoration: "none", fontWeight: 700, letterSpacing: "0.06em", transition: "opacity 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textDecoration: "none", transition: "transform 0.15s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
             >
-              + New Event
+              <div style={{ width: "60px", height: "60px", borderRadius: "14px", background: app.bg, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}>
+                {app.icon}
+              </div>
+              <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.04em", textAlign: "center" }}>
+                {app.label}
+              </span>
             </a>
-            <a
-              href="https://calendar.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", background: "transparent", border: "1px solid var(--border)", padding: "0.35rem 0.85rem", borderRadius: "999px", textDecoration: "none", letterSpacing: "0.06em", transition: "border-color 0.2s, color 0.2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--cyan)"; e.currentTarget.style.color = "var(--cyan)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
-            >
-              Open →
-            </a>
-          </div>
+          ))}
         </div>
-
-        {isPlaceholder ? (
-          <div style={{ height: "500px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", background: "var(--bg)", borderRadius: "0.75rem", border: "1px dashed var(--border)" }}>
-            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "var(--text-sec)", letterSpacing: "0.08em", textAlign: "center", lineHeight: 1.8 }}>
-              Paste your Google Calendar embed URL into<br />
-              <span style={{ color: "var(--cyan)" }}>GOOGLE_CALENDAR_EMBED_URL</span> at the top of<br />
-              <span style={{ color: "var(--text)" }}>src/app/me/page.tsx</span>
-            </p>
-            <a
-              href="https://calendar.google.com/calendar/r/settings"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", color: "#000", background: "var(--cyan)", padding: "0.5rem 1.25rem", borderRadius: "999px", textDecoration: "none", fontWeight: 700, letterSpacing: "0.06em" }}
-            >
-              Get embed URL →
-            </a>
-          </div>
-        ) : (
-          <iframe
-            src={GOOGLE_CALENDAR_EMBED_URL}
-            style={{ width: "100%", height: "600px", border: "none", borderRadius: "0.75rem", filter: "invert(1) hue-rotate(180deg)", colorScheme: "dark" }}
-            title="Google Calendar"
-          />
-        )}
       </div>
 
       {/* Bottom grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1.25rem" }}>
-
-        {/* Bookmarks */}
-        <Card title="Daily Tools">
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-            {bookmarks.map((b) => <LinkRow key={b.label} href={b.href} label={b.label} external />)}
-          </div>
-        </Card>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
 
         {/* YouTube Ideas */}
         <Card title="YouTube Ideas">
@@ -195,30 +220,6 @@ export default function MePage() {
               </li>
             ))}
           </ul>
-        </Card>
-
-        {/* Stats */}
-        <Card title="Stats & Analytics">
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {[
-              { label: "YouTube Analytics", href: "https://studio.youtube.com/channel/analytics" },
-              { label: "Google Analytics", href: "https://analytics.google.com" },
-              { label: "Search Console", href: "https://search.google.com/search-console" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1rem", borderRadius: "0.5rem", background: "var(--chip-bg)", border: "1px solid var(--border)", textDecoration: "none", transition: "border-color 0.2s" }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--cyan)")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
-              >
-                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.875rem", color: "var(--text)" }}>{item.label}</span>
-                <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.06em" }}>OPEN →</span>
-              </a>
-            ))}
-          </div>
         </Card>
 
       </div>
