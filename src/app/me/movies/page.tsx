@@ -45,18 +45,15 @@ const SEED: Movie[] = [
   { id:"s5",  title:"1917",             director:"Sam Mendes",        year:2019, genre:"War",       status:"watched",
     summary:"Two British soldiers must cross enemy territory to deliver a message that could save 1,600 lives.",
     poster:"https://image.tmdb.org/t/p/w342/iZf0KyrE25z1sage4SYQLhzjCUu.jpg" },
-  { id:"s6",  title:"Oppenheimer",      director:"Christopher Nolan", year:2023, genre:"Drama",     status:"watchlist",
+  { id:"s6",  title:"Oppenheimer",      director:"Christopher Nolan", year:2023, genre:"Drama",     status:"watched",
     summary:"The story of J. Robert Oppenheimer, the physicist who led the Manhattan Project to develop the atomic bomb.",
     poster:"https://image.tmdb.org/t/p/w342/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" },
   { id:"s7",  title:"Past Lives",       director:"Celine Song",       year:2023, genre:"Romance",   status:"watchlist",
     summary:"Two childhood sweethearts reconnect over decades, questioning love, identity, and the lives not lived.",
     poster:"https://image.tmdb.org/t/p/w342/k3waqVXkpFfXsBHFCaHRfnkNHNq.jpg" },
-  { id:"s8",  title:"Dune: Part Two",   director:"Denis Villeneuve",  year:2024, genre:"Sci-Fi",    status:"watchlist",
+  { id:"s8",  title:"Dune: Part Two",   director:"Denis Villeneuve",  year:2024, genre:"Sci-Fi",    status:"watched",
     summary:"Paul Atreides unites with the Fremen to wage war against the conspirators who destroyed his family.",
     poster:"https://image.tmdb.org/t/p/w342/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg" },
-  { id:"s9",  title:"Poor Things",      director:"Yorgos Lanthimos",  year:2023, genre:"Fantasy",   status:"watchlist",
-    summary:"A young woman brought back to life by an eccentric scientist embarks on a daring journey of self-discovery.",
-    poster:"https://image.tmdb.org/t/p/w342/kCGlIMHnOm8JPXIwebHn04165mW.jpg" },
   { id:"s10", title:"The Brutalist",    director:"Brady Corbet",      year:2024, genre:"Drama",     status:"watchlist",
     summary:"A Hungarian-Jewish architect flees post-war Europe to rebuild his life and legacy in America.",
     poster:"" },
@@ -82,7 +79,15 @@ export default function MoviesPage() {
         localStorage.setItem("me_movies", JSON.stringify(SEED));
         setMovies(SEED);
       } else {
-        setMovies(parsed);
+        // Migrate: remove Poor Things, mark Oppenheimer + Dune: Part Two as watched
+        const migrated = parsed
+          .filter(m => m.id !== "s9")
+          .map(m => {
+            if (m.id === "s6" || m.id === "s8") return { ...m, status: "watched" as const };
+            return m;
+          });
+        localStorage.setItem("me_movies", JSON.stringify(migrated));
+        setMovies(migrated);
       }
     } else {
       setMovies(SEED);
