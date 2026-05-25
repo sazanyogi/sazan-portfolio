@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 // ─── Edit your content here ───────────────────────────────────────────────────
 
@@ -327,6 +328,21 @@ export default function MePage() {
             ))}
           </ul>
         </Card>
+
+        <Link href="/me/debt" style={{ textDecoration: "none" }}>
+          <div
+            style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", cursor: "none", transition: "border-color 0.2s" }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--cyan)")}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+          >
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem" }}>Financial</p>
+            <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.4rem", color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Debt Tracker</p>
+            <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.85rem", color: "var(--text-sec)", lineHeight: 1.5 }}>
+              Track what you owe, progress paid off, monthly payments and payoff dates.
+            </p>
+            <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--cyan)", letterSpacing: "0.08em", marginTop: "1.25rem" }}>Open →</p>
+          </div>
+        </Link>
 
       </div>
     </div>
