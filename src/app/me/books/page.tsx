@@ -29,31 +29,9 @@ const GENRE_COLORS: Record<string, string> = {
   Technology:    "#74b9ff",
 };
 
+const DUMMY_IDS = new Set(["b1","b2","b3","b4","b5","b6","b7","b8"]);
+
 const SEED: Book[] = [
-  { id:"b1", title:"Atomic Habits",            author:"James Clear",       year:2018, genre:"Self-Help",  status:"read",    progress:100,
-    summary:"Tiny changes, remarkable results. A proven framework for building good habits and breaking bad ones through small daily improvements.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg" },
-  { id:"b2", title:"The Alchemist",            author:"Paulo Coelho",      year:1988, genre:"Fiction",    status:"read",    progress:100,
-    summary:"A young shepherd crosses the desert in pursuit of his dream, guided by omens and the language of the universe.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg" },
-  { id:"b3", title:"Educated",                 author:"Tara Westover",     year:2018, genre:"Memoir",     status:"read",    progress:100,
-    summary:"A woman who grew up in a survivalist family with no formal schooling eventually earns a PhD from Cambridge University.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780399590504-L.jpg" },
-  { id:"b4", title:"Sapiens",                  author:"Yuval Noah Harari", year:2011, genre:"History",    status:"read",    progress:100,
-    summary:"A sweeping history of humankind, tracing how Homo sapiens came to dominate the Earth over 70,000 years.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780062316097-L.jpg" },
-  { id:"b5", title:"The Power of Now",         author:"Eckhart Tolle",     year:1997, genre:"Philosophy", status:"reading", progress:40,
-    summary:"A guide to spiritual enlightenment through living fully in the present moment and escaping the tyranny of the restless mind.",
-    cover:"https://covers.openlibrary.org/b/isbn/9781577314806-L.jpg" },
-  { id:"b6", title:"The Psychology of Money",  author:"Morgan Housel",     year:2020, genre:"Business",   status:"want",    progress:0,
-    summary:"Timeless lessons on wealth, greed, and happiness — how people think about money and how to think about it better.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg" },
-  { id:"b7", title:"Deep Work",                author:"Cal Newport",       year:2016, genre:"Self-Help",  status:"want",    progress:0,
-    summary:"Rules for focused success in a distracted world. How to cultivate deep concentration and produce elite-level work.",
-    cover:"https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg" },
-  { id:"b8", title:"Man's Search for Meaning", author:"Viktor Frankl",     year:1946, genre:"Philosophy", status:"want",    progress:0,
-    summary:"A Holocaust survivor's account of life in Nazi camps and his discovery that meaning — not pleasure — is what drives us.",
-    cover:"https://covers.openlibrary.org/b/isbn/9780807014271-L.jpg" },
   { id:"b9", title:"Goodbye, Things",          author:"Fumio Sasaki",      year:2017, genre:"Non-Fiction", status:"want",    progress:0,
     summary:"A Japanese minimalist shares how letting go of possessions transformed his life, and how owning less can lead to more happiness.",
     cover:"https://covers.openlibrary.org/b/isbn/9780393609035-L.jpg",
@@ -83,27 +61,19 @@ export default function BooksPage() {
 
   useEffect(() => {
     const s = localStorage.getItem("me_books");
-    if (s) {
-      const parsed: Book[] = JSON.parse(s);
-      if (!parsed.length || !("summary" in parsed[0])) {
-        localStorage.setItem("me_books", JSON.stringify(SEED));
-        setBooks(SEED);
-      } else {
-        // merge any SEED books not yet in stored list, and backfill pdf URLs
-        const ids = new Set(parsed.map(b => b.id));
-        const merged = [
-          ...parsed.map(b => {
-            const seed = SEED.find(s => s.id === b.id);
-            return seed?.pdf && !b.pdf ? { ...b, pdf: seed.pdf } : b;
-          }),
-          ...SEED.filter(s => !ids.has(s.id)),
-        ];
-        localStorage.setItem("me_books", JSON.stringify(merged));
-        setBooks(merged);
-      }
-    } else {
-      setBooks(SEED);
-    }
+    const raw: Book[] = s ? JSON.parse(s) : [];
+    // strip old dummy books, backfill pdf on matching SEED entries, add missing SEED books
+    const real = raw.filter(b => !DUMMY_IDS.has(b.id));
+    const realIds = new Set(real.map(b => b.id));
+    const merged = [
+      ...real.map(b => {
+        const seed = SEED.find(sd => sd.id === b.id);
+        return seed?.pdf && !b.pdf ? { ...b, pdf: seed.pdf } : b;
+      }),
+      ...SEED.filter(sd => !realIds.has(sd.id)),
+    ];
+    localStorage.setItem("me_books", JSON.stringify(merged));
+    setBooks(merged);
   }, []);
 
   function save(next: Book[]) {

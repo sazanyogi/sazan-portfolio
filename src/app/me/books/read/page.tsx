@@ -87,12 +87,10 @@ function Reader() {
           <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.06em", maxWidth: "260px", lineHeight: 1.6 }}>
             Mobile browsers can't display PDFs inline. Tap below to open in your phone's PDF viewer.
           </p>
-          <a
-            href={book.pdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", color: "#000", background: "var(--cyan)", padding: "0.75rem 2rem", borderRadius: "999px", textDecoration: "none" }}
-          >Open PDF</a>
+          <button
+            onClick={() => { window.location.href = book.pdf!; }}
+            style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", color: "#000", background: "var(--cyan)", padding: "0.75rem 2rem", borderRadius: "999px", border: "none", cursor: "pointer" }}
+          >Open PDF</button>
         </div>
       </div>
     );
