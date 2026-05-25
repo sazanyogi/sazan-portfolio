@@ -54,6 +54,14 @@ const SEED: Book[] = [
   { id:"b8", title:"Man's Search for Meaning", author:"Viktor Frankl",     year:1946, genre:"Philosophy", status:"want",    progress:0,
     summary:"A Holocaust survivor's account of life in Nazi camps and his discovery that meaning — not pleasure — is what drives us.",
     cover:"https://covers.openlibrary.org/b/isbn/9780807014271-L.jpg" },
+  { id:"b9", title:"Goodbye, Things",          author:"Fumio Sasaki",      year:2017, genre:"Non-Fiction", status:"want",    progress:0,
+    summary:"A Japanese minimalist shares how letting go of possessions transformed his life, and how owning less can lead to more happiness.",
+    cover:"https://covers.openlibrary.org/b/isbn/9780393609035-L.jpg",
+    pdf:"https://6p0tc95qrt77midy.public.blob.vercel-storage.com/books/Goodbye%2C%20Things_%20On%20Minimalist%20Living.pdf" },
+  { id:"b10", title:"Rich Dad Poor Dad",        author:"Robert Kiyosaki",   year:1997, genre:"Business",   status:"want",    progress:0,
+    summary:"What the rich teach their kids about money that the poor and middle class do not. A case for financial education and building assets.",
+    cover:"https://covers.openlibrary.org/b/isbn/9781612680194-L.jpg",
+    pdf:"https://6p0tc95qrt77midy.public.blob.vercel-storage.com/books/Rich%20Dad%2C%20Poor%20Dad.pdf" },
 ];
 
 function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
@@ -81,7 +89,17 @@ export default function BooksPage() {
         localStorage.setItem("me_books", JSON.stringify(SEED));
         setBooks(SEED);
       } else {
-        setBooks(parsed);
+        // merge any SEED books not yet in stored list, and backfill pdf URLs
+        const ids = new Set(parsed.map(b => b.id));
+        const merged = [
+          ...parsed.map(b => {
+            const seed = SEED.find(s => s.id === b.id);
+            return seed?.pdf && !b.pdf ? { ...b, pdf: seed.pdf } : b;
+          }),
+          ...SEED.filter(s => !ids.has(s.id)),
+        ];
+        localStorage.setItem("me_books", JSON.stringify(merged));
+        setBooks(merged);
       }
     } else {
       setBooks(SEED);
