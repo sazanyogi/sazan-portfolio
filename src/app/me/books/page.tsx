@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 type Book = {
@@ -13,6 +13,7 @@ type Book = {
   progress: number;
   summary: string;
   cover: string;
+  pdf?: string;
 };
 
 const GENRE_COLORS: Record<string, string> = {
@@ -60,12 +61,17 @@ function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
 const BLANK = { title: "", author: "", year: String(new Date().getFullYear()), genre: "Fiction", summary: "", cover: "" };
 
 export default function BooksPage() {
-  const [books, setBooks]         = useState<Book[]>([]);
-  const [tab, setTab]             = useState<"want" | "read">("want");
-  const [genre, setGenre]         = useState("All");
-  const [showAdd, setShowAdd]     = useState(false);
-  const [form, setForm]           = useState(BLANK);
+  const [books, setBooks]             = useState<Book[]>([]);
+  const [tab, setTab]                 = useState<"want" | "read">("want");
+  const [genre, setGenre]             = useState("All");
+  const [showAdd, setShowAdd]         = useState(false);
+  const [form, setForm]               = useState(BLANK);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [pdfFile, setPdfFile]         = useState<File | null>(null);
+  const [uploading, setUploading]     = useState(false);
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
+  const fileRef                       = useRef<HTMLInputElement>(null);
+  const cardFileRefs                  = useRef<Record<string, HTMLInputElement | null>>({});
 
   useEffect(() => {
     const s = localStorage.getItem("me_books");
@@ -87,21 +93,49 @@ export default function BooksPage() {
     localStorage.setItem("me_books", JSON.stringify(next));
   }
 
-  function add() {
+  async function uploadPdf(file: File): Promise<string> {
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/books/upload", { method: "POST", body: fd });
+    if (!res.ok) throw new Error("Upload failed");
+    const { url } = await res.json();
+    return url as string;
+  }
+
+  async function add() {
     if (!form.title.trim()) return;
-    save([...books, {
-      id: Date.now().toString(),
-      title: form.title.trim(),
-      author: form.author.trim(),
-      year: parseInt(form.year) || new Date().getFullYear(),
-      genre: form.genre,
-      status: tab === "read" ? "read" : "want",
-      progress: tab === "read" ? 100 : 0,
-      summary: form.summary.trim(),
-      cover: form.cover.trim(),
-    }]);
-    setForm(BLANK);
-    setShowAdd(false);
+    setUploading(true);
+    try {
+      let pdfUrl: string | undefined;
+      if (pdfFile) pdfUrl = await uploadPdf(pdfFile);
+      save([...books, {
+        id: Date.now().toString(),
+        title: form.title.trim(),
+        author: form.author.trim(),
+        year: parseInt(form.year) || new Date().getFullYear(),
+        genre: form.genre,
+        status: tab === "read" ? "read" : "want",
+        progress: tab === "read" ? 100 : 0,
+        summary: form.summary.trim(),
+        cover: form.cover.trim(),
+        pdf: pdfUrl,
+      }]);
+      setForm(BLANK);
+      setPdfFile(null);
+      setShowAdd(false);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function attachPdf(bookId: string, file: File) {
+    setUploadingId(bookId);
+    try {
+      const url = await uploadPdf(file);
+      save(books.map(b => b.id === bookId ? { ...b, pdf: url } : b));
+    } finally {
+      setUploadingId(null);
+    }
   }
 
   const currentlyReading = books.filter(b => b.status === "reading");
@@ -155,13 +189,32 @@ export default function BooksPage() {
               {Object.keys(GENRE_COLORS).map(g => <option key={g} value={g}>{g}</option>)}
             </select>
           </div>
-          <input value={form.cover} onChange={e => setForm({ ...form, cover: e.target.value })} placeholder="Cover image URL (optional — e.g. from Open Library or Goodreads)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
-          <input value={form.summary} onChange={e => setForm({ ...form, summary: e.target.value })} onKeyDown={e => e.key === "Enter" && add()} placeholder="Short summary (1–2 lines)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+          <input value={form.cover} onChange={e => setForm({ ...form, cover: e.target.value })} placeholder="Cover image URL (optional)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+          <input value={form.summary} onChange={e => setForm({ ...form, summary: e.target.value })} placeholder="Short summary (1–2 lines)" style={{ ...inp, width: "100%" }} onFocus={e => (e.currentTarget.style.borderColor = "var(--cyan)")} onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")} />
+
+          {/* PDF upload */}
+          <div
+            onClick={() => fileRef.current?.click()}
+            style={{ border: `1px dashed ${pdfFile ? "var(--cyan)" : "var(--border)"}`, borderRadius: "0.5rem", padding: "0.75rem 1rem", cursor: "none", display: "flex", alignItems: "center", gap: "0.75rem", transition: "border-color 0.2s" }}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--cyan)")}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = pdfFile ? "var(--cyan)" : "var(--border)")}
+          >
+            <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.04em" }}>
+              {pdfFile ? `📄 ${pdfFile.name}` : "Attach PDF (optional) — click to choose file"}
+            </span>
+            {pdfFile && (
+              <button onClick={e => { e.stopPropagation(); setPdfFile(null); }} style={{ marginLeft: "auto", background: "none", border: "none", color: "var(--text-sec)", fontSize: "0.75rem", cursor: "none", padding: 0 }}>✕</button>
+            )}
+          </div>
+          <input ref={fileRef} type="file" accept="application/pdf" style={{ display: "none" }} onChange={e => setPdfFile(e.target.files?.[0] ?? null)} />
+
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.55rem", color: "var(--text-sec)", letterSpacing: "0.06em" }}>
               Adding to: <span style={{ color: "var(--cyan)" }}>{tab === "want" ? "Want to Read" : "Read"}</span>
             </p>
-            <button onClick={add} disabled={!form.title.trim()} style={{ background: form.title.trim() ? "var(--cyan)" : "var(--border)", color: form.title.trim() ? "#000" : "var(--text-sec)", border: "none", borderRadius: "0.5rem", padding: "0.6rem 1.25rem", fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", fontWeight: 700, cursor: "none", transition: "all 0.2s" }}>Save</button>
+            <button onClick={add} disabled={!form.title.trim() || uploading} style={{ background: form.title.trim() && !uploading ? "var(--cyan)" : "var(--border)", color: form.title.trim() && !uploading ? "#000" : "var(--text-sec)", border: "none", borderRadius: "0.5rem", padding: "0.6rem 1.25rem", fontFamily: "var(--font-space-mono)", fontSize: "0.65rem", fontWeight: 700, cursor: "none", transition: "all 0.2s" }}>
+              {uploading ? "Uploading…" : "Save"}
+            </button>
           </div>
         </div>
       )}
@@ -181,6 +234,11 @@ export default function BooksPage() {
                   <div style={{ flex: "1 1 160px" }}>
                     <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1rem", color: "var(--text)" }}>{b.title}</p>
                     <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.75rem", color: "var(--text-sec)", marginTop: "2px" }}>{b.author}</p>
+                    {b.pdf && (
+                      <Link href={`/me/books/read?id=${b.id}`} style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--cyan)", letterSpacing: "0.06em", textDecoration: "none", display: "inline-block", marginTop: "0.35rem" }}>
+                        Read PDF →
+                      </Link>
+                    )}
                   </div>
                   <div style={{ flex: "2 1 200px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.35rem" }}>
@@ -247,14 +305,13 @@ export default function BooksPage() {
               >
                 {/* Cover — 3D flip */}
                 <div style={{ aspectRatio: "2/3", position: "relative", flexShrink: 0, perspective: "800px" }}>
-                  {/* Flipper */}
                   <div style={{
                     position: "absolute", inset: 0,
                     transformStyle: "preserve-3d",
                     transition: "transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1)",
                     transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
                   }}>
-                    {/* Front face — cover */}
+                    {/* Front face */}
                     <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", overflow: "hidden", borderRadius: "1rem 1rem 0 0" }}>
                       {b.cover && (
                         <img src={b.cover} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -275,13 +332,15 @@ export default function BooksPage() {
                         <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "1.05rem", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{b.title}</p>
                         <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.7rem", color: "var(--text-sec)" }}>{b.author}</p>
                       </div>
-
                       {b.status === "read" && (
                         <span style={{ position: "absolute", top: "0.5rem", left: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", letterSpacing: "0.08em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "#4caf50", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>✓ READ</span>
                       )}
+                      {b.pdf && (
+                        <span style={{ position: "absolute", bottom: "0.5rem", right: "0.5rem", fontFamily: "var(--font-space-mono)", fontSize: "0.42rem", letterSpacing: "0.06em", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", color: "var(--cyan)", borderRadius: "999px", padding: "0.2rem 0.5rem" }}>PDF</span>
+                      )}
                     </div>
 
-                    {/* Back face — summary */}
+                    {/* Back face */}
                     <div style={{
                       position: "absolute", inset: 0,
                       backfaceVisibility: "hidden",
@@ -311,10 +370,30 @@ export default function BooksPage() {
                 <div style={{ padding: "0.85rem 1rem", display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1 }}>
                   <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.04em" }}>{b.author}</p>
                   <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", letterSpacing: "-0.01em", lineHeight: 1.25 }}>{b.title}</p>
-                  <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
+                  <div style={{ marginTop: "auto", paddingTop: "0.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.4rem" }}>
                     <span style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", letterSpacing: "0.1em", color, background: color + "20", border: `1px solid ${color}44`, borderRadius: "999px", padding: "0.1rem 0.45rem" }}>
                       {b.genre.toUpperCase()}
                     </span>
+                    {b.pdf ? (
+                      <Link href={`/me/books/read?id=${b.id}`}
+                        style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.48rem", color: "#000", background: "var(--cyan)", border: "none", borderRadius: "999px", padding: "0.2rem 0.6rem", textDecoration: "none", letterSpacing: "0.06em", fontWeight: 700, flexShrink: 0 }}
+                      >Read</Link>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => cardFileRefs.current[b.id]?.click()}
+                          disabled={uploadingId === b.id}
+                          style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.45rem", color: "var(--text-sec)", background: "transparent", border: "1px solid var(--border)", borderRadius: "999px", padding: "0.18rem 0.5rem", cursor: "none", letterSpacing: "0.05em", flexShrink: 0, transition: "all 0.15s" }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--cyan)"; e.currentTarget.style.color = "var(--cyan)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-sec)"; }}
+                        >{uploadingId === b.id ? "…" : "+ PDF"}</button>
+                        <input
+                          type="file" accept="application/pdf" style={{ display: "none" }}
+                          ref={el => { cardFileRefs.current[b.id] = el; }}
+                          onChange={e => { const f = e.target.files?.[0]; if (f) attachPdf(b.id, f); }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
