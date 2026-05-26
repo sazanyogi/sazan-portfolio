@@ -54,8 +54,26 @@ const SEED: Movie[] = [
   { id:"s8",  title:"Dune: Part Two",   director:"Denis Villeneuve",  year:2024, genre:"Sci-Fi",    status:"watched",
     summary:"Paul Atreides unites with the Fremen to wage war against the conspirators who destroyed his family.",
     poster:"https://image.tmdb.org/t/p/w342/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg" },
-  { id:"s10", title:"The Brutalist",    director:"Brady Corbet",      year:2024, genre:"Drama",     status:"watchlist",
+  { id:"s10", title:"The Brutalist",        director:"Brady Corbet",      year:2024, genre:"Drama",    status:"watchlist",
     summary:"A Hungarian-Jewish architect flees post-war Europe to rebuild his life and legacy in America.",
+    poster:"" },
+  { id:"s11", title:"Wild Tales",           director:"Damián Szifron",    year:2014, genre:"Comedy",   status:"watchlist",
+    summary:"Six darkly comic tales of revenge, frustration, and primal rage — ordinary people pushed far past their limits.",
+    poster:"" },
+  { id:"s12", title:"Funny Games",          director:"Michael Haneke",    year:2007, genre:"Horror",   status:"watchlist",
+    summary:"Two polite strangers take a family hostage and force them into sadistic games — a brutal deconstruction of screen violence.",
+    poster:"" },
+  { id:"s13", title:"No Other Choice",      director:"",                  year:2025, genre:"Thriller", status:"watchlist",
+    summary:"A 2025 comedy thriller. IMDb 7.5.",
+    poster:"" },
+  { id:"s14", title:"The Handmaiden",       director:"Park Chan-wook",    year:2016, genre:"Thriller", status:"watchlist",
+    summary:"A con artist poses as handmaiden to a reclusive heiress, but unexpected desire unravels their elaborate scheme of betrayal.",
+    poster:"" },
+  { id:"s15", title:"Requiem for a Dream",  director:"Darren Aronofsky",  year:2000, genre:"Drama",    status:"watchlist",
+    summary:"Four people in Brooklyn become consumed by their dreams and addictions, each spiralling into their own harrowing descent.",
+    poster:"" },
+  { id:"s16", title:"Sapne vs Everyone",    director:"",                  year:2023, genre:"Drama",    status:"watchlist",
+    summary:"Indian series — a dreamer fights against all odds to turn their aspirations into reality.",
     poster:"" },
 ];
 
@@ -79,13 +97,15 @@ export default function MoviesPage() {
         localStorage.setItem("me_movies", JSON.stringify(SEED));
         setMovies(SEED);
       } else {
-        // Migrate: remove Poor Things, mark Oppenheimer + Dune: Part Two as watched
-        const migrated = parsed
+        // Migrate: remove Poor Things, fix statuses, add any new SEED entries
+        const step1 = parsed
           .filter(m => m.id !== "s9")
           .map(m => {
             if (m.id === "s6" || m.id === "s8") return { ...m, status: "watched" as const };
             return m;
           });
+        const existingIds = new Set(step1.map(m => m.id));
+        const migrated = [...step1, ...SEED.filter(s => !existingIds.has(s.id))];
         localStorage.setItem("me_movies", JSON.stringify(migrated));
         setMovies(migrated);
       }
