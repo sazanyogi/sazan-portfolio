@@ -97,12 +97,14 @@ export default function MoviesPage() {
         localStorage.setItem("me_movies", JSON.stringify(SEED));
         setMovies(SEED);
       } else {
-        // Migrate: remove Poor Things, fix statuses, add any new SEED entries
+        // Migrate: remove Poor Things, fix statuses, backfill missing posters, add new SEED entries
         const step1 = parsed
           .filter(m => m.id !== "s9")
           .map(m => {
-            if (m.id === "s6" || m.id === "s8") return { ...m, status: "watched" as const };
-            return m;
+            const seed = SEED.find(s => s.id === m.id);
+            const withPoster = seed?.poster && !m.poster ? { ...m, poster: seed.poster } : m;
+            if (m.id === "s6" || m.id === "s8") return { ...withPoster, status: "watched" as const };
+            return withPoster;
           });
         const existingIds = new Set(step1.map(m => m.id));
         const migrated = [...step1, ...SEED.filter(s => !existingIds.has(s.id))];
