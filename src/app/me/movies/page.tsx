@@ -75,6 +75,15 @@ const SEED: Movie[] = [
   { id:"s16", title:"Sapne vs Everyone",    director:"",                  year:2023, genre:"Drama",    status:"watchlist",
     summary:"Indian series — a dreamer fights against all odds to turn their aspirations into reality.",
     poster:"" },
+  { id:"s17", title:"Taken",               director:"Pierre Morel",       year:2008, genre:"Action",   status:"watched",
+    summary:"A retired CIA operative hunts the kidnappers who abducted his daughter in Paris, using a very particular set of skills.",
+    poster:"https://image.tmdb.org/t/p/w342/ognkaUSNgJe1a2pjB4UNdzEo5jT.jpg" },
+  { id:"s18", title:"Taken 2",             director:"Olivier Megaton",    year:2012, genre:"Action",   status:"watched",
+    summary:"Bryan Mills and his wife are taken hostage in Istanbul by the father of a kidnapper he killed.",
+    poster:"https://image.tmdb.org/t/p/w342/yzAlcuJhpnxRPjaj7AHBRbNPQCJ.jpg" },
+  { id:"s19", title:"Taken 3",             director:"Olivier Megaton",    year:2014, genre:"Action",   status:"watched",
+    summary:"Bryan Mills is framed for his ex-wife's murder and must evade authorities while hunting the real killers.",
+    poster:"https://image.tmdb.org/t/p/w342/vzvMXMypMq7ieDofKThsxjHj9hn.jpg" },
 ];
 
 function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
