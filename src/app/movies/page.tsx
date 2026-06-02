@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { MOVIES, GENRE_COLORS, type Movie } from "@/data/movies";
 
-type Tab = "watchlist" | "watched" | "favorites";
+type Tab = "watchlist" | "watched" | "favorites"; // watched | queued | starred
 
 function gc(g: string) { return GENRE_COLORS[g] ?? "#718096"; }
 
