@@ -45,6 +45,42 @@ export default function MoviesPage() {
     }
   }, []);
 
+  // Auto-fetch posters for movies that don't have one yet
+  useEffect(() => {
+    if (!movies.length) return;
+    const missing = movies.filter(m => !m.poster).slice(0, 30);
+    if (!missing.length) return;
+    let cancelled = false;
+
+    async function fetchBatch(batch: Movie[]) {
+      const results = await Promise.all(
+        batch.map(async m => {
+          try {
+            const res = await fetch(`/api/poster?title=${encodeURIComponent(m.title)}&year=${m.year}`);
+            const { poster } = await res.json() as { poster: string };
+            return { id: m.id, poster };
+          } catch {
+            return { id: m.id, poster: "" };
+          }
+        })
+      );
+      if (cancelled) return;
+      const updates = results.filter(r => r.poster);
+      if (!updates.length) return;
+      setMovies(prev => {
+        const next = prev.map(m => {
+          const u = updates.find(r => r.id === m.id);
+          return u ? { ...m, poster: u.poster } : m;
+        });
+        localStorage.setItem("me_movies", JSON.stringify(next));
+        return next;
+      });
+    }
+
+    fetchBatch(missing);
+    return () => { cancelled = true; };
+  }, [movies.length]);
+
   function save(next: Movie[]) {
     setMovies(next);
     localStorage.setItem("me_movies", JSON.stringify(next));
