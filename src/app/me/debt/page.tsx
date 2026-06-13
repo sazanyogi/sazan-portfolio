@@ -41,10 +41,11 @@ const iOwe = [
   },
   {
     name: "Sita Didi",
-    amount: 2000,
+    amount: 1500,
     note: "When she comes back to Nepal",
     color: "var(--pink)",
     transactions: [
+      { label: "Payment",                              date: "2026-06-11", amount: 500 },
       { label: "Payment",                              date: "2026-05-12", amount: 500 },
       { label: "Ded Lakh Tiryo - Japan jane process",  date: "2026-04-05", amount: 1500 },
       { label: "Bihe ma Leko",                         date: "2023-03-01", amount: -4000 },
@@ -80,6 +81,15 @@ const iOwe = [
 ];
 
 const owedToMe = [
+  {
+    name: "Dipak Mama",
+    amount: 1000,
+    note: "",
+    color: "var(--cyan)",
+    transactions: [
+      { label: "I gave", date: "2026-06-11", amount: 1000 },
+    ],
+  },
   {
     name: "Kritika Adhikari",
     amount: 1000,

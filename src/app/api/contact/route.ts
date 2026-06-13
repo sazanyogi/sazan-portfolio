@@ -37,6 +37,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Input too long" }, { status: 400 });
   }
 
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
