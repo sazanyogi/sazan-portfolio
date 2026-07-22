@@ -3,7 +3,7 @@ import Link from "next/link";
 import PrintButton from "@/components/PrintButton";
 
 export const metadata: Metadata = {
-  title: "Resume — Sajan Yogi",
+  title: "Resume — Sajan Yogi, AI Engineer",
   robots: "noindex",
 };
 
@@ -67,44 +67,47 @@ export default function ResumePage() {
         .resume-contacts a { color: #4A5568; text-decoration: none; }
         .resume-contacts a:hover { color: #1A202C; text-decoration: underline; }
         .sep { color: #CBD5E0; padding: 0 4px; }
-        .section { margin-bottom: 13px; }
+        .section { margin-bottom: 9px; }
         .section:last-child { margin-bottom: 0; }
-        .section-heading { font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #2D3748; border-bottom: 2px solid #1A202C; padding-bottom: 4px; margin-bottom: 9px; }
-        .summary { font-size: 12px; line-height: 1.6; color: #2D3748; }
-        .exp-item { margin-bottom: 10px; }
+        .section-heading { font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #2D3748; border-bottom: 2px solid #1A202C; padding-bottom: 3px; margin-bottom: 7px; }
+        .summary { font-size: 11.5px; line-height: 1.48; color: #2D3748; }
+        .exp-item { margin-bottom: 7px; }
         .exp-item:last-child { margin-bottom: 0; }
         .exp-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-        .exp-role { font-size: 12.5px; font-weight: 600; color: #1A202C; }
-        .exp-dates { font-size: 11px; color: #718096; white-space: nowrap; flex-shrink: 0; }
-        .exp-company { font-size: 11.5px; color: #4A5568; font-weight: 500; margin-top: 1px; }
+        .exp-role { font-size: 12px; font-weight: 600; color: #1A202C; }
+        .exp-dates { font-size: 10.5px; color: #718096; white-space: nowrap; flex-shrink: 0; }
+        .exp-company { font-size: 11px; color: #4A5568; font-weight: 500; margin-top: 1px; }
         .exp-company em { font-style: normal; color: #718096; font-weight: 400; }
-        .exp-bullets { margin-top: 4px; list-style: none; }
-        .exp-bullets li { font-size: 11.5px; line-height: 1.55; color: #2D3748; padding-left: 12px; position: relative; margin-bottom: 1px; }
+        .exp-bullets { margin-top: 3px; list-style: none; }
+        .exp-bullets li { font-size: 11px; line-height: 1.4; color: #2D3748; padding-left: 12px; position: relative; margin-bottom: 1px; }
         .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: #CBD5E0; }
-        .project-item { margin-bottom: 6px; }
+        .project-item { margin-bottom: 4px; }
         .project-item:last-child { margin-bottom: 0; }
-        .project-name { font-size: 12px; font-weight: 600; color: #1A202C; }
+        .project-name { font-size: 11.5px; font-weight: 600; color: #1A202C; }
         .project-name a { color: inherit; text-decoration: none; }
         .project-name a:hover { text-decoration: underline; }
-        .project-desc { font-size: 11.5px; color: #4A5568; line-height: 1.6; margin-top: 1px; }
-        .project-stack { font-size: 10.5px; color: #A0AEC0; margin-top: 2px; font-style: italic; }
+        .project-desc { font-size: 11px; color: #4A5568; line-height: 1.45; margin-top: 1px; }
+        .project-stack { font-size: 10px; color: #A0AEC0; margin-top: 1px; font-style: italic; }
         .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-        .skill-group-label { font-size: 10px; font-weight: 600; color: #2D3748; margin-bottom: 4px; letter-spacing: 0.04em; }
-        .skill-list { font-size: 11px; color: #4A5568; line-height: 1.6; }
+        .skill-group-label { font-size: 10px; font-weight: 600; color: #2D3748; margin-bottom: 3px; letter-spacing: 0.04em; }
+        .skill-list { font-size: 10.5px; color: #4A5568; line-height: 1.45; }
         .meta-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-        .edu-degree { font-size: 11.5px; font-weight: 600; color: #1A202C; }
-        .edu-school { font-size: 11px; color: #4A5568; margin-top: 2px; }
-        .edu-year { font-size: 10.5px; color: #718096; margin-top: 1px; }
-        .cert-item { font-size: 11.5px; color: #2D3748; line-height: 1.6; margin-bottom: 4px; }
-        .cert-item span { display: block; font-size: 10.5px; color: #718096; }
+        .edu-degree { font-size: 11px; font-weight: 600; color: #1A202C; }
+        .edu-school { font-size: 10.5px; color: #4A5568; margin-top: 2px; }
+        .edu-year { font-size: 10px; color: #718096; margin-top: 1px; }
+        .cert-item { font-size: 11px; color: #2D3748; line-height: 1.45; margin-bottom: 4px; }
+        .cert-item span { display: block; font-size: 10px; color: #718096; }
         .tool-tags { display: flex; flex-wrap: wrap; gap: 5px; }
         .tool-tag { font-size: 10px; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 2px 7px; color: #4A5568; font-weight: 500; }
-        .divider { border: none; border-top: 1px solid #E2E8F0; margin: 11px 0; }
+        .divider { border: none; border-top: 1px solid #E2E8F0; margin: 7px 0; }
         @media print {
-          nav, .toolbar { display: none !important; }
-          .resume-body { background: #fff; padding: 0; }
-          .paper { box-shadow: none; padding: 24px 44px 28px; max-width: 100%; }
-          body { padding-top: 0 !important; }
+          nav, footer, .toolbar { display: none !important; }
+          .resume-body { background: #fff; padding: 0; min-height: auto; }
+          .paper { box-shadow: none; padding: 16px 40px 18px; max-width: 100%; }
+          html, body { background: #fff !important; padding-top: 0 !important; min-height: auto !important; height: auto !important; }
+        }
+        @page {
+          margin: 0.4in;
         }
         @media (max-width: 640px) {
           .paper { padding: 40px 28px 52px; }
@@ -122,7 +125,7 @@ export default function ResumePage() {
         <div className="paper">
           <header className="resume-header">
             <div className="resume-name">Sajan Yogi</div>
-            <div className="resume-title">Data Analyst &nbsp;·&nbsp; AI Automation &nbsp;·&nbsp; Big Data Analytics Graduate</div>
+            <div className="resume-title">AI Engineer &nbsp;·&nbsp; GenAI &amp; Python &nbsp;·&nbsp; Agentic Automation</div>
             <div className="resume-contacts">
               <span>+1 (437) 430-0348</span>
               <span className="sep">|</span>
@@ -132,13 +135,13 @@ export default function ResumePage() {
               <span className="sep">|</span>
               <a href="https://www.linkedin.com/in/sajanyogi" target="_blank" rel="noopener noreferrer">linkedin.com/in/sajanyogi</a>
               <span className="sep">|</span>
-              <span>Mississauga, Ontario</span>
+              <span>Stoney Creek, Ontario</span>
             </div>
           </header>
 
           <div className="section">
             <div className="section-heading">Summary</div>
-            <p className="summary">Data-focused technologist with a Postgraduate Certificate in Big Data Analytics (Lambton College, 2024) and a Bachelor of Engineering in Computer Science. Experienced building AI-powered automation pipelines, serverless data endpoints, and workflow systems using Python, SQL, Claude/OpenAI APIs, Modal, and n8n. Background in IT infrastructure and systems administration gives strong practical grounding in cloud environments (Azure AD, Google Workspace, Firebase). Currently targeting Data Analyst, BI Analyst, and AI Automation roles in Canada — with hands-on portfolio projects already in production.</p>
+            <p className="summary">Recent graduate (Postgraduate Certificate in Big Data Analytics, Lambton College, 2024; B.E. Computer Science) with hands-on experience building and shipping AI software solo — Job Hunter Bot, AI Workflow Automations, and an MCP-connected personal assistant were each designed, built, and shipped end-to-end in 1–3 days. Hands-on with Python, Claude/Gemini APIs, agentic workflows (MCP, n8n), and serverless APIs (FastAPI, Modal) — actively expanding into OpenAI, LangChain, LangGraph, RAG, and vector databases. Comfortable explaining technical work to non-technical audiences. Currently targeting AI Engineer and GenAI roles in Canada.</p>
           </div>
 
           <hr className="divider" />
@@ -148,55 +151,77 @@ export default function ResumePage() {
 
             <div className="exp-item">
               <div className="exp-header">
-                <div className="exp-role">Technical Lead</div>
-                <div className="exp-dates">2025 — Present</div>
+                <div className="exp-role">Production Team Member</div>
+                <div className="exp-dates">Dec 2025 — Present</div>
               </div>
-              <div className="exp-company">Click &amp; Cast Inc. <em>— Mississauga, ON</em></div>
+              <div className="exp-company">FGF Brands (Ace Bakery) <em>— Mississauga, ON</em></div>
               <ul className="exp-bullets">
-                <li>Built and deployed AI-powered automation pipelines integrating Claude and OpenAI APIs with n8n workflows for automated client outreach, email processing, and content generation.</li>
-                <li>Developed serverless REST API endpoints using Python, FastAPI, and Modal — connected to n8n for real-time data processing and workflow orchestration.</li>
-                <li>Reduced manual operational tasks by 40% through scripted automation of reporting, scheduling, and communications workflows.</li>
-                <li>Manage cloud infrastructure including DNS, hosting, Google Workspace admin, and SSL across all production environments.</li>
+                <li>Full-time production role on the manufacturing floor — daily exposure to plant operations, shift scheduling, and workflow bottlenecks.</li>
+                <li>Mix and scale dough and ingredients for bread production, rotating across multiple lines per shift in a fast-paced environment.</li>
+                <li>Maintain consistent quality and safety standards while adapting to changing line assignments and production demands.</li>
               </ul>
             </div>
 
             <div className="exp-item">
               <div className="exp-header">
-                <div className="exp-role">Junior Data &amp; Systems Analyst</div>
-                <div className="exp-dates">Oct 2021 — Apr 2023</div>
-              </div>
-              <div className="exp-company">Freelance <em>— Ontario, Canada</em></div>
-              <ul className="exp-bullets">
-                <li>Analyzed system logs, network traffic, and incident patterns across 10+ small business clients to identify root causes and recommend preventive solutions.</li>
-                <li>Tracked and reported on operational metrics including ticket volume, resolution times, and recurring issue trends — surfacing insights to reduce repeat incidents.</li>
-                <li>Managed structured user and permissions data across Active Directory, Microsoft 365, and Google Workspace environments for multiple organizations.</li>
-                <li>Built and maintained technical documentation and process guides that reduced repeat ticket volume and improved knowledge transfer across client teams.</li>
-              </ul>
-            </div>
-
-            <div className="exp-item">
-              <div className="exp-header">
-                <div className="exp-role">Supervisor</div>
-                <div className="exp-dates">Aug 2023 — Dec 2024</div>
+                <div className="exp-role">Team Member — Supervisor Trainee</div>
+                <div className="exp-dates">Aug 2023 — Dec 2025</div>
               </div>
               <div className="exp-company">Tim Hortons <em>— Mississauga, ON</em></div>
               <ul className="exp-bullets">
-                <li>Led a team of 8–12 staff, managing scheduling, training, and performance in a fast-paced customer-facing environment.</li>
-                <li>Resolved escalated customer issues promptly, demonstrating strong communication and problem-solving skills under pressure.</li>
-                <li>Oversaw cash handling, inventory, and compliance with company standards — developed strong attention to detail and accountability.</li>
+                <li>Part-time role across food prep, cash, and drive-thru stations, with brief supervisor-track training in final months.</li>
               </ul>
             </div>
 
             <div className="exp-item">
               <div className="exp-header">
-                <div className="exp-role">Data &amp; Automation Developer</div>
-                <div className="exp-dates">Feb 2020 — Present</div>
+                <div className="exp-role">Project-Based Work (Self-Directed)</div>
+                <div className="exp-dates">2024 — Present</div>
               </div>
-              <div className="exp-company">Independent Projects</div>
+              <div className="exp-company">Click &amp; Cast Inc. <em>— alongside full-time employment</em></div>
               <ul className="exp-bullets">
-                <li>Built an AI-powered job hunting bot that scrapes LinkedIn, Remotive, and WeWorkRemotely daily, scores postings against a candidate profile using Claude AI, generates tailored cover letters, and delivers an email digest — all automated on a serverless cron schedule.</li>
-                <li>Developed real-time web applications with Firebase/Firestore back-end including a live sports scoreboard platform and a multi-user budgeting PWA.</li>
-                <li>Designed and deployed multiple Python REST APIs on Modal (FastAPI) integrated with n8n for automated data pipelines and client-facing workflows.</li>
+                <li>Design and ship web apps, websites, and AI automation tools independently (see Selected Projects below).</li>
+                <li>Manage full technical operations for Click &amp; Cast Inc. — cloud infrastructure, deployments, and maintenance across live products.</li>
+                <li>Reduced manual operational tasks by 40% through automation of reporting and communications workflows.</li>
+              </ul>
+            </div>
+
+            <div className="exp-item">
+              <div className="exp-header">
+                <div className="exp-role">Junior Data Analyst</div>
+                <div className="exp-dates">2022 — 2023</div>
+              </div>
+              <div className="exp-company">Varietec Pvt Ltd <em>— Nepal</em></div>
+              <ul className="exp-bullets">
+                <li>Collected, cleaned, and preprocessed datasets using Python (pandas, NumPy) and SQL, working with structured and unstructured data.</li>
+                <li>Performed exploratory data analysis using Python and Jupyter Notebooks to identify patterns and business insights.</li>
+                <li>Validated data integrity through SQL queries and Python scripts, identifying and correcting discrepancies to maintain high-quality datasets.</li>
+                <li>Collaborated with senior analysts via Git-based workflows, with beginner-level exposure to Power BI.</li>
+              </ul>
+            </div>
+
+            <div className="exp-item">
+              <div className="exp-header">
+                <div className="exp-role">Computer Instructor</div>
+                <div className="exp-dates">2021 — 2022</div>
+              </div>
+              <div className="exp-company">Model School (Government) <em>— Salyan, Nepal</em></div>
+              <ul className="exp-bullets">
+                <li>Computer Engineering, grades 9–12 — Programming Fundamentals, OOP (C++, Java), and Mathematics, 7–8 courses total.</li>
+                <li>Delivered lessons across multiple sections, adapting material for varying student skill levels.</li>
+                <li>Ran practical programming labs alongside lectures, guiding students through hands-on coding exercises.</li>
+              </ul>
+            </div>
+
+            <div className="exp-item">
+              <div className="exp-header">
+                <div className="exp-role">Quality Assurance</div>
+                <div className="exp-dates">2021 — 2022</div>
+              </div>
+              <div className="exp-company">CoveredPress <em>— Remote (USA), Part-Time</em></div>
+              <ul className="exp-bullets">
+                <li>Executed manual test cases across web and software features, tracking and resolving defects with the development team.</li>
+                <li>Performed regression and cross-browser testing ahead of releases, working closely with developers to verify bug fixes.</li>
               </ul>
             </div>
           </div>
@@ -206,19 +231,19 @@ export default function ResumePage() {
           <div className="section">
             <div className="section-heading">Selected Projects</div>
             <div className="project-item">
-              <div className="project-name"><a href="https://scorecast.clickandcast.com/" target="_blank" rel="noopener noreferrer">Scorecast</a> — scorecast.clickandcast.com</div>
-              <div className="project-desc">Real-time scoreboard web platform for live sports events — score tracking, display, and broadcast over the web.</div>
-              <div className="project-stack">Firebase, Firestore, JavaScript, HTML, CSS</div>
+              <div className="project-name">2nd Brain Bot</div>
+              <div className="project-desc">Telegram assistant connected to my personal Obsidian knowledge base via MCP — Claude accesses and retrieves relevant notes on demand (projects, career plans, research), so I can query years of notes in plain language instead of searching manually.</div>
+              <div className="project-stack">Python, Claude API, MCP, Telegram Bot API, Modal</div>
             </div>
             <div className="project-item">
-              <div className="project-name"><a href="https://yogi-finance.sazan.com.np/" target="_blank" rel="noopener noreferrer">Yogi Finance</a> — yogi-finance.sazan.com.np</div>
-              <div className="project-desc">Progressive web app (PWA) for real-time household budgeting with multi-user authentication and shared dashboards.</div>
-              <div className="project-stack">Firebase Auth, Firestore, PWA, JavaScript</div>
+              <div className="project-name">2nd Brain Bot — RAG Upgrade <em style={{ color: "#A0AEC0", fontStyle: "italic", fontWeight: 400 }}>(In Progress)</em></div>
+              <div className="project-desc">Adding true RAG on top of the MCP assistant above — chunking notes, generating embeddings, and storing them in a vector database (Chroma) for semantic similarity search, with retrieved chunks fed to Claude via API.</div>
+              <div className="project-stack">Python, Embeddings, Chroma (Vector DB), RAG</div>
             </div>
             <div className="project-item">
-              <div className="project-name">Click &amp; Cast Analytics Dashboard</div>
-              <div className="project-desc">Live marketing analytics dashboard for a media company — GA4 tracking deployed on a Next.js production site, connected to Looker Studio for real-time reporting on sessions, users, traffic sources, and top pages.</div>
-              <div className="project-stack">Google Analytics GA4, Looker Studio, Next.js</div>
+              <div className="project-name">Ops Insights Prototype <em style={{ color: "#A0AEC0", fontStyle: "italic", fontWeight: 400 }}>(In Progress)</em></div>
+              <div className="project-desc">LLM-powered tool that summarizes production/shift data and flags anomalies, drawing on hands-on manufacturing floor experience.</div>
+              <div className="project-stack">Python, Claude API</div>
             </div>
             <div className="project-item">
               <div className="project-name">Job Hunter Bot</div>
@@ -227,8 +252,18 @@ export default function ResumePage() {
             </div>
             <div className="project-item">
               <div className="project-name">AI Workflow Automations</div>
-              <div className="project-desc">Suite of serverless REST API endpoints for automated email reply generation, client outreach sequencing, and data processing — integrated with n8n for trigger-based orchestration.</div>
+              <div className="project-desc">Suite of serverless REST API endpoints for automated email reply generation, client outreach sequencing, and data processing — integrated with n8n for agentic, trigger-based orchestration.</div>
               <div className="project-stack">Python, FastAPI, Modal, n8n, Anthropic API, OpenAI API</div>
+            </div>
+            <div className="project-item">
+              <div className="project-name"><a href="https://yogi-finance.sazan.com.np/" target="_blank" rel="noopener noreferrer">Yogi Finance</a> — yogi-finance.sazan.com.np</div>
+              <div className="project-desc">AI-powered personal finance PWA — Claude AI extracts and categorizes transactions from uploaded bank statements automatically, with multi-user authentication and shared household dashboards.</div>
+              <div className="project-stack">Claude API, Firebase Auth, Firestore, PWA, JavaScript</div>
+            </div>
+            <div className="project-item">
+              <div className="project-name">Click &amp; Cast Analytics Dashboard</div>
+              <div className="project-desc">Live marketing analytics dashboard for a media company — GA4 tracking deployed on a Next.js production site, connected to Looker Studio for real-time reporting on sessions, users, traffic sources, and top pages.</div>
+              <div className="project-stack">Google Analytics GA4, Looker Studio, Next.js</div>
             </div>
           </div>
 
@@ -238,20 +273,20 @@ export default function ResumePage() {
             <div className="section-heading">Skills</div>
             <div className="skills-grid">
               <div>
-                <div className="skill-group-label">Data &amp; Analytics</div>
-                <div className="skill-list">Python (pandas, scripting)<br/>SQL (joins, CTEs, aggregations)<br/>Data pipelines &amp; ETL<br/>Google Sheets API<br/>Web scraping (BeautifulSoup)</div>
+                <div className="skill-group-label">GenAI &amp; Agentic AI</div>
+                <div className="skill-list">Claude / Gemini API<br/>Agentic AI &amp; MCP (applied)<br/>Prompt engineering<br/>Tool-based retrieval<br/>n8n workflow automation</div>
               </div>
               <div>
-                <div className="skill-group-label">AI &amp; Automation</div>
-                <div className="skill-list">Claude / OpenAI API<br/>Agentic AI &amp; MCP<br/>Prompt engineering<br/>n8n workflow automation<br/>Modal + FastAPI (serverless)</div>
+                <div className="skill-group-label">Programming &amp; APIs</div>
+                <div className="skill-list">Python (pandas, scripting)<br/>FastAPI + Modal — API &amp; system design<br/>SQL (joins, CTEs, aggregations)<br/>Web scraping (BeautifulSoup)<br/>Git</div>
+              </div>
+              <div>
+                <div className="skill-group-label">Currently Deepening</div>
+                <div className="skill-list">RAG &amp; vector databases<br/>OpenAI API<br/>LangChain / LangGraph<br/>Vertex AI (Gemini &amp; Claude)<br/>Multi-agent orchestration</div>
               </div>
               <div>
                 <div className="skill-group-label">Cloud &amp; Systems</div>
-                <div className="skill-list">Firebase, Firestore<br/>Azure AD, Microsoft 365<br/>Google Workspace Admin<br/>Cloudflare, DNS, SSL<br/>Git, Linux (Debian)</div>
-              </div>
-              <div>
-                <div className="skill-group-label">BI &amp; Infrastructure</div>
-                <div className="skill-list">Dashboards &amp; reporting<br/>Power BI (in progress)<br/>Google Analytics (GA4)<br/>Active Directory<br/>IT Security fundamentals</div>
+                <div className="skill-list">Firebase, Firestore<br/>Azure AD, Microsoft 365<br/>Google Workspace Admin<br/>Cloudflare, DNS, SSL<br/>Power BI (beginner), GA4</div>
               </div>
             </div>
           </div>
@@ -288,7 +323,7 @@ export default function ResumePage() {
           <div className="section" style={{ marginBottom: 0 }}>
             <div className="section-heading">Tools</div>
             <div className="tool-tags">
-              {["Python","SQL","pandas","FastAPI","Modal","n8n","Claude API","Agentic AI","MCP","Codex","OpenAI API","Firebase","Google Sheets API","BeautifulSoup","Git","JavaScript","Azure Active Directory","Google Workspace","Microsoft 365","Cloudflare","Power BI","Jira","Notion"].map((t) => (
+              {["Python","SQL","pandas","FastAPI","Modal","n8n","Claude API","Gemini API","OpenAI API","RAG","Agentic AI","MCP","Codex","Firebase","Google Sheets API","BeautifulSoup","Git","JavaScript","Azure Active Directory","Google Workspace","Microsoft 365","Cloudflare","Power BI","Jira","Notion"].map((t) => (
                 <span key={t} className="tool-tag">{t}</span>
               ))}
             </div>

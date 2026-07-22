@@ -2,28 +2,28 @@
 
 const SERVICES = [
   {
-    icon: "📷",
-    title: "Photography",
+    icon: "🧠",
+    title: "GenAI & LLM Engineering",
     color: "var(--cyan)",
-    items: ["Events & sports", "Portraits & headshots", "Street & documentary", "Brand & product"],
+    items: ["Claude, GPT & Gemini APIs", "Prompt engineering", "RAG pipelines", "Model evaluation"],
   },
   {
-    icon: "🎬",
-    title: "Videography",
+    icon: "🤖",
+    title: "Agentic AI & MCP",
     color: "var(--purple)",
-    items: ["Reels & short-form", "Brand films & promos", "Event coverage", "Drone / BTS footage"],
+    items: ["Multi-agent workflows", "MCP servers & tools", "n8n orchestration", "Tool-calling & planning"],
   },
   {
-    icon: "📱",
-    title: "Content Creation",
+    icon: "🐍",
+    title: "Python & APIs",
     color: "var(--pink)",
-    items: ["Social media content", "Campaign visuals", "Editing & post-production", "Thumbnails & graphics"],
+    items: ["FastAPI microservices", "Serverless (Modal)", "Web scraping & scripting", "REST API design"],
   },
   {
     icon: "📊",
-    title: "Social Media",
+    title: "Data & Automation",
     color: "var(--cyan)",
-    items: ["Strategy & planning", "Account management", "Analytics & reporting", "Paid campaign support"],
+    items: ["SQL & data pipelines", "Workflow automation", "Analytics & reporting", "ETL & integrations"],
   },
 ];
 
@@ -44,10 +44,10 @@ export default function Services() {
           WHAT I DO
         </div>
         <h2 style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1 }}>
-          Creative Services
+          AI Engineering Capabilities
         </h2>
         <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "1rem", color: "var(--text-sec)", marginTop: "1rem", maxWidth: "480px", lineHeight: 1.65 }}>
-          From a single shoot to an ongoing content partnership — here&apos;s how I can help your brand show up visually.
+          From LLM APIs to agentic workflows — here&apos;s the stack I use to design, build, and ship GenAI systems.
         </p>
       </div>
 

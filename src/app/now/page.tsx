@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-const LAST_UPDATED = "May 2026";
+const LAST_UPDATED = "Jul 2026";
 
 const SPOTLIGHT = {
   label: "MAIN FOCUS",
   icon: "⚡",
-  title: "Building a creative career in media & content",
-  description: "Pivoting fully into photography, videography, and content creation. Growing Click & Cast Inc, building my visual portfolio, and using AI to make creative work faster and smarter.",
+  title: "Pivoting into AI Engineering",
+  description: "Repositioning toward AI Engineer / GenAI & Python roles. Deepening hands-on RAG, agentic workflows, and LLM engineering on top of the Claude/OpenAI automation work I've already shipped at Click & Cast Inc.",
   color: "var(--cyan)",
 };
 
@@ -18,10 +18,10 @@ const SECTIONS = [
     icon: "🔨",
     color: "var(--cyan)",
     items: [
-      { text: "Shooting & growing my creative portfolio", tag: "ONGOING" },
-      { text: "Growing Click & Cast Inc — media & content agency", tag: "DAILY" },
-      { text: "Building AI automation tools for creative workflows", tag: "IN PROGRESS" },
-      { text: "sazan.com.np — repositioned for media & creative roles", tag: "LIVE" },
+      { text: "Applying to AI Engineer / GenAI roles", tag: "DAILY" },
+      { text: "AI automation pipelines at Click & Cast Inc", tag: "ONGOING" },
+      { text: "Hands-on RAG projects with Claude & Gemini", tag: "IN PROGRESS" },
+      { text: "sazan.com.np — repositioned for AI Engineer roles", tag: "LIVE" },
     ],
   },
   {
@@ -29,10 +29,10 @@ const SECTIONS = [
     icon: "📖",
     color: "var(--purple)",
     items: [
-      { text: "Premiere Pro & DaVinci Resolve — video editing", tag: "ONGOING" },
-      { text: "Agentic AI & MCP — automation for creative pipelines", tag: "IN PROGRESS" },
-      { text: "Short-form video & Reels production", tag: "DAILY" },
-      { text: "Social media strategy & content planning", tag: "ONGOING" },
+      { text: "LangChain & LangGraph — agentic frameworks", tag: "IN PROGRESS" },
+      { text: "Vector databases & embeddings for RAG", tag: "IN PROGRESS" },
+      { text: "Vertex AI — Gemini & Claude deployment", tag: "ONGOING" },
+      { text: "MCP — building & consolidating agent tools", tag: "DAILY" },
     ],
   },
   {
@@ -40,8 +40,8 @@ const SECTIONS = [
     icon: "👀",
     color: "var(--pink)",
     items: [
-      { text: "Following AI tooling — Claude, n8n, MCP updates", tag: "WEEKLY" },
-      { text: "Studying photographers & cinematographers I admire", tag: null },
+      { text: "Following AI tooling — Claude, Gemini, n8n, MCP updates", tag: "WEEKLY" },
+      { text: "GenAI job postings to track what teams are actually hiring for", tag: null },
     ],
   },
   {
@@ -50,8 +50,8 @@ const SECTIONS = [
     color: "var(--cyan)",
     items: [
       { text: "Based in Stoney Creek, Ontario", tag: null },
-      { text: "Shooting whenever the light is good", tag: "ONGOING" },
-      { text: "Camping trips with camera gear in tow", tag: null },
+      { text: "Still shooting photos/video for fun, not for work", tag: null },
+      { text: "Camping trips when the schedule allows", tag: null },
       { text: "Trying to run every morning — inconsistently", tag: null },
     ],
   },

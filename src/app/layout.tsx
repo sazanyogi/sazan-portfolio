@@ -31,20 +31,20 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Sajan Yogi — Portfolio",
-  description: "Creative technologist, data analyst, and photographer based in Stoney Creek, Ontario. Building brands through AI, data, and digital products.",
+  title: "Sajan Yogi — AI Engineer",
+  description: "AI Engineer building GenAI applications, agentic workflows, and Python automation. Based in Stoney Creek, Ontario.",
   authors: [{ name: "Sajan Yogi" }],
   openGraph: {
-    title: "Sajan Yogi — Portfolio",
-    description: "Creative technologist, data analyst, and photographer.",
+    title: "Sajan Yogi — AI Engineer",
+    description: "AI Engineer building GenAI applications, agentic workflows, and Python automation.",
     url: "https://sazan.com.np",
     type: "website",
-    images: [{ url: "https://sazan.com.np/Images/Favourite/2J9A5623.jpg" }],
+    images: [{ url: "https://sazan.com.np/photos/favourite/2J9A5623.jpg" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sajan Yogi — Portfolio",
-    description: "Creative technologist, data analyst, and photographer based in Ontario.",
+    title: "Sajan Yogi — AI Engineer",
+    description: "AI Engineer building GenAI applications, agentic workflows, and Python automation.",
   },
 };
 

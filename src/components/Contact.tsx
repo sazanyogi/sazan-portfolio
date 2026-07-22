@@ -109,7 +109,7 @@ export default function Contact() {
               marginBottom: "1.25rem",
             }}
           >
-            Let&apos;s Create
+            Let&apos;s Build
             <br />
             Something
           </h2>
@@ -123,8 +123,8 @@ export default function Contact() {
               maxWidth: "380px",
             }}
           >
-            Open to photography, videography, content creation, and social media roles.
-            Also happy to chat about brand collaborations, agency work, or creative projects.
+            Open to AI Engineer, GenAI, and Python automation roles.
+            Also happy to chat about agentic AI, RAG systems, or automation projects.
           </p>
 
           {/* Socials */}

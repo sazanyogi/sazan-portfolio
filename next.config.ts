@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -9,8 +11,8 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      // Next.js requires unsafe-inline for hydration scripts
-      "script-src 'self' 'unsafe-inline'",
+      // Next.js requires unsafe-inline for hydration scripts; dev mode also needs unsafe-eval for HMR/stack traces (React never uses eval in production)
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
       // Inline styles are used extensively via React style props
       "style-src 'self' 'unsafe-inline'",
       // next/font/google self-hosts fonts — no external font origin needed

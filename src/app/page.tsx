@@ -3,16 +3,14 @@
 import Link from "next/link";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
-import PhotoTeaser from "@/components/PhotoTeaser";
 import NowTeaser from "@/components/NowTeaser";
 import Contact from "@/components/Contact";
 import Services from "@/components/Services";
-import Showreel from "@/components/Showreel";
 
 const STATS = [
-  { value: "3K+", label: "Photos Shot" },
-  { value: "5+", label: "Years Creative" },
-  { value: "10+", label: "Brands Worked With" },
+  { value: "5+", label: "Years in Tech" },
+  { value: "1+", label: "Year Building AI" },
+  { value: "5+", label: "Projects Shipped" },
 ];
 
 export default function Home() {
@@ -32,7 +30,7 @@ export default function Home() {
           <div>
             <div className="animate-fade-up" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", fontFamily: "var(--font-space-mono)", fontSize: "0.7rem", color: "#4ade80", letterSpacing: "0.12em", background: "rgba(74,222,128,0.06)", border: "1px solid #4ade80", borderRadius: "2rem", padding: "0.35rem 0.9rem", marginBottom: "2rem", boxShadow: "0 0 12px rgba(74,222,128,0.25)" }}>
               <span className="animate-pulse-dot" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", display: "inline-block", flexShrink: 0 }} />
-              Available for creative work · Stoney Creek, ON
+              Open to AI Engineer roles · Stoney Creek, ON
             </div>
 
             <div className="animate-fade-up" style={{ marginBottom: "1.5rem", animationDelay: "0.1s" }}>
@@ -40,19 +38,19 @@ export default function Home() {
                 Sajan Nath<br />Yogi<span style={{ color: "var(--cyan)" }}>.</span>
               </h1>
               <div style={{ fontFamily: "var(--font-space-mono)", fontSize: "clamp(0.7rem, 1.3vw, 0.82rem)", color: "var(--cyan)", letterSpacing: "0.1em", marginTop: "1rem" }}>
-                Photographer · Videographer · Content Creator · Social Media
+                AI Engineer · Agentic Automation
               </div>
             </div>
 
             <p className="animate-fade-up" style={{ fontFamily: "var(--font-dm-sans)", fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", color: "var(--text-sec)", lineHeight: 1.8, maxWidth: "480px", marginBottom: "2.5rem", animationDelay: "0.2s" }}>
-              Visual storyteller based in Stoney Creek, Ontario. I shoot, edit, and create content that makes brands stand out — photography, video, and social media that actually connects.
+              AI Engineer based in Stoney Creek, Ontario. I build GenAI applications, agentic workflows, and Python automation — working hands-on with Claude and Gemini to ship real systems, not demos.
             </p>
 
             <div className="animate-fade-up" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", animationDelay: "0.3s" }}>
               {[
-                { label: "VIEW PORTFOLIO", href: "/photos", primary: true },
+                { label: "VIEW PROJECTS", href: "/work", primary: true },
                 { label: "GET IN TOUCH", href: "#contact", primary: false },
-                { label: "MY WORK ↗", href: "/work", primary: false },
+                { label: "VIEW RESUME ↗", href: "/resume", primary: false },
               ].map((btn) => (
                 <Link key={btn.label} href={btn.href}
                   style={{
@@ -89,10 +87,10 @@ export default function Home() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "1.5rem" }}>
                 {[
-                  { text: "Shooting & building creative portfolio", tag: "ONGOING", color: "var(--cyan)", bg: "rgba(0,245,255,0.1)" },
-                  { text: "Creating content via Click & Cast Inc", tag: "DAILY", color: "#4ade80", bg: "rgba(74,222,128,0.12)" },
-                  { text: "Available for media & agency work", tag: "OPEN", color: "var(--purple)", bg: "rgba(123,97,255,0.12)" },
-                  { text: "Building AI tools that support creative work", tag: "IN PROGRESS", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
+                  { text: "Building agentic AI workflows & RAG systems", tag: "ONGOING", color: "var(--cyan)", bg: "rgba(0,245,255,0.1)" },
+                  { text: "Running AI automation at Click & Cast Inc", tag: "DAILY", color: "#4ade80", bg: "rgba(74,222,128,0.12)" },
+                  { text: "Open to AI Engineer & GenAI roles", tag: "OPEN", color: "var(--purple)", bg: "rgba(123,97,255,0.12)" },
+                  { text: "Learning LangChain, LangGraph & vector DBs", tag: "IN PROGRESS", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
                 ].map((item, i) => (
                   <div key={i}>
                     <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", marginBottom: "0.3rem" }}>
@@ -145,10 +143,8 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Creative-first section order */}
+      {/* AI Engineer-first section order */}
       <Services />
-      <PhotoTeaser />
-      <Showreel />
       <Projects />
       <About />
       <NowTeaser />

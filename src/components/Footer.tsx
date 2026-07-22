@@ -5,7 +5,6 @@ import Link from "next/link";
 const NAV = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
-  { label: "Photos", href: "/photos" },
   { label: "Now", href: "/now" },
   { label: "Camping", href: "/camping" },
   { label: "Resume", href: "/resume" },
@@ -95,7 +94,7 @@ export default function Footer() {
               maxWidth: "280px",
             }}
           >
-            Photographer · Videographer · Content Creator.
+            AI Engineer · GenAI &amp; Python.
             Based in Stoney Creek, Ontario.
           </p>
         </div>

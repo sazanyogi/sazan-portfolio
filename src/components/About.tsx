@@ -3,15 +3,15 @@
 import { useState } from "react";
 
 const SKILLS = [
-  { category: "Camera & Capture", items: ["Sony A6700", "DJI RS Mini", "NiSi Filters", "Lighting", "Composition"] },
-  { category: "Editing & Post", items: ["Lightroom", "Premiere Pro", "Capture One", "DaVinci Resolve", "Photoshop"] },
-  { category: "Social & Content", items: ["Instagram", "TikTok", "YouTube", "Meta Ads", "Content Strategy", "GA4"] },
-  { category: "Tech (Bonus)", items: ["Next.js", "Python", "Claude API", "n8n", "SQL", "Power BI"] },
+  { category: "GenAI & LLMs", items: ["Claude API", "OpenAI API", "Gemini API", "RAG", "Prompt Engineering"] },
+  { category: "Agentic & Automation", items: ["Agentic AI", "MCP", "n8n", "Multi-step workflows"] },
+  { category: "Programming & APIs", items: ["Python", "FastAPI", "Modal (serverless)", "SQL", "Git"] },
+  { category: "Cloud & Data", items: ["Firebase/Firestore", "Azure AD", "GA4", "Power BI"] },
 ];
 
 const TIMELINE = [
+  { year: "2025", event: "Click & Cast Inc", sub: "Technical Lead — building AI automation pipelines" },
   { year: "2024", event: "Big Data Analytics — Lambton College", sub: "Postgraduate Certificate" },
-  { year: "2024", event: "Click & Cast Inc", sub: "Founder — AI-powered media & automation agency" },
   { year: "2023", event: "AI Workflow Systems", sub: "Built production Claude + n8n pipelines" },
   { year: "2020", event: "B.E. Computer Science — Bangalore", sub: "Bachelor of Engineering" },
 ];
@@ -76,9 +76,9 @@ export default function About() {
               marginBottom: "1.5rem",
             }}
           >
-            The Creative
+            Building with
             <br />
-            Behind the Lens
+            GenAI &amp; Python
           </h2>
           <p
             style={{
@@ -89,9 +89,9 @@ export default function About() {
               marginBottom: "1rem",
             }}
           >
-            Photographer, videographer, and content creator based in Stoney Creek, Ontario.
-            I tell visual stories — for brands, events, and the moments in between. Shooting on Sony,
-            editing with precision, and building content that earns attention.
+            AI Engineer based in Stoney Creek, Ontario, with a Postgraduate Certificate in Big Data
+            Analytics and a Bachelor of Engineering in Computer Science. I build GenAI applications,
+            agentic workflows, and Python automation that run in production — not just notebooks.
           </p>
           <p
             style={{
@@ -102,8 +102,9 @@ export default function About() {
               marginBottom: "2.5rem",
             }}
           >
-            Founder of Click &amp; Cast Inc — an AI-powered media and content agency. I also bring a
-            rare technical edge: data analytics and AI automation that gives creative campaigns a measurable backbone.
+            Technical Lead at Click &amp; Cast Inc, where I&apos;ve shipped Claude/OpenAI-powered
+            automation pipelines and serverless APIs on FastAPI + Modal. Currently deepening my hands-on
+            RAG work and expanding into LangChain, LangGraph, and vector databases.
           </p>
 
           {/* Timeline */}
