@@ -33,6 +33,10 @@
 *.jpg
 *.jpeg
 *.pdf
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.jpeg
+!public/**/*.pdf
 
 # debug
 npm-debug.log*
