@@ -1,28 +1,61 @@
 "use client";
 
+function SparkleIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" />
+    </svg>
+  );
+}
+
+function NetworkIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M12 8.2v5M9.8 17l-1.6-2M14.2 17l1.6-2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="6" r="2.2" fill="currentColor" />
+      <circle cx="6" cy="18" r="2.2" fill="currentColor" />
+      <circle cx="18" cy="18" r="2.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+function CodeIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13 5l-2 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function BarsIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="4" y="14" width="4" height="7" rx="1" />
+      <rect x="10" y="9" width="4" height="12" rx="1" />
+      <rect x="16" y="4" width="4" height="17" rx="1" />
+    </svg>
+  );
+}
+
 const SERVICES = [
   {
-    icon: "🧠",
+    icon: <SparkleIcon />,
     title: "GenAI & LLM Engineering",
-    color: "var(--cyan)",
     items: ["Claude, GPT & Gemini APIs", "Prompt engineering", "RAG pipelines", "Model evaluation"],
   },
   {
-    icon: "🤖",
+    icon: <NetworkIcon />,
     title: "Agentic AI & MCP",
-    color: "var(--purple)",
     items: ["Multi-agent workflows", "MCP servers & tools", "n8n orchestration", "Tool-calling & planning"],
   },
   {
-    icon: "🐍",
+    icon: <CodeIcon />,
     title: "Python & APIs",
-    color: "var(--pink)",
     items: ["FastAPI microservices", "Serverless (Modal)", "Web scraping & scripting", "REST API design"],
   },
   {
-    icon: "📊",
+    icon: <BarsIcon />,
     title: "Data & Automation",
-    color: "var(--cyan)",
     items: ["SQL & data pipelines", "Workflow automation", "Analytics & reporting", "ETL & integrations"],
   },
 ];
@@ -59,13 +92,13 @@ export default function Services() {
               background: "var(--surface)",
               border: "1px solid var(--border)",
               borderRadius: "16px",
-              padding: "1.75rem",
+              padding: "1.5rem",
               position: "relative",
               overflow: "hidden",
               transition: "border-color 0.2s, transform 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = s.color;
+              e.currentTarget.style.borderColor = "var(--text-sec)";
               e.currentTarget.style.transform = "translateY(-4px)";
             }}
             onMouseLeave={(e) => {
@@ -73,17 +106,45 @@ export default function Services() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${s.color}, transparent)` }} />
-            <div style={{ fontSize: "1.75rem", marginBottom: "1rem" }}>{s.icon}</div>
-            <div style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1.1rem", color: "var(--text)", marginBottom: "1.25rem" }}>{s.title}</div>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, var(--text-sec), transparent)", opacity: 0.5 }} />
+
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.1rem" }}>
+              <div
+                style={{
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "11px",
+                  background: "var(--chip-bg)",
+                  color: "var(--text)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                {s.icon}
+              </div>
+              <div style={{ fontFamily: "var(--font-bricolage)", fontWeight: 700, fontSize: "1.02rem", color: "var(--text)", lineHeight: 1.2 }}>{s.title}</div>
+            </div>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
               {s.items.map((item) => (
-                <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: s.color, flexShrink: 0, display: "inline-block" }} />
-                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.85rem", color: "var(--text-sec)" }}>{item}</span>
-                </li>
+                <span
+                  key={item}
+                  style={{
+                    fontFamily: "var(--font-space-mono)",
+                    fontSize: "0.65rem",
+                    color: "var(--text-sec)",
+                    background: "var(--chip-bg)",
+                    padding: "0.25rem 0.55rem",
+                    borderRadius: "4px",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {item}
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>

@@ -2,64 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
-const PROJECTS = [
-  {
-    id: "job-hunter-bot",
-    title: "Job Hunter Bot",
-    category: "AI Automation",
-    description:
-      "Daily AI job scraper that scores 99+ postings against my candidate profile using Claude, logs only 80+ score matches, auto-generates tailored cover letters, and sends an HTML email digest every morning.",
-    stack: ["Python", "Claude API", "Modal", "Google Sheets", "Gmail SMTP"],
-    links: { github: "https://github.com/sazanyogi" },
-    accent: "cyan",
-    featured: true,
-  },
-  {
-    id: "ai-workflows",
-    title: "AI Workflow Automations",
-    category: "AI Automation",
-    description:
-      "Serverless API endpoints for n8n automation workflows — email reply generation, data pipeline processing, and AI-assisted decision making. Deployed on Modal with Bearer token auth.",
-    stack: ["Python", "FastAPI", "Modal", "n8n", "Anthropic API"],
-    links: { github: "https://github.com/sazanyogi" },
-    accent: "cyan",
-    featured: false,
-  },
-  {
-    id: "scorecast",
-    title: "Scorecast",
-    category: "Web App",
-    description:
-      "Real-time sports scoreboard platform with live score updates, match management, and multi-user support. Built with Firebase Firestore for real-time sync.",
-    stack: ["Firebase", "Firestore", "JavaScript", "Real-time"],
-    links: { github: "https://github.com/sazanyogi" },
-    accent: "purple",
-    featured: false,
-  },
-  {
-    id: "yogi-finance",
-    title: "Yogi Finance",
-    category: "Full-Stack App",
-    description:
-      "AI-powered personal finance tracker for individuals and couples. Upload any bank statement — Claude AI extracts and categorizes every transaction automatically. Features shared family workspaces, partner invites, auto account detection, duplicate filtering, and real-time balance calculations.",
-    stack: ["Next.js", "Supabase", "Claude AI", "TypeScript", "Vercel"],
-    links: { github: "https://github.com/sazanyogi", live: "https://yogi-finance.vercel.app" },
-    accent: "cyan",
-    featured: true,
-  },
-  {
-    id: "crs-calculator",
-    title: "CRS Score Calculator",
-    category: "Web App",
-    description:
-      "Accurate, mobile-first CRS calculator for Canadian Express Entry — better UX than the official IRCC tool. Supports IELTS, CELPIP, TEF, and TCF with real-time scoring, animated score ring, and full IRCC breakdown.",
-    stack: ["Next.js", "TypeScript", "Vercel"],
-    links: { github: "https://github.com/sazanyogi/crs-calculator", live: "https://crs.sazan.com.np" },
-    accent: "cyan",
-    featured: true,
-  },
-];
+import { PROJECTS, type Project } from "@/data/projects";
+import ProjectVisual from "@/components/ProjectVisual";
 
 const ACCENT_COLORS: Record<string, string> = {
   cyan: "var(--cyan)",
@@ -67,30 +11,14 @@ const ACCENT_COLORS: Record<string, string> = {
   pink: "var(--pink)",
 };
 
-function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
+const FEATURED_PROJECTS = PROJECTS.filter((p) => p.onHomepage);
+
+function ProjectCard({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false);
   const color = ACCENT_COLORS[project.accent];
 
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: "var(--card-bg)",
-        border: `1px solid ${hovered ? color : "var(--border)"}`,
-        borderRadius: "16px",
-        padding: "2rem",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
-        boxShadow: hovered ? `0 0 32px ${color}22` : "none",
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        cursor: "default",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+  const cardInner = (
+    <>
       {/* Top glow line */}
       <div
         style={{
@@ -101,128 +29,167 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
           height: "2px",
           background: hovered ? `linear-gradient(90deg, transparent, ${color}, transparent)` : "transparent",
           transition: "background 0.3s",
+          zIndex: 1,
         }}
       />
 
-      {/* Category + featured badge */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span
-          style={{
-            fontFamily: "var(--font-space-mono)",
-            fontSize: "0.65rem",
-            color: color,
-            letterSpacing: "0.12em",
-            background: `${color}18`,
-            padding: "0.25rem 0.65rem",
-            borderRadius: "2rem",
-          }}
-        >
-          {project.category.toUpperCase()}
-        </span>
-        {project.featured && (
+      <ProjectVisual visual={project.visual} accent={project.accent} title={project.title} />
+
+      <div style={{ padding: "1.5rem 2rem 2rem", display: "flex", flexDirection: "column", gap: "1rem", flex: 1 }}>
+        {/* Category + featured badge */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span
-            style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "0.6rem",
-              color: "var(--text-sec)",
-              letterSpacing: "0.1em",
-            }}
-          >
-            FEATURED
-          </span>
-        )}
-      </div>
-
-      {/* Title */}
-      <h3
-        style={{
-          fontFamily: "var(--font-bricolage)",
-          fontWeight: 700,
-          fontSize: "1.25rem",
-          color: "var(--text)",
-          letterSpacing: "-0.01em",
-          lineHeight: 1.2,
-        }}
-      >
-        {project.title}
-      </h3>
-
-      {/* Description */}
-      <p
-        style={{
-          fontFamily: "var(--font-dm-sans)",
-          fontSize: "0.875rem",
-          color: "var(--text-sec)",
-          lineHeight: 1.65,
-          flex: 1,
-        }}
-      >
-        {project.description}
-      </p>
-
-      {/* Stack chips */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-        {project.stack.map((tech) => (
-          <span
-            key={tech}
             style={{
               fontFamily: "var(--font-space-mono)",
               fontSize: "0.65rem",
-              color: "var(--text-sec)",
-              background: "var(--chip-bg)",
-              padding: "0.2rem 0.55rem",
-              borderRadius: "4px",
-              letterSpacing: "0.04em",
+              color: color,
+              letterSpacing: "0.12em",
+              background: `color-mix(in srgb, ${color} 10%, transparent)`,
+              padding: "0.25rem 0.65rem",
+              borderRadius: "2rem",
             }}
           >
-            {tech}
+            {project.category.toUpperCase()}
           </span>
-        ))}
-      </div>
+          {project.featured && (
+            <span
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "0.6rem",
+                color: "var(--text-sec)",
+                letterSpacing: "0.1em",
+              }}
+            >
+              FEATURED
+            </span>
+          )}
+        </div>
 
-      {/* Links */}
-      <div style={{ display: "flex", gap: "1rem", paddingTop: "0.5rem" }}>
-        {project.links.github && (
-          <a
-            href={project.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "0.7rem",
-              color: hovered ? color : "var(--text-sec)",
-              textDecoration: "none",
-              letterSpacing: "0.08em",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              transition: "color 0.2s",
-            }}
-          >
-            ↗ GITHUB
-          </a>
-        )}
-        {project.links.live && (
-          <a
-            href={project.links.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "0.7rem",
-              color: hovered ? color : "var(--text-sec)",
-              textDecoration: "none",
-              letterSpacing: "0.08em",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              transition: "color 0.2s",
-            }}
-          >
-            ↗ LIVE
-          </a>
-        )}
+        {/* Title */}
+        <h3
+          style={{
+            fontFamily: "var(--font-bricolage)",
+            fontWeight: 700,
+            fontSize: "1.25rem",
+            color: "var(--text)",
+            letterSpacing: "-0.01em",
+            lineHeight: 1.2,
+          }}
+        >
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p
+          style={{
+            fontFamily: "var(--font-dm-sans)",
+            fontSize: "0.875rem",
+            color: "var(--text-sec)",
+            lineHeight: 1.65,
+            flex: 1,
+          }}
+        >
+          {project.description}
+        </p>
+
+        {/* Stack chips */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+          {project.stack.map((tech) => (
+            <span
+              key={tech}
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "0.65rem",
+                color: "var(--text-sec)",
+                background: "var(--chip-bg)",
+                padding: "0.2rem 0.55rem",
+                borderRadius: "4px",
+                letterSpacing: "0.04em",
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Links */}
+        <div style={{ display: "flex", gap: "1rem", paddingTop: "0.5rem" }}>
+          {project.slug ? (
+            <span
+              style={{
+                fontFamily: "var(--font-space-mono)",
+                fontSize: "0.7rem",
+                color: hovered ? color : "var(--text-sec)",
+                letterSpacing: "0.08em",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                transition: "color 0.2s",
+              }}
+            >
+              VIEW CASE STUDY →
+            </span>
+          ) : (
+            project.links.github && (
+              <a
+                href={project.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: "var(--font-space-mono)",
+                  fontSize: "0.7rem",
+                  color: hovered ? color : "var(--text-sec)",
+                  textDecoration: "none",
+                  letterSpacing: "0.08em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  transition: "color 0.2s",
+                }}
+              >
+                ↗ GITHUB
+              </a>
+            )
+          )}
+        </div>
       </div>
+    </>
+  );
+
+  const cardStyle: React.CSSProperties = {
+    background: "var(--card-bg)",
+    border: `1px solid ${hovered ? color : "var(--border)"}`,
+    borderRadius: "16px",
+    display: "flex",
+    flexDirection: "column",
+    transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
+    boxShadow: hovered ? `0 0 32px color-mix(in srgb, ${color} 13%, transparent)` : "none",
+    transform: hovered ? "translateY(-4px)" : "translateY(0)",
+    position: "relative",
+    overflow: "hidden",
+    textDecoration: "none",
+  };
+
+  if (project.slug) {
+    return (
+      <Link
+        href={`/work/${project.slug}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{ ...cardStyle, cursor: "none" }}
+      >
+        {cardInner}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ ...cardStyle, cursor: "default" }}
+    >
+      {cardInner}
     </div>
   );
 }
@@ -329,8 +296,8 @@ export default function Projects() {
           gap: "1.5rem",
         }}
       >
-        {PROJECTS.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {FEATURED_PROJECTS.map((project) => (
+          <ProjectCard key={project.title} project={project} />
         ))}
       </div>
     </section>

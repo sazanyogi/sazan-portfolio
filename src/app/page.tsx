@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
-import NowTeaser from "@/components/NowTeaser";
 import Contact from "@/components/Contact";
 import Services from "@/components/Services";
 
@@ -139,7 +138,6 @@ export default function Home() {
       <Services />
       <Projects />
       <About />
-      <NowTeaser />
       <Contact />
     </>
   );
