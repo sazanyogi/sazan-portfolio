@@ -83,10 +83,10 @@ export default function NowPage() {
       <div style={{ maxWidth: "860px" }}>
         {/* Back link */}
         <Link
-          href="/"
+          href="/me"
           style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.72rem", color: "var(--text-sec)", textDecoration: "none", letterSpacing: "0.1em", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "3rem" }}
         >
-          ← BACK HOME
+          ← DASHBOARD
         </Link>
 
         {/* Header */}

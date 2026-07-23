@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 const ITEMS = [
   { text: "Shooting & building my creative portfolio", tag: "ONGOING", color: "var(--cyan)", tagBg: "rgba(0,245,255,0.1)" },
   { text: "Growing Click & Cast Inc — media & content agency", tag: "DAILY", color: "#4ade80", tagBg: "rgba(74,222,128,0.12)" },
@@ -55,32 +53,6 @@ export default function NowTeaser() {
               Building a creative career in media & content
             </h2>
           </div>
-          <Link
-            href="/now"
-            style={{
-              fontFamily: "var(--font-space-mono)",
-              fontSize: "0.72rem",
-              color: "var(--cyan)",
-              textDecoration: "none",
-              letterSpacing: "0.08em",
-              border: "1px solid var(--cyan)",
-              padding: "0.45rem 1rem",
-              borderRadius: "2rem",
-              whiteSpace: "nowrap",
-              transition: "background 0.2s, color 0.2s",
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--cyan)";
-              e.currentTarget.style.color = "var(--bg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "var(--cyan)";
-            }}
-          >
-            SEE FULL /NOW ↗
-          </Link>
         </div>
 
         {/* Items */}

@@ -372,6 +372,68 @@ function YouTubeCard() {
   );
 }
 
+// ─── Camping card ─────────────────────────────────────────────────────────────
+
+function CampingCard() {
+  return (
+    <Link href="/me/camping" style={{ textDecoration: "none", display: "block", height: "100%" }}>
+      <div
+        style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "1rem", cursor: "none", transition: "border-color 0.2s" }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--cyan)")}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--border)")}
+      >
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Outdoors</p>
+
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "2rem", color: "var(--cyan)", letterSpacing: "-0.03em", lineHeight: 1 }}>⛺</p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.35rem" }}>
+            GEAR & PACKING LIST
+          </p>
+        </div>
+
+        <div style={{ height: "1px", background: "var(--border)" }} />
+
+        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)", flex: 1, lineHeight: 1.5 }}>
+          Camping gear roundup and trip packing checklist.
+        </p>
+
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--cyan)", letterSpacing: "0.06em" }}>Open list →</p>
+      </div>
+    </Link>
+  );
+}
+
+// ─── Now card ─────────────────────────────────────────────────────────────────
+
+function NowCard() {
+  return (
+    <Link href="/me/now" style={{ textDecoration: "none", display: "block", height: "100%" }}>
+      <div
+        style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "1rem", padding: "1.5rem", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "1rem", cursor: "none", transition: "border-color 0.2s" }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--purple)")}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--border)")}
+      >
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.6rem", color: "var(--text-sec)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Status</p>
+
+        <div>
+          <p style={{ fontFamily: "var(--font-bricolage)", fontWeight: 800, fontSize: "2rem", color: "var(--purple)", letterSpacing: "-0.03em", lineHeight: 1 }}>⚡</p>
+          <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.52rem", color: "var(--text-sec)", letterSpacing: "0.06em", marginTop: "0.35rem" }}>
+            WHAT I&apos;M DOING NOW
+          </p>
+        </div>
+
+        <div style={{ height: "1px", background: "var(--border)" }} />
+
+        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", color: "var(--text-sec)", flex: 1, lineHeight: 1.5 }}>
+          Current focus, learning, and life updates.
+        </p>
+
+        <p style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.58rem", color: "var(--purple)", letterSpacing: "0.06em" }}>Open page →</p>
+      </div>
+    </Link>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
@@ -423,6 +485,8 @@ export default function MePage() {
         <MoviesCard />
         <BooksCard />
         <YouTubeCard />
+        <CampingCard />
+        <NowCard />
         <Card title="Reminders">
           <ul style={{ display: "flex", flexDirection: "column", gap: "0.65rem", listStyle: "none" }}>
             {reminders.map((note, i) => (

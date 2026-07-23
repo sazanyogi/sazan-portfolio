@@ -114,14 +114,6 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              <Link href="/now"
-                style={{ fontFamily: "var(--font-space-mono)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--cyan)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", marginTop: "1rem", padding: "0.55rem 1.1rem", borderRadius: "2rem", border: "1px solid var(--cyan)", background: "rgba(0,245,255,0.05)", boxShadow: "0 0 14px rgba(0,245,255,0.15)", transition: "all 0.2s" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,245,255,0.12)"; e.currentTarget.style.boxShadow = "0 0 24px rgba(0,245,255,0.3)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,245,255,0.05)"; e.currentTarget.style.boxShadow = "0 0 14px rgba(0,245,255,0.15)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <span className="animate-pulse-dot" style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--cyan)", display: "inline-block", flexShrink: 0 }} />
-                WHAT I&apos;M FOCUSED ON ↗
-              </Link>
             </div>
           </div>
         </div>
