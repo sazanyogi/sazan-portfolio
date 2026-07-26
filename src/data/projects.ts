@@ -273,6 +273,41 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "ops-insights-prototype",
+    title: "Ops Insights Prototype",
+    category: "AI & Automation",
+    year: "2026",
+    status: "In Progress",
+    onHomepage: false,
+    featured: false,
+    accent: "pink",
+    description:
+      "LLM-powered tool that summarizes shift/production data and flags anomalies for a manufacturing supervisor — a cheap statistical pre-filter narrows the log to outliers, cohort bias, and cross-line correlated events, and an LLM explains and prioritizes what it finds.",
+    stack: ["Python", "Gemini API", "Streamlit", "pandas", "NumPy"],
+    links: { github: "https://github.com/sazanyogi/ops-insights-prototype" },
+    visual: { type: "chart" },
+    overview:
+      "Shift logs — units produced, downtime minutes, defect counts — are something I have hands-on familiarity with from time on a manufacturing floor, and turning that into \"what actually needs attention\" usually falls on whoever's willing to stare at a spreadsheet. This prototype automates the first pass: statistics catch the outliers, an LLM explains them in plain language and tells a one-off incident apart from a systemic pattern.",
+    architecture: [
+      "A synthetic data generator produces a realistic shift log (date × shift × line) with OEE-style metrics — Availability × Performance × Quality — and downtime reason codes, with three seeded patterns to find: a multi-shift breakdown streak on one line, a systemic night-shift defect-rate drift, and a same-day material shortage that hits every line at once.",
+      "A pandas/numpy pre-filter runs three passes before any LLM call: per-line z-scores on downtime and defect rate (point outliers), shift-level cohort averages (systemic bias — e.g. Night consistently running worse), and cross-line correlation by date (an event that hit every line at once).",
+      "Only the aggregate stats and flagged candidates — never the raw per-row log — go to the Gemini API, with a manufacturing-analyst system prompt and a Pydantic-constrained structured response schema so the output reliably parses into a period summary, a severity-ranked anomaly list, and highlights.",
+      "A Streamlit dashboard shows OEE-by-line, downtime-by-reason, and defect-rate-by-shift trend charts alongside the LLM readout, with an option to upload a real CSV in place of the synthetic data.",
+    ],
+    keyDecisions: [
+      "Three-layer anomaly detection instead of one — a single z-score threshold misses systemic bias (a shift that's consistently a bit worse, not spiking) and correlated multi-entity events (every line hit the same day). Layering point/cohort/correlation catches patterns a naive threshold wouldn't.",
+      "Statistics do the detecting, the LLM does the explaining — deliberately not asking it to eyeball a table for outliers. The cheap, auditable pass narrows the field; the model's job is reasoning about likely cause and priority, which is what it's actually good at.",
+      "Only aggregates and flagged candidates are sent to the model, never the full shift log — the same cost-control pattern as Job Hunter Bot's pre-filter-before-LLM-call approach, so token usage doesn't scale with how much history the log holds.",
+      "Structured output via a Pydantic response schema instead of prompt-engineering a format and hoping — the dashboard needs to reliably render severity-ranked cards, so a guaranteed-valid schema beat a regex-and-pray parser.",
+      "Started building against the Claude API, then switched the LLM call to Gemini's free tier before running it live against a real key — the pipeline isolates that call in one function (`src/analyzer.py`) specifically so which provider does the reasoning is a swappable decision, not a rewrite.",
+    ],
+    challenges: [
+      "Honest status: this is a working prototype verified end-to-end on the statistics side (the anomaly pre-filter is tested against known seeded patterns) and the app itself boots and renders correctly, but the live LLM analysis step hasn't been run against a real API key yet — that's the next thing to confirm before calling this done.",
+      "The anomaly detection is intentionally simple — z-scores and group means, not a real time-series model. That's a deliberate scope choice for a prototype, but it means slow drifts shorter than the z-score window or effects smaller than ~2 standard deviations won't surface as candidates.",
+      "No persistence yet — every session starts from freshly generated or uploaded data, so there's no period-over-period comparison. That's the clearest next step if this moves past prototype.",
+    ],
+  },
+  {
     slug: "this-portfolio",
     title: "This Portfolio",
     category: "Web App",
