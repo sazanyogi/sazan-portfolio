@@ -277,7 +277,7 @@ export const PROJECTS: Project[] = [
     title: "Ops Insights Prototype",
     category: "AI & Automation",
     year: "2026",
-    status: "In Progress",
+    status: "Live",
     onHomepage: false,
     featured: false,
     accent: "pink",
@@ -302,7 +302,8 @@ export const PROJECTS: Project[] = [
       "Started building against the Claude API, then switched the LLM call to Gemini's free tier before running it live against a real key — the pipeline isolates that call in one function (`src/analyzer.py`) specifically so which provider does the reasoning is a swappable decision, not a rewrite.",
     ],
     challenges: [
-      "Honest status: this is a working prototype verified end-to-end on the statistics side (the anomaly pre-filter is tested against known seeded patterns) and the app itself boots and renders correctly, but the live LLM analysis step hasn't been run against a real API key yet — that's the next thing to confirm before calling this done.",
+      "Model IDs on hosted LLM APIs aren't stable: the first working build defaulted to a pinned Gemini model that returned a 404 (\"no longer available to new users\") the first time it ran against a real key. Fixed by querying the account's actual available-models list rather than trusting docs, and switching to a Google-maintained rolling alias (gemini-flash-latest) that always points at the current recommended model instead of a dated snapshot.",
+      "Nearly shipped a real API key to a public repo: it briefly ended up in .env.example (tracked, unlike the gitignored .env) during setup. GitHub's push protection caught it before it left the machine — a good reminder that push protection is a real safety net, not just a formality, and that .env.example deserves the same care as .env during setup.",
       "The anomaly detection is intentionally simple — z-scores and group means, not a real time-series model. That's a deliberate scope choice for a prototype, but it means slow drifts shorter than the z-score window or effects smaller than ~2 standard deviations won't surface as candidates.",
       "No persistence yet — every session starts from freshly generated or uploaded data, so there's no period-over-period comparison. That's the clearest next step if this moves past prototype.",
     ],
