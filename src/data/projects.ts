@@ -245,11 +245,11 @@ export const PROJECTS: Project[] = [
     category: "AI & Automation",
     year: "2026",
     status: "Live",
-    onHomepage: false,
+    onHomepage: true,
     featured: false,
     accent: "purple",
     description:
-      "Telegram bot connected to my Obsidian vault. Ask it anything about my notes, projects, career plans — it retrieves and summarises from my personal knowledge base using Claude AI.",
+      "Telegram bot connected to my Obsidian vault, stored as a GitHub repo — a Modal webhook fires a fire-and-forget dispatch to Claude, which classifies each message as a question, a new note, or a calendar event. Retrieval runs directly against the GitHub API, no vector database or embeddings needed, so I can ask about years of notes and projects, or log new ones, straight from Telegram.",
     stack: ["Python", "Claude API", "Telegram Bot API", "GitHub API", "Modal", "Google Calendar API"],
     links: { github: "https://github.com/sazanyogi" },
     visual: { type: "chat" },
@@ -278,14 +278,14 @@ export const PROJECTS: Project[] = [
     category: "AI & Automation",
     year: "2026",
     status: "Live",
-    onHomepage: false,
+    onHomepage: true,
     featured: false,
     accent: "pink",
     description:
       "LLM-powered tool that summarizes shift/production data and flags anomalies for a manufacturing supervisor — a cheap statistical pre-filter narrows the log to outliers, cohort bias, and cross-line correlated events, and an LLM explains and prioritizes what it finds.",
     stack: ["Python", "Gemini API", "Streamlit", "pandas", "NumPy"],
     links: { github: "https://github.com/sazanyogi/ops-insights-prototype" },
-    visual: { type: "chart" },
+    visual: { type: "image", src: "/projects/ops-insights-prototype.png" },
     overview:
       "Shift logs — units produced, downtime minutes, defect counts — are something I have hands-on familiarity with from time on a manufacturing floor, and turning that into \"what actually needs attention\" usually falls on whoever's willing to stare at a spreadsheet. This prototype automates the first pass: statistics catch the outliers, an LLM explains them in plain language and tells a one-off incident apart from a systemic pattern.",
     architecture: [
