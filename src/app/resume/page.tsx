@@ -141,7 +141,7 @@ export default function ResumePage() {
 
           <div className="section">
             <div className="section-heading">Summary</div>
-            <p className="summary">Recent graduate (Postgraduate Certificate in Big Data Analytics, Lambton College, 2024; B.E. Computer Science) with hands-on experience building and shipping AI software solo — Job Hunter Bot, AI Workflow Automations, and an MCP-connected personal assistant were each designed, built, and shipped end-to-end in 1–3 days. Hands-on with Python, Claude/Gemini APIs, agentic workflows (MCP, n8n), and serverless APIs (FastAPI, Modal) — actively expanding into OpenAI, LangChain, LangGraph, RAG, and vector databases. Comfortable explaining technical work to non-technical audiences. Currently targeting AI Engineer and GenAI roles in Canada.</p>
+            <p className="summary">Recent graduate (Postgraduate Certificate in Big Data Analytics, Lambton College, 2024; B.E. Computer Science) with hands-on experience building and shipping AI software solo — Job Hunter Bot, AI Workflow Automations, and a Telegram-based personal knowledge assistant were each designed, built, and shipped end-to-end in 1–3 days. Hands-on with Python, Claude/Gemini APIs, agentic workflows (MCP, n8n), and serverless APIs (FastAPI, Modal) — actively expanding into OpenAI, LangChain, LangGraph, RAG, and vector databases. Comfortable explaining technical work to non-technical audiences. Currently targeting AI Engineer and GenAI roles in Canada.</p>
           </div>
 
           <hr className="divider" />
@@ -232,18 +232,18 @@ export default function ResumePage() {
             <div className="section-heading">Selected Projects</div>
             <div className="project-item">
               <div className="project-name">2nd Brain Bot</div>
-              <div className="project-desc">Telegram assistant connected to my personal Obsidian knowledge base via MCP — Claude accesses and retrieves relevant notes on demand (projects, career plans, research), so I can query years of notes in plain language instead of searching manually.</div>
-              <div className="project-stack">Python, Claude API, MCP, Telegram Bot API, Modal</div>
+              <div className="project-desc">Telegram assistant connected to my personal Obsidian vault (stored as a GitHub repo) — a Modal-hosted webhook fires a fire-and-forget dispatch to Claude, which classifies each message as a question, a new note, or a calendar event; retrieval runs directly against the GitHub API (no vector DB or embeddings needed) so I can ask about years of notes, projects, and career plans in plain language, or log new ones, straight from Telegram.</div>
+              <div className="project-stack">Python, Claude API, GitHub API, Telegram Bot API, Modal, Google Calendar API</div>
             </div>
             <div className="project-item">
               <div className="project-name">2nd Brain Bot — RAG Upgrade <em style={{ color: "#A0AEC0", fontStyle: "italic", fontWeight: 400 }}>(In Progress)</em></div>
-              <div className="project-desc">Adding true RAG on top of the MCP assistant above — chunking notes, generating embeddings, and storing them in a vector database (Chroma) for semantic similarity search, with retrieved chunks fed to Claude via API.</div>
+              <div className="project-desc">Adding true RAG on top of the assistant above — chunking notes, generating embeddings, and storing them in a vector database (Chroma) for semantic similarity search, with retrieved chunks fed to Claude via API.</div>
               <div className="project-stack">Python, Embeddings, Chroma (Vector DB), RAG</div>
             </div>
             <div className="project-item">
-              <div className="project-name">Ops Insights Prototype <em style={{ color: "#A0AEC0", fontStyle: "italic", fontWeight: 400 }}>(In Progress)</em></div>
-              <div className="project-desc">LLM-powered tool that summarizes production/shift data and flags anomalies, drawing on hands-on manufacturing floor experience.</div>
-              <div className="project-stack">Python, Claude API</div>
+              <div className="project-name">Ops Insights Prototype</div>
+              <div className="project-desc">LLM-powered dashboard that summarizes manufacturing shift/production data and flags anomalies for a plant supervisor — a pandas/numpy statistical pre-filter (point outliers, shift-level cohort bias, cross-line correlated events) narrows a synthetic or uploaded shift log before Gemini explains and prioritizes findings through a schema-constrained structured response, rendered in an interactive Streamlit dashboard.</div>
+              <div className="project-stack">Python, Gemini API, Streamlit, pandas, NumPy</div>
             </div>
             <div className="project-item">
               <div className="project-name">Job Hunter Bot</div>
