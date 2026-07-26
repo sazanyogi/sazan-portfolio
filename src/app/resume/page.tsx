@@ -232,13 +232,8 @@ export default function ResumePage() {
             <div className="section-heading">Selected Projects</div>
             <div className="project-item">
               <div className="project-name">2nd Brain Bot</div>
-              <div className="project-desc">Telegram assistant connected to my personal Obsidian vault (stored as a GitHub repo) — a Modal-hosted webhook fires a fire-and-forget dispatch to Claude, which classifies each message as a question, a new note, or a calendar event; retrieval runs directly against the GitHub API (no vector DB or embeddings needed) so I can ask about years of notes, projects, and career plans in plain language, or log new ones, straight from Telegram.</div>
-              <div className="project-stack">Python, Claude API, GitHub API, Telegram Bot API, Modal, Google Calendar API</div>
-            </div>
-            <div className="project-item">
-              <div className="project-name">2nd Brain Bot — RAG Upgrade <em style={{ color: "#A0AEC0", fontStyle: "italic", fontWeight: 400 }}>(In Progress)</em></div>
-              <div className="project-desc">Adding true RAG on top of the assistant above — chunking notes, generating embeddings, and storing them in a vector database (Chroma) for semantic similarity search, with retrieved chunks fed to Claude via API.</div>
-              <div className="project-stack">Python, Embeddings, Chroma (Vector DB), RAG</div>
+              <div className="project-desc">Telegram assistant with real semantic search over my personal Obsidian vault — rebuilt from a slow, self-hosted architecture onto Cloudflare Workers, Supabase (pgvector), and Gemini after the first RAG attempt proved too slow to use; notes are chunked and re-embedded automatically on every GitHub push, and the bot now handles voice notes and photos, scheduled morning/evening briefings, and a one-tap task checklist, alongside calendar read/write and plain-language note capture.</div>
+              <div className="project-stack">JavaScript, Cloudflare Workers, Gemini API, Supabase (pgvector), GitHub Actions, Telegram Bot API, Google Calendar API</div>
             </div>
             <div className="project-item">
               <div className="project-name">Ops Insights Prototype</div>
